@@ -1,0 +1,92 @@
+# ModelSim/QuestaSim 仿真文件
+work/
+*.wlf
+*.wdb
+*.vcd
+*.vstf
+*.view
+transcript
+vsim_stacktrace.vstf
+vish_stacktrace.vstf
+wlft*
+
+# Quartus 编译产物
+db/
+incremental_db/
+output_files/
+*.jdi
+*.sof
+*.pof
+*.asm
+*.report
+*.tdf
+*.fit.rpt
+*.fit.summary
+*.sta.rpt
+*.sta.summary
+
+# IP/Qsys 生成文件
+ip/
+qsys_*/
+*.qip
+*.sopcinfo
+*.bsp
+
+# 综合工具文件
+*.rpt
+*.htm
+*.html
+synplify.log
+*.syn
+
+# 仿真临时文件
+# sim/
+# sim_outputs/
+# tb/work/
+*.o
+*.so
+*.log
+
+# # Python/验证脚本生成
+# __pycache__/
+# *.pyc
+# *.pyo
+# *.pyd
+# .Python
+# *.egg-info/
+# dist/
+# build/
+
+# IDE 文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS 文件
+Thumbs.db
+.directory
+
+# 临时文件
+*.tmp
+*.bak
+*.backup
+*.old
+*_backup
+
+# 数据文件（可选，根据需要保留）
+# *.txt
+# *.dat
+# *.log
+
+# Vivado (如果使用)
+.Xil/
+*.jou
+*.str
+*.pb
+
+# Verilog 编译
+*.v.bak
+*.vhd.bak
