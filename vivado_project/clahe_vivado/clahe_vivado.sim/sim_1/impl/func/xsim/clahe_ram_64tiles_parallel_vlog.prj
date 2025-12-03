@@ -1,0 +1,8 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"clahe_ram_64tiles_parallel_func_impl.v" \
+"../../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_simple_dual_ram_model.v" \
+"../../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_ram_64tiles_parallel.v" \
+
+# Do not sort compile order
+nosort

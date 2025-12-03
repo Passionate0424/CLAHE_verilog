@@ -1,0 +1,315 @@
+m255
+K4
+z2
+!s11f vlog 2020.4 2020.10, Oct 13 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dE:/project/clahe_vivado/clahe_vivado.sim/sim_1/behav/modelsim
+T_opt
+!s110 1764689889
+V9f:PhMU;9]_;RcI;PoiE<3
+04 22 4 work tb_clahe_top_bmp_multi fast 0
+04 4 4 work glbl fast 0
+=1-b0dcefc0c376-692f07e1-13a-326c
+o-quiet -auto_acc_if_foreign -work xil_defaultlib -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip +acc
+Z1 tCvgOpt 0
+n@_opt
+OL;O;2020.4;71
+vbmp_for_videoStream_24bit
+!s10a 1761303976
+Z2 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z3 !s110 1764686674
+!i10b 1
+!s100 ojjZ[9@6@QIJHhbgC]20l2
+Z4 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IA1UYhXInJcl?]_n;cLO0g1
+S1
+R0
+w1761303976
+8../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_for_videoStream_24bit.sv
+F../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_for_videoStream_24bit.sv
+!i122 1
+L0 5 185
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+Z6 OL;L;2020.4;71
+r1
+!s85 0
+31
+Z7 !s108 1764686674.000000
+Z8 !s107 ../../../../clahe_vivado.srcs/sim_1/imports/tb/tb_clahe_top_bmp_multi.sv|../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_to_videoStream.sv|../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_for_videoStream_24bit.sv|
+Z9 !s90 -64|-incr|-sv|-work|xil_defaultlib|../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_for_videoStream_24bit.sv|../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_to_videoStream.sv|../../../../clahe_vivado.srcs/sim_1/imports/tb/tb_clahe_top_bmp_multi.sv|
+!i113 0
+Z10 o-64 -sv -work xil_defaultlib -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+nbmp_for_video@stream_24bit
+vbmp_to_videoStream
+!s10a 1764687348
+R2
+R3
+!i10b 1
+!s100 :YSTH;jakXAg_1c=RGl?^1
+R4
+IkF4TQmnBW2XW>_oh4gfo73
+S1
+R0
+w1761967833
+8../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_to_videoStream.sv
+F../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_to_videoStream.sv
+!i122 1
+L0 5 209
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R1
+nbmp_to_video@stream
+vclahe_clipper_cdf
+Z11 !s10a 1764213807
+R3
+!i10b 1
+!s100 dR09J9jm<:be3E1Z4X4540
+R4
+IPUUiCQdLX_KcQFlk3V>5N1
+R0
+Z12 w1764213807
+8../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_clipper_cdf.v
+F../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_clipper_cdf.v
+!i122 0
+L0 49 805
+R5
+R6
+r1
+!s85 0
+31
+Z13 !s108 1764686673.000000
+Z14 !s107 ../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_true_dual_port_ram.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_top.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_simple_dual_ram_model.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_ram_16tiles_parallel.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_mapping_parallel.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_histogram_stat.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_coord_counter.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_clipper_cdf.v|
+Z15 !s90 -64|-incr|-work|xil_defaultlib|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_clipper_cdf.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_coord_counter.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_histogram_stat.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_mapping_parallel.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_ram_16tiles_parallel.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_simple_dual_ram_model.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_top.v|../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_true_dual_port_ram.v|
+!i113 0
+Z16 o-64 -work xil_defaultlib -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vclahe_coord_counter
+R11
+R3
+!i10b 1
+!s100 `BHhVbOb5<dRh];odCJPP0
+R4
+IH1IVQz9C9G[Y`a^BV@4Yh2
+R0
+R12
+8../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_coord_counter.v
+F../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_coord_counter.v
+!i122 0
+L0 32 144
+R5
+R6
+r1
+!s85 0
+31
+R13
+R14
+R15
+!i113 0
+R16
+R1
+vclahe_histogram_stat
+R11
+R3
+!i10b 1
+!s100 OZ?a9C9[bPE5<Qki9Qge:2
+R4
+ICS;dS:iWPnc=?Gffb^j`H1
+R0
+R12
+8../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_histogram_stat.v
+F../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_histogram_stat.v
+!i122 0
+L0 24 229
+R5
+R6
+r1
+!s85 0
+31
+R13
+R14
+R15
+!i113 0
+R16
+R1
+vclahe_mapping_parallel
+R11
+R3
+!i10b 1
+!s100 GQ=RVKAKMM^bD46U?G5LE2
+R4
+IdFaGzj`>ozQS5j<mDQo]03
+R0
+R12
+8../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_mapping_parallel.v
+F../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_mapping_parallel.v
+!i122 0
+L0 37 506
+R5
+R6
+r1
+!s85 0
+31
+R13
+R14
+R15
+!i113 0
+R16
+R1
+vclahe_ram_16tiles_parallel
+R11
+R3
+!i10b 1
+!s100 bH8DFCU<V@zJ?2ll:2<1b2
+R4
+I[njY:3zR4JI3mVE>IJNzU3
+R0
+R12
+8../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_ram_16tiles_parallel.v
+F../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_ram_16tiles_parallel.v
+!i122 0
+L0 29 280
+R5
+R6
+r1
+!s85 0
+31
+R13
+R14
+R15
+!i113 0
+R16
+R1
+vclahe_simple_dual_ram_model
+R11
+R3
+!i10b 1
+!s100 cdOOdI_=P2R[44J@H9YIm3
+R4
+I=0AmKn]3lRZVlLRl`IHM`3
+R0
+R12
+8../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_simple_dual_ram_model.v
+F../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_simple_dual_ram_model.v
+!i122 0
+L0 37 41
+R5
+R6
+r1
+!s85 0
+31
+R13
+R14
+R15
+!i113 0
+R16
+R1
+vclahe_top
+R11
+R3
+!i10b 1
+!s100 6?`7QMMMlM:hU7jni4HD61
+R4
+Icd9B0G8m5<D5?IYaYV>z21
+R0
+R12
+8../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_top.v
+F../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_top.v
+!i122 0
+L0 41 425
+R5
+R6
+r1
+!s85 0
+31
+R13
+R14
+R15
+!i113 0
+R16
+R1
+vclahe_true_dual_port_ram
+R11
+R3
+!i10b 1
+!s100 fVHgI@5e0Uz=j@Q4W^aH30
+R4
+Ij7eLDDG[Zz<QEiHdkJadH3
+R0
+R12
+8../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_true_dual_port_ram.v
+F../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_true_dual_port_ram.v
+!i122 0
+L0 15 46
+R5
+R6
+r1
+!s85 0
+31
+R13
+R14
+R15
+!i113 0
+R16
+R1
+vglbl
+!s110 1764689881
+!i10b 1
+!s100 DCW3=ePZ4oEojGg2KL;HS0
+R4
+ITNN_cbZIG@:>zYe@^CH>f0
+R0
+w1544155481
+8glbl.v
+Fglbl.v
+!i122 16
+L0 6 65
+R5
+R6
+r1
+!s85 0
+31
+Z17 !s108 1764689880.000000
+!s107 glbl.v|
+!s90 -work|xil_defaultlib|glbl.v|
+!i113 0
+o-work xil_defaultlib -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vtb_clahe_top_bmp_multi
+R2
+!s110 1764689880
+!i10b 1
+!s100 0SY8MR`^SLDmS_AGz_FWQ2
+R4
+IJ>3l<gROE]:k8a`z79IUg3
+S1
+R0
+w1764689857
+8../../../../clahe_vivado.srcs/sim_1/imports/tb/tb_clahe_top_bmp_multi.sv
+F../../../../clahe_vivado.srcs/sim_1/imports/tb/tb_clahe_top_bmp_multi.sv
+!i122 15
+L0 26 550
+R5
+R6
+r1
+!s85 0
+31
+R17
+R8
+R9
+!i113 0
+R10
+R1
