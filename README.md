@@ -1,6 +1,11 @@
 # CLAHE FPGA Project
 
-一个完整的**对比度受限自适应直方图均衡化（CLAHE）**算法的 FPGA 硬件实现项目，提供 16 tile 与 64 tile 两个可复现的参考设计，包含完整的 RTL 代码、测试平台、仿真脚本与详细文档。
+欢迎！请选择语言 / Please pick a language:
+
+[![中文说明](https://img.shields.io/badge/lang-中文-blue)](README.md)
+[![English](https://img.shields.io/badge/lang-English-lightgrey)](README_EN.md)
+
+---
 
 ## 📖 项目简介
 
@@ -432,10 +437,5 @@ parameter TILE_NUM = 64,        // 总 tile 数
 本项目为开源项目，具体许可证信息请查看 LICENSE 文件。
 
 ---
-
-## Language / 语言
-
-- 🇨🇳 [中文详细说明](README_ZH.md)
-- 🇬🇧 [English Detailed Guide](README_EN.md)
 
 > 更多技术细节请参考 `docs/` 目录下的详细文档。
