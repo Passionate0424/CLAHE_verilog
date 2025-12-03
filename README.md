@@ -16,6 +16,40 @@ CLAHE（Contrast Limited Adaptive Histogram Equalization）是一种经典的图
 - ✅ **YUV 格式支持**：支持 YUV 三路数据输入输出，确保数据同步
 - ✅ **完整仿真环境**：支持 ModelSim/Questa、VCS、Icarus Verilog 等多种仿真器
 
+## 🏗️ 项目结构
+
+本仓库按功能与用途分为若干目录：源码（RTL）、测试平台、仿真流程、文档与综合/实现产物等，便于学习、仿真与上板验证。
+
+```
+CLAHE/
+├── fpga报告.md                 # 项目报告（中文，可选）
+├── LICENSE                     # 许可证
+├── README*.md                  # 多语言入口文档（中文/英文）
+├── artifacts/                  # 综合/实现与工具产生的输出文件（例如 QDB、QPG、实现报告）
+├── work/                       # 仿真器（ModelSim/Questa）编译生成的工作目录（可忽略/清理）
+├── vivado_project/             # Xilinx Vivado 工程文件（用于综合、仿真参考）
+├── docs/                       # 项目设计与 RTL 模块的详细文档与流程说明
+├── pictures/                   # 文档和 README 中使用的图片资源
+├── projects/                   # 各版本实现目录（16tile / 64tile）
+│   ├── 16tile/                 # 16 tile（4×4）参考实现（教学/轻量）
+│   │   ├── rtl/                # RTL 源代码与子模块
+│   │   ├── tb/                 # Testbench（模块/顶层仿真）
+│   │   ├── sim/                # 仿真脚本（ModelSim/VCS/Icarus 等）
+│   │   ├── scripts/            # 辅助脚本（图片处理、仿真驱动等）
+│   │   └── assets/             # 仿真/测试资源（图片、参考数据）
+│   └── 64tile/                 # 64 tile（8×8）主线实现（更高质量的局部增强）
+│       ├── rtl/
+│       ├── tb/
+│       ├── sim/
+│       ├── scripts/
+│       └── assets/
+├── flows/                      # 一些跨工具/跨版本的仿真与处理流程
+│   └── full_sim/               # 整帧 BMP 端到端仿真流程（包含输入/输出文件与脚本）
+└── projects/*/README/          # 各版本的快速说明（参见各子目录）
+```
+
+ 
+
 ## 🎯 算法原理
 
 CLAHE 算法的处理流程包括以下几个步骤：
@@ -229,34 +263,6 @@ modelsim仿真波形及图片结果如下：
 
 详细算法说明请参考 `docs/RTL_OVERVIEW.md`。
 
-## 🏗️ 项目结构
-
-```
-CLAHE/
-├── README*.md                    # 多语言入口文档
-├── docs/                         # 项目文档
-│   ├── README.md                 # 统一文档说明
-│   └── RTL_OVERVIEW.md           # RTL 模块详细解析
-├── projects/                     # 各版本实现
-│   ├── 16tile/                   # 16 tile 版本（4×4 tiles）
-│   │   ├── rtl/                  # RTL 源代码
-│   │   ├── tb/                   # 测试平台
-│   │   ├── sim/                  # 仿真脚本
-│   │   ├── scripts/              # 辅助脚本
-│   │   └── assets/               # 测试资源
-│   └── 64tile/                   # 64 tile 版本（8×8 tiles，主线）
-│       ├── rtl/                  # RTL 源代码
-│       ├── tb/                   # 测试平台
-│       ├── sim/                  # 仿真脚本
-│       ├── scripts/              # 辅助脚本
-│       └── assets/               # 测试资源
-└── flows/                        # 统一仿真流程
-    └── full_sim/                 # 跨 EDA 整帧 BMP 仿真
-        ├── CLAHE/                # RTL 代码
-        ├── bmp_in/               # 输入测试图像
-        ├── bmp_test_results/     # 仿真输出结果
-        └── sim_clahe_*.do/sh     # 仿真脚本
-```
 
 ## 🔧 硬件架构
 
@@ -333,43 +339,7 @@ CLAHE/
    vsim -do run_all.do
    ```
 
-   或使用整帧 BMP 测试：
-
-   ```bash
-   cd flows/full_sim
-   vsim -do sim_clahe_bmp.do
-   ```
-
-4. **查看结果**
-   - 输出图像：`bmp_test_results/output/`
-   - 波形文件：根据仿真脚本生成的 `.wlf` 或 `.vcd` 文件
-
-### 使用其他仿真器
-
-- **VCS**:
-
-  ```bash
-  cd flows/full_sim
-  ./sim_clahe_vcs.sh
-  ```
-
-- **Icarus Verilog**:
-
-  ```bash
-  cd flows/full_sim
-  ./sim_clahe_iverilog.sh
-  ```
-
-## 📚 文档导航
-
-### 主要文档
-
-- **[README_ZH.md](README_ZH.md)**: 中文详细说明
-- **[README_EN.md](README_EN.md)**: English detailed guide
-- **[docs/README.md](docs/README.md)**: 统一的 16tile/64tile/整帧仿真说明
-- **[docs/RTL_OVERVIEW.md](docs/RTL_OVERVIEW.md)**: RTL 模块算法原理与实现详解
-
-### 模块文档
+ 
 
 - `clahe_coord_counter.v`: 坐标计数与 tile 定位
 - `clahe_histogram_stat*.v`: 直方图统计与冲突处理

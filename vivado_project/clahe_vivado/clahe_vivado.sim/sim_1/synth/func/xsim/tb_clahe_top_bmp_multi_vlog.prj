@@ -1,0 +1,11 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"tb_clahe_top_bmp_multi_func_synth.v" \
+
+sv xil_defaultlib  \
+"../../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_for_videoStream_24bit.sv" \
+"../../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_to_videoStream.sv" \
+"../../../../../clahe_vivado.srcs/sim_1/imports/tb/tb_clahe_top_bmp_multi.sv" \
+
+# Do not sort compile order
+nosort

@@ -1,0 +1,21 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_clipper_cdf.v" \
+"../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_coord_counter.v" \
+"../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_histogram_stat.v" \
+"../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_mapping_parallel.v" \
+"../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_ram_16tiles_parallel.v" \
+"../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_simple_dual_ram_model.v" \
+"../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_top.v" \
+"../../../../clahe_vivado.srcs/sources_1/imports/rtl/clahe_true_dual_port_ram.v" \
+
+sv xil_defaultlib  \
+"../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_for_videoStream_24bit.sv" \
+"../../../../clahe_vivado.srcs/sim_1/imports/tb/bmp_to_videoStream.sv" \
+"../../../../clahe_vivado.srcs/sim_1/imports/tb/tb_clahe_top_bmp_multi.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
