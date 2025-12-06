@@ -198,47 +198,32 @@ module clahe_top (
     // 时序：帧0写RAM_A读RAM_B，帧1写RAM_B读RAM_A
 
     // ========================================================================
-    // 乒乓控制逻辑（优化：在CDF计算完成时切换，消除闪烁）
+    // 乒乓控制逻辑（修正：在帧开始时切换，避免清零和映射冲突）
     // ========================================================================
-    // 优化说明：
-    // 1. 问题根源：原来在新帧第一个href时切换，虽然理论有时间但存在时序风险
-    // 2. 解决方案：在CDF计算完成（cdf_done脉冲）时立即切换乒乓标志
-    // 3. 时序优势：
-    //    - vsync↓ (帧N结束) → frame_hist_done脉冲 → 触发CDF计算
-    //    - CDF计算 (约25,600周期 @100MHz，64个tile)
-    //    - CDF完成 → cdf_done脉冲 → **立即切换ping_pong** ✓
-    //    - [帧间隙剩余时间 ~19.7ms]
-    //    - vsync↑ (帧N+1开始)
-    //    - 第一个href↑ → 映射开始读取RAM（CDF已完成，乒乓已切换，完全就绪）
-    // 4. histogram和cdf衔接：
-    //    - histogram在vsync↓立即输出frame_hist_done
-    //    - cdf模块监听frame_hist_done，立即开始处理
-    //    - 无额外延迟，衔接最紧密
-
-    // 检测cdf_done上升沿（用于乒乓切换）
-    reg cdf_done_d1;
-    wire cdf_done_posedge;
+    // 修正说明：
+    // 1. 在帧开始时（vsync上升沿）切换ping_pong_flag
+    // 2. 这样在帧间隙期间：清零和CDF处理在旧的ping_pong下进行
+    // 3. 新帧开始时：切换到新的ping_pong，使用刚计算好的CDF
+    // 4. 避免清零和映射读取同一块RAM的冲突
+    reg cdf_processing_d1;
 
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
-            cdf_done_d1 <= 1'b0;
+            cdf_processing_d1 <= 1'b0;
         end
         else begin
-            cdf_done_d1 <= cdf_done;
+            cdf_processing_d1 <= cdf_processing;
         end
     end
 
-    assign cdf_done_posedge = cdf_done && !cdf_done_d1;  // cdf_done上升沿
+    wire cdf_done_edge = cdf_processing_d1 && !cdf_processing;  // CDF处理完成的下降沿
 
-    // 乒乓切换：在CDF完成时切换
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
             ping_pong_flag <= 1'b0;
         end
-        else if (cdf_done_posedge) begin
-            // 优化：在CDF完成时立即切换ping_pong
-            // 此时CDF LUT已经完全写入RAM，可以安全切换
-            // 下一帧映射将使用新的CDF LUT，消除闪烁
+        else if (vsync_posedge) begin
+            // 修正：在帧开始时切换ping_pong，避免清零和映射冲突
             ping_pong_flag <= !ping_pong_flag;
         end
     end
