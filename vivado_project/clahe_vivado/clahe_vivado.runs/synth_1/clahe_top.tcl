@@ -23,21 +23,21 @@ create_project -in_memory -part xc7z020clg400-3
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir E:/project/clahe_vivado/clahe_vivado.cache/wt [current_project]
-set_property parent.project_path E:/project/clahe_vivado/clahe_vivado.xpr [current_project]
+set_property webtalk.parent_dir E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.cache/wt [current_project]
+set_property parent.project_path E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo e:/project/clahe_vivado/clahe_vivado.cache/ip [current_project]
+set_property ip_output_repo e:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_verilog -library xil_defaultlib {
-  E:/project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_clipper_cdf.v
-  E:/project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_coord_counter.v
-  E:/project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_histogram_stat.v
-  E:/project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_mapping_parallel.v
-  E:/project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_ram_16tiles_parallel.v
-  E:/project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_simple_dual_ram_model.v
-  E:/project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_true_dual_port_ram.v
-  E:/project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_top.v
+  E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_clipper_cdf.v
+  E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_coord_counter.v
+  E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_histogram_stat.v
+  E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_mapping_parallel.v
+  E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_ram_16tiles_parallel.v
+  E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_simple_dual_ram_model.v
+  E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_true_dual_port_ram.v
+  E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/sources_1/imports/rtl/clahe_top.v
 }
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
@@ -47,8 +47,8 @@ read_verilog -library xil_defaultlib {
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc E:/project/clahe_vivado/clahe_vivado.srcs/constrs_1/imports/clahe_top_sim.xdc
-set_property used_in_implementation false [get_files E:/project/clahe_vivado/clahe_vivado.srcs/constrs_1/imports/clahe_top_sim.xdc]
+read_xdc E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/constrs_1/imports/clahe_top_sim.xdc
+set_property used_in_implementation false [get_files E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/constrs_1/imports/clahe_top_sim.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]

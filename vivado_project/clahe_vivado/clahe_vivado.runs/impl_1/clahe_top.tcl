@@ -69,12 +69,12 @@ set rc [catch {
   create_project -in_memory -part xc7z020clg400-3
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
-  set_property webtalk.parent_dir E:/project/clahe_vivado/clahe_vivado.cache/wt [current_project]
-  set_property parent.project_path E:/project/clahe_vivado/clahe_vivado.xpr [current_project]
-  set_property ip_output_repo E:/project/clahe_vivado/clahe_vivado.cache/ip [current_project]
+  set_property webtalk.parent_dir E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.cache/wt [current_project]
+  set_property parent.project_path E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.xpr [current_project]
+  set_property ip_output_repo E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
-  add_files -quiet E:/project/clahe_vivado/clahe_vivado.runs/synth_1/clahe_top.dcp
-  read_xdc E:/project/clahe_vivado/clahe_vivado.srcs/constrs_1/imports/clahe_top_sim.xdc
+  add_files -quiet E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.runs/synth_1/clahe_top.dcp
+  read_xdc E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.srcs/constrs_1/imports/clahe_top_sim.xdc
   link_design -top clahe_top -part xc7z020clg400-3
   close_msg_db -file init_design.pb
 } RESULT]
