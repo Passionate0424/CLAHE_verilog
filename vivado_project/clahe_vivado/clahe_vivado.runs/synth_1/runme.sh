@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='E:/project/clahe_vivado/clahe_vivado.runs/synth_1'
+HD_PWD='E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado/clahe_vivado.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

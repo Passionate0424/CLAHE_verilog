@@ -49,9 +49,20 @@
 - **Bug Fix 2 (Clipper)**: 修复了 CDF 归一化中的溢出问题，增加了 `Explicit Saturation` 逻辑 (`> 255 ? 255 : val`)。
 - **结果**: 优化版设计不仅通过了理论验证，其核心算法逻辑也在基准版仿真中得到了交叉验证。
 
+### [Done] Step 4: 伪影消除与时序修复 (Artifact Elimination & Timing Fix)
+- **Bug Fix 3 (Vertical Division Lines)**: 修复了 RAM 跨 Crossbar 的时序对齐问题。
+    - **Issue**: `clahe_ram_banked` 内部 Crossbar 使用当前周期的 Tile Index 选择上一周期请求的数据 (RAM read latency = 1)，导致在 Tile 边界切换瞬间数据路由错误，产生纵向分割线。
+    - **Fix**: 在 Crossbar 控制路径引入 `mapping_xx_tile_idx_d1` 寄存器，确保控制信号与数据信号时序严格对齐。
+- **Bug Fix 4 (Checkerboard Artifacts)**: 修正了双线性插值权重的相位计算。
+    - **Fix**: 确保插值权重 `wx`, `wy` 基于 Tile 中心点计算，消除了跨边界时的相位突变。
+
 ## 4. 验证结论 (Verification Conclusion)
-- **Status**: Verified.
-- **仿真结果**: 优化版 (`run_top_opt.do`) 输出 Max/Avg 统计数据正常 (Max 201)，图像直方图分布合理。
-- **资源对比**:
-    - Original: 64 RAM Instances.
-    - Optimized: 4 RAM Banks (逻辑容量相同，但物理单元利用率大幅提升，布线拥塞度大幅降低)。
+- **Status**: **Fully Verified & Artifact-Free**.
+- **仿真结果**: 
+    - 统计数据正常 (Max 201)。
+    - **视觉检查**: 产生的 BMP 图像清晰平滑，彻底消除了之前的棋盘格和分割线伪影。
+    - **全黑问题**: 确认已解决 (由之前的错误 Dual Port 修改导致，已回退并修复时序)。
+- **最终成效**: 
+    - 成功实现了 4-Bank 架构下的无冲突访问。
+    - 图像质量与标准算法一致，无视觉瑕疵。
+    - 资源维持在低水平 (4 RAMs)。
