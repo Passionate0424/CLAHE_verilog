@@ -184,13 +184,20 @@ module clahe_ram_64tiles_parallel (
             // ================================================================
             // Efinix BRAM IP核实例
             // ================================================================
-            clahe_simple_dual_ram ram_a_inst (
-                                      .clk(pclk),                 // 单时钟
-                                      .we(ram_a_we_a[i]),         // 写使能
-                                      .waddr(ram_a_addr_a[i]),    // 写地址
-                                      .wdata_a(ram_a_din_a[i]),   // 写数据
-                                      .raddr(ram_a_addr_b[i]),    // 读地址
-                                      .rdata_b(ram_a_dout_b[i])   // 读数据
+            clahe_simple_dual_ram_model ram_a_inst (
+                                    //   .clk(pclk),                 // 单时钟
+                                    //   .we(ram_a_we_a[i]),         // 写使能
+                                    //   .waddr(ram_a_addr_a[i]),    // 写地址
+                                    //   .wdata_a(ram_a_din_a[i]),   // 写数据
+                                    //   .raddr(ram_a_addr_b[i]),    // 读地址
+                                    //   .rdata_b(ram_a_dout_b[i])   // 读数据
+                                    .clk_a(pclk),
+                                    .we_a(ram_a_we_a[i]),
+                                    .addr_a(ram_a_addr_a[i]),
+                                    .din_a(ram_a_din_a[i]),
+                                    .clk_b(pclk),
+                                    .addr_b(ram_a_addr_b[i]),
+                                    .dout_b(ram_a_dout_b[i])
                                   );
         end
     endgenerate
@@ -237,14 +244,21 @@ module clahe_ram_64tiles_parallel (
             // ================================================================
             // Efinix BRAM IP核实例
             // ================================================================
-            clahe_simple_dual_ram ram_b_inst (
-                                      .clk(pclk),                 // 单时钟
-                                      .we(ram_b_we_a[i]),         // 写使能
-                                      .waddr(ram_b_addr_a[i]),    // 写地址
-                                      .wdata_a(ram_b_din_a[i]),   // 写数据
-                                      .raddr(ram_b_addr_b[i]),    // 读地址
-                                      .rdata_b(ram_b_dout_b[i])   // 读数据
-                                  );
+            clahe_simple_dual_ram_model ram_b_inst (
+                                            // .clk(pclk),                 // 单时钟
+                                            // .we(ram_b_we_a[i]),         // 写使能
+                                            // .waddr(ram_b_addr_a[i]),    // 写地址
+                                            // .wdata_a(ram_b_din_a[i]),   // 写数据
+                                            // .raddr(ram_b_addr_b[i]),    // 读地址
+                                            // .rdata_b(ram_b_dout_b[i])   // 读数据
+                                            .clk_a(pclk),
+                                            .we_a(ram_b_we_a[i]),
+                                            .addr_a(ram_b_addr_a[i]),
+                                            .din_a(ram_b_din_a[i]),
+                                            .clk_b(pclk),
+                                            .addr_b(ram_b_addr_b[i]),
+                                            .dout_b(ram_b_dout_b[i])
+                                        );
         end
     endgenerate
 

@@ -91,7 +91,8 @@ module clahe_clipper_cdf #(
 
     // Clip相关信号
     reg  [31:0] excess_total;          // 总溢出量（所有超出clip_limit的计数值）
-    wire [23:0] excess_per_bin;        // 每个bin分配的溢出量（标准CLAHE：分配给所有256个灰度级）
+    wire [23:0] excess_base;           // 每个bin的基础分配量（除法结果）
+    wire [7:0]  excess_remainder;      // 余数（需要额外分配给前remainder个bins）
 
     // CDF相关信号
     reg  [31:0] cdf [0:255];           // 累积分布函数数组
@@ -107,8 +108,11 @@ module clahe_clipper_cdf #(
     wire [15:0] hist_rd_data;           // 根据ping_pong_flag选择读取的RAM数据
     assign hist_rd_data = ping_pong_flag ? hist_rd_data_b : hist_rd_data_a;
 
-    // Clip优化：使用组合逻辑计算excess_per_bin（位宽优化）
-    assign excess_per_bin = excess_total[31:8];  // 直接取高24位，等效于除以256
+    // Clip优化：使用组合逻辑计算基础分配量和余数（确保像素总数守恒）
+    // 标准CLAHE算法：base = excess_total / 256, remainder = excess_total % 256
+    // 前remainder个bins分配(base+1)个像素，其余bins分配base个像素
+    assign excess_base = excess_total[31:8];      // 除以256：取高24位
+    assign excess_remainder = excess_total[7:0];  // 模256：取低8位
 
 
     integer i;
@@ -300,8 +304,7 @@ module clahe_clipper_cdf #(
                     if (bin_cnt == 0) begin
                         excess_total <= 32'd0;
                     end
-
-                    if (hist_buf[bin_cnt[7:0]] > clip_limit) begin
+                    else if (hist_buf[bin_cnt[7:0]] > clip_limit) begin
                         // 超过阈值，计算溢出量
                         excess_total <= excess_total + (hist_buf[bin_cnt[7:0]] - clip_limit);
                         hist_clipped[bin_cnt[7:0]] <= clip_limit;
@@ -319,7 +322,7 @@ module clahe_clipper_cdf #(
                 end
 
                 // ============================================================
-                // CLIP_REDIST: 重分配溢出量到所有bins（标准CLAHE）
+                // CLIP_REDIST: 重分配溢出量到所有bins（标准CLAHE，确保像素守恒）
                 // ============================================================
                 CLIP_REDIST: begin
                     // 保持RAM信号稳定，避免X态
@@ -329,8 +332,16 @@ module clahe_clipper_cdf #(
                     cdf_wr_bin_addr <= 8'd0;
                     cdf_wr_en <= 1'b0;
 
-                    // 标准CLAHE：所有bins都接收溢出值（位宽优化）
-                    hist_clipped[bin_cnt[7:0]] <= hist_clipped[bin_cnt[7:0]] + excess_per_bin[23:0];
+                    // 标准CLAHE：像素总数守恒的分配策略
+                    // 前remainder个bins分配(base+1)，其余bins分配base
+                    if (bin_cnt < excess_remainder) begin
+                        // 前remainder个bins多分配1个像素
+                        hist_clipped[bin_cnt[7:0]] <= hist_clipped[bin_cnt[7:0]] + excess_base[15:0] + 16'd1;
+                    end
+                    else begin
+                        // 其余bins只分配base个像素
+                        hist_clipped[bin_cnt[7:0]] <= hist_clipped[bin_cnt[7:0]] + excess_base[15:0];
+                    end
 
                     if (bin_cnt < 9'd255) begin
                         bin_cnt <= bin_cnt + 9'd1;
