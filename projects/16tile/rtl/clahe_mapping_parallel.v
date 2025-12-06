@@ -253,29 +253,19 @@ module clahe_mapping_parallel #(
     // 权重表示像素在两个相邻tile中心之间的相对位置
     // 使用Q8定点格式：0-255 表示 0.0-1.0
     //
-    // 关键修复：
-    //   - 旧实现：wx = (local_x * 819) >> 10，基于local坐标 ❌
-    //     问题：tile边界处突然跳变(319→255, 0→0)，导致严重分块效应
-    //   - 新实现：wx = 128 + ((dx * 819) >> 10)，基于tile中心距离 ✓
-    //     优势：tile边界处平滑过渡(左边界≈0, 中心=128, 右边界≈255)
-    //
-    // 饱和处理：确保权重在0-255范围内
-    function [7:0] saturate_weight;
-        input signed [10:0] offset;  // wx_offset或wy_offset
-        reg signed [10:0] result;
-        begin
-            result = 11'sd128 + offset;  // 加上中心偏移
-            if (result < 0)
-                saturate_weight = 8'd0;
-            else if (result > 255)
-                saturate_weight = 8'd255;
-            else
-                saturate_weight = result[7:0];
-        end
-    endfunction
+    // 修复：使用与64tile相同的逻辑，基于Grid Entity进行索引计算
+    // 消除Checkerboard效应
+    wire [8:0] wx_idx_fix;
+    wire [7:0] wy_idx_fix;
 
-    assign wx = saturate_weight(wx_offset);  // 饱和到0-255
-    assign wy = saturate_weight(wy_offset);  // 饱和到0-255
+    assign wx_idx_fix = (local_x < TILE_CENTER_X) ? (local_x + TILE_CENTER_X) : (local_x - TILE_CENTER_X);
+    assign wy_idx_fix = (local_y < TILE_CENTER_Y) ? (local_y + TILE_CENTER_Y) : (local_y - TILE_CENTER_Y);
+
+    // 权重计算: (idx * 256) / SIZE
+    // wx = (idx * 256) / 320 ≈ (idx * 819 + 512) >> 10
+    // wy = (idx * 256) / 180 ≈ (idx * 1456 + 512) >> 10
+    assign wx = (wx_idx_fix * 10'd819 + 20'd512) >> 10;
+    assign wy = (wy_idx_fix * 11'd1456 + 19'd512) >> 10;
 
     // ========================================================================
     // 输出接口连接
