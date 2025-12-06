@@ -33,7 +33,7 @@ module clahe_ram_banked #(
         // Ping-Pong Control
         input  wire        ping_pong_flag,
         input  wire        clear_start,
-        input  wire        clear_done,
+        output reg         clear_done,
 
         // ====================================================================
         // Histogram Statistic Interface (Write/Read Port A)
@@ -74,6 +74,34 @@ module clahe_ram_banked #(
     // ========================================================================
     // Internal Signals & Types
     // ========================================================================
+
+    // RAM Clear Logic
+    reg [12:0] clear_cnt;
+    reg        clearing;
+
+    always @(posedge pclk or negedge rst_n) begin
+        if (!rst_n) begin
+            clearing <= 1'b0;
+            clear_done <= 1'b1; // Default ready
+            clear_cnt <= 13'd0;
+        end
+        else begin
+            if (clear_start) begin
+                clearing <= 1'b1;
+                clear_done <= 1'b0;
+                clear_cnt <= 13'd0;
+            end
+            else if (clearing) begin
+                if (clear_cnt == 13'd4095) begin
+                    clearing <= 1'b0;
+                    clear_done <= 1'b1;
+                end
+                else begin
+                    clear_cnt <= clear_cnt + 1;
+                end
+            end
+        end
+    end
 
     // Address decoding function
     function [1:0] get_bank_id;
@@ -145,6 +173,21 @@ module clahe_ram_banked #(
     reg [15:0] ram_1_2 [0:4095];
     reg [15:0] ram_1_3 [0:4095];
 
+    // Simulation Initialization
+    integer init_i;
+    initial begin
+        for (init_i = 0; init_i < 4096; init_i = init_i + 1) begin
+            ram_0_0[init_i] = 16'd0;
+            ram_0_1[init_i] = 16'd0;
+            ram_0_2[init_i] = 16'd0;
+            ram_0_3[init_i] = 16'd0;
+            ram_1_0[init_i] = 16'd0;
+            ram_1_1[init_i] = 16'd0;
+            ram_1_2[init_i] = 16'd0;
+            ram_1_3[init_i] = 16'd0;
+        end
+    end
+
     // Read Outputs
     reg [15:0] rdata_0_0_p0, rdata_0_1_p0, rdata_0_2_p0, rdata_0_3_p0;
     reg [15:0] rdata_1_0_p0, rdata_1_1_p0, rdata_1_2_p0, rdata_1_3_p0;
@@ -165,8 +208,15 @@ module clahe_ram_banked #(
     always @(posedge pclk) begin
         // --- Set 0 Port 0 (Hist/CDF Wr/Rd) ---
         if (ping_pong_flag == 0) begin
-            // Set 0 is Hist
-            if (hist_wr_en) begin
+            // Set 0 is Hist + CDF Calc
+            if (clearing) begin
+                // Parallel Clear Set 0
+                ram_0_0[clear_cnt] <= 16'd0;
+                ram_0_1[clear_cnt] <= 16'd0;
+                ram_0_2[clear_cnt] <= 16'd0;
+                ram_0_3[clear_cnt] <= 16'd0;
+            end
+            else if (hist_wr_en) begin
                 if (curr_hist_bank == 0)
                     ram_0_0[curr_hist_addr] <= hist_wr_data;
                 if (curr_hist_bank == 1)
@@ -176,10 +226,30 @@ module clahe_ram_banked #(
                 if (curr_hist_bank == 3)
                     ram_0_3[curr_hist_addr] <= hist_wr_data;
             end
-            rdata_0_0_p0 <= ram_0_0[curr_hist_addr];
-            rdata_0_1_p0 <= ram_0_1[curr_hist_addr];
-            rdata_0_2_p0 <= ram_0_2[curr_hist_addr];
-            rdata_0_3_p0 <= ram_0_3[curr_hist_addr];
+            else if (cdf_wr_en) begin
+                if (curr_cdf_bank == 0)
+                    ram_0_0[curr_cdf_addr] <= {8'd0, cdf_wr_data};
+                if (curr_cdf_bank == 1)
+                    ram_0_1[curr_cdf_addr] <= {8'd0, cdf_wr_data};
+                if (curr_cdf_bank == 2)
+                    ram_0_2[curr_cdf_addr] <= {8'd0, cdf_wr_data};
+                if (curr_cdf_bank == 3)
+                    ram_0_3[curr_cdf_addr] <= {8'd0, cdf_wr_data};
+            end
+
+            // Read Address Mux (Priority to CDF if enabled, otherwise Hist)
+            if (cdf_rd_en) begin
+                rdata_0_0_p0 <= ram_0_0[curr_cdf_addr];
+                rdata_0_1_p0 <= ram_0_1[curr_cdf_addr];
+                rdata_0_2_p0 <= ram_0_2[curr_cdf_addr];
+                rdata_0_3_p0 <= ram_0_3[curr_cdf_addr];
+            end
+            else begin
+                rdata_0_0_p0 <= ram_0_0[curr_hist_addr];
+                rdata_0_1_p0 <= ram_0_1[curr_hist_addr];
+                rdata_0_2_p0 <= ram_0_2[curr_hist_addr];
+                rdata_0_3_p0 <= ram_0_3[curr_hist_addr];
+            end
         end
         else begin
             // Set 0 is CDF Write / Mapping Read
@@ -201,8 +271,15 @@ module clahe_ram_banked #(
 
         // --- Set 1 Port 0 ---
         if (ping_pong_flag == 1) begin
-            // Set 1 is Hist
-            if (hist_wr_en) begin
+            // Set 1 is Hist + CDF Calc
+            if (clearing) begin
+                // Parallel Clear Set 1
+                ram_1_0[clear_cnt] <= 16'd0;
+                ram_1_1[clear_cnt] <= 16'd0;
+                ram_1_2[clear_cnt] <= 16'd0;
+                ram_1_3[clear_cnt] <= 16'd0;
+            end
+            else if (hist_wr_en) begin
                 if (curr_hist_bank == 0)
                     ram_1_0[curr_hist_addr] <= hist_wr_data;
                 if (curr_hist_bank == 1)
@@ -212,10 +289,29 @@ module clahe_ram_banked #(
                 if (curr_hist_bank == 3)
                     ram_1_3[curr_hist_addr] <= hist_wr_data;
             end
-            rdata_1_0_p0 <= ram_1_0[curr_hist_addr];
-            rdata_1_1_p0 <= ram_1_1[curr_hist_addr];
-            rdata_1_2_p0 <= ram_1_2[curr_hist_addr];
-            rdata_1_3_p0 <= ram_1_3[curr_hist_addr];
+            else if (cdf_wr_en) begin
+                if (curr_cdf_bank == 0)
+                    ram_1_0[curr_cdf_addr] <= {8'd0, cdf_wr_data};
+                if (curr_cdf_bank == 1)
+                    ram_1_1[curr_cdf_addr] <= {8'd0, cdf_wr_data};
+                if (curr_cdf_bank == 2)
+                    ram_1_2[curr_cdf_addr] <= {8'd0, cdf_wr_data};
+                if (curr_cdf_bank == 3)
+                    ram_1_3[curr_cdf_addr] <= {8'd0, cdf_wr_data};
+            end
+
+            if (cdf_rd_en) begin
+                rdata_1_0_p0 <= ram_1_0[curr_cdf_addr];
+                rdata_1_1_p0 <= ram_1_1[curr_cdf_addr];
+                rdata_1_2_p0 <= ram_1_2[curr_cdf_addr];
+                rdata_1_3_p0 <= ram_1_3[curr_cdf_addr];
+            end
+            else begin
+                rdata_1_0_p0 <= ram_1_0[curr_hist_addr];
+                rdata_1_1_p0 <= ram_1_1[curr_hist_addr];
+                rdata_1_2_p0 <= ram_1_2[curr_hist_addr];
+                rdata_1_3_p0 <= ram_1_3[curr_hist_addr];
+            end
         end
         else begin
             // Set 1 is CDF Write / Mapping
@@ -277,7 +373,8 @@ module clahe_ram_banked #(
         endcase
 
         // CDF Read Output
-        if (ping_pong_flag == 1)
+        // CDF Read Output
+        if (ping_pong_flag == 0)
         case (curr_cdf_bank)
             0:
                 cdf_rd_data = rdata_0_0_p0;

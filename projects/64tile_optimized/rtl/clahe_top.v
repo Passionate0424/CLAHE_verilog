@@ -472,4 +472,9 @@ module clahe_top (
     wire        debug_interp_enable = enable_interp;
     wire        debug_cdf_ready = cdf_done;
 
+    // Aliases for Testbench compatibility
+    wire        dbg_cdf_processing = cdf_processing;
+    wire        dbg_cdf_done = cdf_done;
+    wire        dbg_ping_pong_flag = ping_pong_flag;
+
 endmodule

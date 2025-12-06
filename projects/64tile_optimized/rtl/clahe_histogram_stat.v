@@ -21,7 +21,9 @@
 
 `timescale 1ns / 1ps
 
-module clahe_histogram_stat (
+module clahe_histogram_stat #(
+        parameter TILE_NUM_BITS = 6
+    )(
         input  wire        pclk,
         input  wire        rst_n,
 
@@ -29,7 +31,7 @@ module clahe_histogram_stat (
         input  wire [7:0]  in_y,           // 输入Y分量
         input  wire        in_href,        // 行有效信号
         input  wire        in_vsync,       // 场同步信号
-        input  wire [3:0]  tile_idx,       // tile索引 (0-15)
+        input  wire [TILE_NUM_BITS-1:0] tile_idx,       // tile索引
 
         // 乒乓控制
         input  wire        ping_pong_flag,
@@ -39,8 +41,8 @@ module clahe_histogram_stat (
         input  wire        clear_done,
 
         // RAM接口
-        output wire [3:0]  ram_rd_tile_idx,
-        output wire [3:0]  ram_wr_tile_idx,
+        output wire [TILE_NUM_BITS-1:0] ram_rd_tile_idx,
+        output wire [TILE_NUM_BITS-1:0] ram_wr_tile_idx,
         output wire [7:0]  ram_wr_addr_a,
         output wire [15:0] ram_wr_data_a,
         output wire        ram_wr_en_a,
@@ -52,89 +54,56 @@ module clahe_histogram_stat (
     );
 
     // ========================================================================
-    // 清零控制（保持原有逻辑）
+    // 信号边沿检测
     // ========================================================================
-    reg        vsync_d1, vsync_d2;
-    wire       vsync_negedge;
-
+    reg vsync_d;
     always @(posedge pclk or negedge rst_n) begin
-        if (!rst_n) begin
-            vsync_d1 <= 1'b0;
-            vsync_d2 <= 1'b0;
-        end
-        else begin
-            vsync_d1 <= in_vsync;
-            vsync_d2 <= vsync_d1;
-        end
+        if (!rst_n)
+            vsync_d <= 1'b0;
+        else
+            vsync_d <= in_vsync;
     end
 
-    assign vsync_negedge = !vsync_d1 && vsync_d2;
-    assign clear_start = vsync_negedge;
+    wire vsync_pos = in_vsync && !vsync_d;  // Frame Start
+    wire vsync_neg = !in_vsync && vsync_d;  // Frame End
 
     // ========================================================================
-    // 帧完成检测
+    // 输出信号生成
     // ========================================================================
-    localparam TOTAL_PIXELS = 921600;
-    reg [19:0] pixel_counter;
-    reg        hist_done_flag;
+    // Clear Start: Trigger at Frame Start (VSync Posedge) to clear the NEW active bank
+    assign clear_start = vsync_pos;
 
-    always @(posedge pclk or negedge rst_n) begin
-        if (!rst_n) begin
-            pixel_counter <= 20'd0;
-            hist_done_flag <= 1'b0;
-        end
-        else if (vsync_negedge) begin
-            pixel_counter <= 20'd0;
-            hist_done_flag <= 1'b0;
-        end
-        else begin
-            if (in_href && in_vsync && clear_done) begin
-                if (pixel_counter + 20'd1 == TOTAL_PIXELS) begin
-                    hist_done_flag <= 1'b1;
-                end
-                else begin
-                    hist_done_flag <= 1'b0;
-                end
-                pixel_counter <= pixel_counter + 20'd1;
-            end
-            else begin
-                hist_done_flag <= 1'b0;
-            end
-        end
-    end
-
-    assign frame_hist_done = hist_done_flag;
-
-    // ========================================================================
+    // Frame Hist Done: Trigger at Frame End (VSync Negedge) to start Clipper on the COMPLETED bank
+    assign frame_hist_done = vsync_neg;
     // Stage 1: 输入打拍 + 相邻相同检测
     // ========================================================================
     reg [7:0]  pixel_s1;
-    reg [3:0]  tile_s1;
+    reg [TILE_NUM_BITS-1:0] tile_s1;
     reg        valid_s1;
     reg        same_as_prev;   // 与上一个相同的标志
 
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
             pixel_s1 <= 8'd0;
-            tile_s1 <= 4'd0;
+            tile_s1 <= {TILE_NUM_BITS{1'b0}};
             valid_s1 <= 1'b0;
             same_as_prev <= 1'b0;
         end
         else begin
-            // 检测相邻相同：当前输入与上一周期输入比较
-            if ((in_href && in_vsync && clear_done) && valid_s1 &&
-                    (in_y == pixel_s1) &&
-                    (tile_idx == tile_s1)) begin
+            pixel_s1 <= in_y;
+            tile_s1 <= tile_idx;
+            // valid_s1 depends on inputs and clear_done
+            // Also need to handle boundary conditions if necessary
+            valid_s1 <= in_href && in_vsync && clear_done;
+
+            // Same pixel detection for Read-Modify-Write optimization
+            // If current input is valid and same as currently latched pixel (previous cycle input)
+            if ((in_y == pixel_s1) && (tile_idx == tile_s1) && (in_href && in_vsync && clear_done)) begin
                 same_as_prev <= 1'b1;
             end
             else begin
                 same_as_prev <= 1'b0;
             end
-
-            // 打拍输入
-            pixel_s1 <= in_y;
-            tile_s1 <= tile_idx;
-            valid_s1 <= in_href && in_vsync && clear_done;
         end
     end
 
@@ -142,7 +111,7 @@ module clahe_histogram_stat (
     // Stage 2: RAM读取 + 旁路数据选择
     // ========================================================================
     reg [7:0]  pixel_s2;
-    reg [3:0]  tile_s2;
+    reg [TILE_NUM_BITS-1:0] tile_s2;
     reg        valid_s2;
     reg        same_s2;
     reg [1:0]  increment_s2;  // 增量：1或2
@@ -151,7 +120,7 @@ module clahe_histogram_stat (
     // Stage 3: 寄存器声明（需要在旁路逻辑之前声明）
     // ========================================================================
     reg [7:0]  pixel_s3;
-    reg [3:0]  tile_s3;
+    reg [TILE_NUM_BITS-1:0] tile_s3;
     reg        valid_s3;
     reg [15:0] ram_data_s3;
     reg [15:0] ram_wr_data_s3;
@@ -192,7 +161,7 @@ module clahe_histogram_stat (
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
             pixel_s2 <= 8'd0;
-            tile_s2 <= 4'd0;
+            tile_s2 <= {TILE_NUM_BITS{1'b0}};
             valid_s2 <= 1'b0;
             same_s2 <= 1'b0;
             increment_s2 <= 2'd1;
@@ -220,7 +189,7 @@ module clahe_histogram_stat (
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
             pixel_s3 <= 8'd0;
-            tile_s3 <= 4'd0;
+            tile_s3 <= {TILE_NUM_BITS{1'b0}};
             valid_s3 <= 1'b0;
             ram_data_s3 <= 16'd0;
             ram_wr_data_s3 <= 16'd0;

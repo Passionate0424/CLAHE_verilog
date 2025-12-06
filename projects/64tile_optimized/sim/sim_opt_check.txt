@@ -1,0 +1,279 @@
+Reading pref.tcl
+
+# 2020.4
+
+# do run_top_opt.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap work work 
+# Modifying E:/modeltech64_2020.4/win64/../modelsim.ini
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 19:58:28 on Dec 06,2025
+# vlog -work work ../../16tile/tb/bmp_to_videoStream.sv 
+# -- Compiling module bmp_to_videoStream
+# 
+# Top level modules:
+# 	bmp_to_videoStream
+# End time: 19:58:28 on Dec 06,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 19:58:28 on Dec 06,2025
+# vlog -work work ../tb/bmp_for_videoStream_24bit.sv 
+# -- Compiling module bmp_for_videoStream_24bit
+# 
+# Top level modules:
+# 	bmp_for_videoStream_24bit
+# End time: 19:58:28 on Dec 06,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 19:58:28 on Dec 06,2025
+# vlog -work work ../rtl/clahe_coord_counter.v 
+# -- Compiling module clahe_coord_counter
+# 
+# Top level modules:
+# 	clahe_coord_counter
+# End time: 19:58:28 on Dec 06,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 19:58:28 on Dec 06,2025
+# vlog -work work ../rtl/clahe_histogram_stat.v 
+# -- Compiling module clahe_histogram_stat
+# 
+# Top level modules:
+# 	clahe_histogram_stat
+# End time: 19:58:28 on Dec 06,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 19:58:28 on Dec 06,2025
+# vlog -work work ../rtl/clahe_clipper_cdf.v 
+# -- Compiling module clahe_clipper_cdf
+# 
+# Top level modules:
+# 	clahe_clipper_cdf
+# End time: 19:58:28 on Dec 06,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 19:58:28 on Dec 06,2025
+# vlog -work work ../rtl/clahe_mapping_parallel.v 
+# -- Compiling module clahe_mapping_parallel
+# 
+# Top level modules:
+# 	clahe_mapping_parallel
+# End time: 19:58:28 on Dec 06,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 19:58:28 on Dec 06,2025
+# vlog -work work ../rtl/clahe_ram_banked.v 
+# -- Compiling module clahe_ram_banked
+# 
+# Top level modules:
+# 	clahe_ram_banked
+# End time: 19:58:28 on Dec 06,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 19:58:28 on Dec 06,2025
+# vlog -work work ../rtl/clahe_top.v 
+# -- Compiling module clahe_top
+# 
+# Top level modules:
+# 	clahe_top
+# End time: 19:58:28 on Dec 06,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 19:58:28 on Dec 06,2025
+# vlog -work work ../tb/tb_clahe_top_bmp_multi.sv 
+# -- Compiling module tb_clahe_top_bmp_multi
+# 
+# Top level modules:
+# 	tb_clahe_top_bmp_multi
+# End time: 19:58:29 on Dec 06,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vsim -voptargs="+acc" work.tb_clahe_top_bmp_multi 
+# Start time: 19:58:29 on Dec 06,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  ModelSim SE-64 2020.4 Oct 13 2020
+# //
+# //  Copyright 1991-2020 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_clahe_top_bmp_multi(fast)
+# Loading work.clahe_top(fast)
+# Loading work.clahe_coord_counter(fast)
+# Loading work.clahe_histogram_stat(fast)
+# Loading work.clahe_ram_banked(fast)
+# Loading work.clahe_clipper_cdf(fast)
+# Loading work.clahe_mapping_parallel(fast)
+# Loading work.bmp_to_videoStream(fast)
+# Loading work.bmp_for_videoStream_24bit(fast)
+# Loading work.bmp_for_videoStream_24bit(fast__1)
+# ** Warning: (vsim-PLI-3691) Expected a system task, not a system function '$fread'.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_clahe_top_bmp_multi/u_bmp_reader File: ../../16tile/tb/bmp_to_videoStream.sv Line: 48
+# ** Warning: (vsim-PLI-3691) Expected a system task, not a system function '$fseek'.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_clahe_top_bmp_multi/u_bmp_reader File: ../../16tile/tb/bmp_to_videoStream.sv Line: 70
+# ** Warning: (vsim-PLI-3691) Expected a system task, not a system function '$fseek'.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_clahe_top_bmp_multi/u_bmp_reader File: ../../16tile/tb/bmp_to_videoStream.sv Line: 191
+# ** Warning: (vsim-PLI-3691) Expected a system task, not a system function '$fseek'.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_clahe_top_bmp_multi/u_bmp_reader File: ../../16tile/tb/bmp_to_videoStream.sv Line: 200
+# ** Warning: (vsim-PLI-3691) Expected a system task, not a system function '$fread'.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_clahe_top_bmp_multi/u_bmp_reader File: ../../16tile/tb/bmp_to_videoStream.sv Line: 201
+# ** Warning: (vsim-PLI-3691) Expected a system task, not a system function '$fread'.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_clahe_top_bmp_multi/u_bmp_reader File: ../../16tile/tb/bmp_to_videoStream.sv Line: 206
+# iBMP_FILE_NAME = E:/FPGA_codes/CLAHE/projects/16tile/sim/bmp_in/test_standard.bmp
+# 
+# vin BMP File Size         = 0x002a3036
+# vin Image data offset     = 0x00000036
+# vin Image width           = 0x00000500
+# vin Image heigh           = 0x000002d0
+# vin Image size            = 0x002a3000
+# vin Image pixel number    = 0x000e1000
+# vin Image BufferLineWidth = 0x00000f00
+# 
+# DEBUG: Simulation Started
+# 
+# ========================================
+#   CLAHE BMP Multi-Frame Test
+# ========================================
+#   Image Resolution: 1280x720
+#   Number of Image Sets: 3
+#   Total Frames: 6 (each image input twice)
+#   CLAHE Enable:     1
+#   Interp Enable:    1
+#   Clip Threshold:   600
+#   Input Path:       sim/bmp_in/
+#   Output Path:      bmp_test_results/
+#     - Input images:  bmp_test_results/input/
+#     - Output images: bmp_test_results/output/
+# 
+#   Note: Each image is input twice:
+#     1st pass: Build histogram (output enhanced)
+#     2nd pass: Apply CLAHE enhancement
+# ========================================
+# 
+# [0] <<< CDF Processing finished (ping_pong=0)
+# [270000] Reset released
+# [270000] Waiting for RAM initialization...
+# [8370000] RAM initialization complete
+# 
+# [8505000] ========================================
+# [8505000] Image Set 0 - Frame Pair (0, 1)
+# [8505000] ========================================
+# 
+# [8505000] --- Frame 0: Histogram Building (CDF all zeros) ---
+# [9855000] Setting bmp_begin=1
+# [9869000] Setting bmp_begin=0
+# [9869000] Waiting for bmp_in_done...
+# vout BMP File Size      = 0x002a3036
+# vout Image data offset  = 0x00000036
+# vout Image width        = 0x00000500
+# vout Image heigh        = 0x000002d0
+# vout Image size         = 0x002a3000
+# 
+# bmp file name = bmp_test_results/input/input_frame 0.bmp !
+# vout BMP File Size      = 0x002a3036
+# vout Image data offset  = 0x00000036
+# vout Image width        = 0x00000500
+# vout Image heigh        = 0x000002d0
+# vout Image size         = 0x002a3000
+# 
+# bmp file name = bmp_test_results/output/output_frame 0.bmp !
+# [FRAME0 PIXEL#1] RGB=(13,13,13) valid=1 in_y=13, out_y=0, out_u=128, out_v=128
+# [FRAME0 PIXEL#2] RGB=(13,13,13) valid=1 in_y=13, out_y=0, out_u=128, out_v=128
+# [FRAME0 PIXEL#3] RGB=(13,13,13) valid=1 in_y=13, out_y=0, out_u=128, out_v=128
+# [FRAME0 PIXEL#4] RGB=(13,13,13) valid=1 in_y=13, out_y=0, out_u=128, out_v=128
+# [FRAME0 PIXEL#5] RGB=(13,13,13) valid=1 in_y=13, out_y=0, out_u=128, out_v=128
+# [17334849000] Frame 0 input complete (histogram collected)
+# [17334849000] Frame 0 CDF processing complete (ready for enhancement)
+# [17334891000] >>> CDF Processing started (ping_pong=0)
+# 
+# ========== FRAME 0 STATISTICS ==========
+# Total output pixels: 921600
+# Non-zero pixels: 0
+# Average out_y: 0
+# Max out_y: 0
+# =======================================
+# 
+# [18484473000] <<< CDF Processing finished (ping_pong=0)
+# [18484473000] *** CDF Ready - CLAHE active
+# 
+# [18698349000] --- Frame 1: CLAHE Enhancement Applied ---
+# vout BMP File Size      = 0x002a3036
+# vout Image data offset  = 0x00000036
+# vout Image width        = 0x00000500
+# vout Image heigh        = 0x000002d0
+# vout Image size         = 0x002a3000
+# 
+# bmp file name = bmp_test_results/input/input_frame 1.bmp !
+# vout BMP File Size      = 0x002a3036
+# vout Image data offset  = 0x00000036
+# vout Image width        = 0x00000500
+# vout Image heigh        = 0x000002d0
+# vout Image size         = 0x002a3000
+# 
+# bmp file name = bmp_test_results/output/output_frame 1.bmp !
+# [FRAME0 NONZERO #1] pixel#921601: in_y=13, out_y=24, out_u=128, out_v=128, RGB=(24,24,24)
+# [FRAME0 NONZERO #2] pixel#921602: in_y=13, out_y=23, out_u=128, out_v=128, RGB=(23,23,23)
+# [FRAME0 NONZERO #3] pixel#921603: in_y=13, out_y=23, out_u=128, out_v=128, RGB=(23,23,23)
+# [FRAME0 NONZERO #4] pixel#921604: in_y=13, out_y=23, out_u=128, out_v=128, RGB=(23,23,23)
+# [FRAME0 NONZERO #5] pixel#921605: in_y=13, out_y=23, out_u=128, out_v=128, RGB=(23,23,23)
+# [FRAME0 NONZERO #6] pixel#921606: in_y=13, out_y=23, out_u=128, out_v=128, RGB=(23,23,23)
+# [FRAME0 NONZERO #7] pixel#921607: in_y=13, out_y=23, out_u=128, out_v=128, RGB=(23,23,23)
+# [FRAME0 NONZERO #8] pixel#921608: in_y=13, out_y=23, out_u=128, out_v=128, RGB=(23,23,23)
+# [FRAME0 NONZERO #9] pixel#921609: in_y=13, out_y=23, out_u=128, out_v=128, RGB=(23,23,23)
+# [FRAME0 NONZERO #10] pixel#921610: in_y=13, out_y=23, out_u=128, out_v=128, RGB=(23,23,23)
+# [36024695000] Frame 1 input complete (enhanced output)
+# [36024737000] >>> CDF Processing started (ping_pong=1)
+# 
+# ========== FRAME 1 STATISTICS ==========
+# Total output pixels: 1843200
+# Non-zero pixels: 913384
+# Average out_y: 26
+# Max out_y: 201
+# =======================================
+# 
+# [37174319000] <<< CDF Processing finished (ping_pong=1)
+# [37174319000] Frame 1 processing complete
+# [37174319000] *** CDF Ready - CLAHE active
+# 
+# [38524319000] ========================================
+# [38524319000] Image Set 1 - Frame Pair (2, 3)
+# [38524319000] ========================================
+# 
+# [38524319000] --- Frame 2: Histogram Building (CDF all zeros) ---
+# 
+# [FRAME0 SUMMARY]
+#   Total pixels: 1843200
+#   Non-zero pixels: 913384
+#   Avg in_y: 36
+#   Avg out_y: 26
+#   Max in_y: 95
+#   Max out_y: 201
+# 
+# [38525669000] Setting bmp_begin=1
+# [38525683000] Setting bmp_begin=0
+# [38525683000] Waiting for bmp_in_done...
+# vout BMP File Size      = 0x002a3036
+# vout Image data offset  = 0x00000036
+# vout Image width        = 0x00000500
+# vout Image heigh        = 0x000002d0
+# vout Image size         = 0x002a3000
+# 
+# bmp file name = bmp_test_results/input/input_frame 2.bmp !
+# vout BMP File Size      = 0x002a3036
+# vout Image data offset  = 0x00000036
+# vout Image width        = 0x00000500
+# vout Image heigh        = 0x000002d0
+# vout Image size         = 0x002a3000
+# 
+# bmp file name = bmp_test_results/output/output_frame 2.bmp !
+# End time: 19:59:33 on Dec 06,2025, Elapsed time: 0:01:04
+# Errors: 0, Warnings: 6
