@@ -401,6 +401,34 @@ module clahe_ram_banked #(
     // ========================================================================
     // Mapping Crossbar Logic (Port 1)
     // ========================================================================
+    // CRITICAL FIX: RAM read has 1 cycle latency.
+    // We MUST delay the tile indices by 1 cycle to match the data output.
+    reg [TILE_NUM_BITS-1:0] mapping_tl_tile_idx_d1;
+    reg [TILE_NUM_BITS-1:0] mapping_tr_tile_idx_d1;
+    reg [TILE_NUM_BITS-1:0] mapping_bl_tile_idx_d1;
+    reg [TILE_NUM_BITS-1:0] mapping_br_tile_idx_d1;
+
+    always @(posedge pclk or negedge rst_n) begin
+        if (!rst_n) begin
+            mapping_tl_tile_idx_d1 <= 0;
+            mapping_tr_tile_idx_d1 <= 0;
+            mapping_bl_tile_idx_d1 <= 0;
+            mapping_br_tile_idx_d1 <= 0;
+        end
+        else begin
+            mapping_tl_tile_idx_d1 <= mapping_tl_tile_idx;
+            mapping_tr_tile_idx_d1 <= mapping_tr_tile_idx;
+            mapping_bl_tile_idx_d1 <= mapping_bl_tile_idx;
+            mapping_br_tile_idx_d1 <= mapping_br_tile_idx;
+        end
+    end
+
+    // Use DELAYED indices to determine which bank holds the data we requested
+    wire [1:0] bank_tl = get_bank_id(mapping_tl_tile_idx_d1);
+    wire [1:0] bank_tr = get_bank_id(mapping_tr_tile_idx_d1);
+    wire [1:0] bank_bl = get_bank_id(mapping_bl_tile_idx_d1);
+    wire [1:0] bank_br = get_bank_id(mapping_br_tile_idx_d1);
+
     reg [7:0] raw_b0, raw_b1, raw_b2, raw_b3;
     always @(*) begin
         if (ping_pong_flag == 1) begin // Set 0 is Mapping
@@ -417,34 +445,55 @@ module clahe_ram_banked #(
         end
     end
 
-    wire [1:0] tl_bank = get_bank_id(mapping_tl_tile_idx);
-
+    // Independent Muxes for each port
+    // Solves both Timing Issue (by using _d1) and Aliasing Issue (by using independent muxes)
     always @(*) begin
-        case (tl_bank)
-            2'b00: begin
+        // TL Port
+        case (bank_tl)
+            2'd0:
                 mapping_tl_rd_data = raw_b0;
-                mapping_tr_rd_data = raw_b1;
-                mapping_bl_rd_data = raw_b2;
-                mapping_br_rd_data = raw_b3;
-            end
-            2'b01: begin
+            2'd1:
                 mapping_tl_rd_data = raw_b1;
-                mapping_tr_rd_data = raw_b0;
-                mapping_bl_rd_data = raw_b3;
-                mapping_br_rd_data = raw_b2;
-            end
-            2'b10: begin
+            2'd2:
                 mapping_tl_rd_data = raw_b2;
-                mapping_tr_rd_data = raw_b3;
-                mapping_bl_rd_data = raw_b0;
-                mapping_br_rd_data = raw_b1;
-            end
-            2'b11: begin
+            2'd3:
                 mapping_tl_rd_data = raw_b3;
+        endcase
+
+        // TR Port
+        case (bank_tr)
+            2'd0:
+                mapping_tr_rd_data = raw_b0;
+            2'd1:
+                mapping_tr_rd_data = raw_b1;
+            2'd2:
                 mapping_tr_rd_data = raw_b2;
+            2'd3:
+                mapping_tr_rd_data = raw_b3;
+        endcase
+
+        // BL Port
+        case (bank_bl)
+            2'd0:
+                mapping_bl_rd_data = raw_b0;
+            2'd1:
                 mapping_bl_rd_data = raw_b1;
+            2'd2:
+                mapping_bl_rd_data = raw_b2;
+            2'd3:
+                mapping_bl_rd_data = raw_b3;
+        endcase
+
+        // BR Port
+        case (bank_br)
+            2'd0:
                 mapping_br_rd_data = raw_b0;
-            end
+            2'd1:
+                mapping_br_rd_data = raw_b1;
+            2'd2:
+                mapping_br_rd_data = raw_b2;
+            2'd3:
+                mapping_br_rd_data = raw_b3;
         endcase
     end
 
