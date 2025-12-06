@@ -67,7 +67,14 @@ module clahe_top (
         // ====================================================================
         input  wire [7:0]  clip_threshold, // 对比度限制阈值 (0-255)，推荐值：3-5
         input  wire        enable_clahe,   // CLAHE使能信号，1=启用CLAHE处理
-        input  wire        enable_interp   // 插值使能信号，1=启用双线性插值
+        input  wire        enable_interp,   // 插值使能信号，1=启用双线性插值
+
+        // ====================================================================
+        // 调试接口 - 用于仿真和调试
+        // ====================================================================
+        output wire        dbg_cdf_processing,
+        output wire        dbg_cdf_done,
+        output wire        dbg_ping_pong_flag
     );
 
     // ========================================================================
@@ -473,8 +480,9 @@ module clahe_top (
     wire        debug_cdf_ready = cdf_done;
 
     // Aliases for Testbench compatibility
-    wire        dbg_cdf_processing = cdf_processing;
-    wire        dbg_cdf_done = cdf_done;
-    wire        dbg_ping_pong_flag = ping_pong_flag;
+    assign dbg_cdf_processing = cdf_processing;
+    assign dbg_cdf_done = cdf_done;
+    assign dbg_ping_pong_flag = ping_pong_flag;
 
 endmodule
+

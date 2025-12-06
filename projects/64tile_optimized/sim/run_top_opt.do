@@ -26,5 +26,5 @@ add wave -position insertpoint sim:/tb_clahe_top_bmp_multi/*
 add wave -position insertpoint sim:/tb_clahe_top_bmp_multi/u_dut/*
 add wave -position insertpoint sim:/tb_clahe_top_bmp_multi/u_dut/ram_banked_inst/*
 
-run 40ms
+run -all
 quit -f

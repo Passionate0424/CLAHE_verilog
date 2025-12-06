@@ -141,7 +141,10 @@ module tb_clahe_top_bmp_multi #(
                   .out_vsync(out_vsync),
                   .clip_threshold(clip_threshold),
                   .enable_clahe(clahe_enable),
-                  .enable_interp(interp_enable)
+                  .enable_interp(interp_enable),
+                  .dbg_cdf_processing(processing),
+                  .dbg_cdf_done(cdf_ready),
+                  .dbg_ping_pong_flag(ping_pong_flag)
               );
 
     // ========================================================================
@@ -425,6 +428,7 @@ module tb_clahe_top_bmp_multi #(
             $display("[%0t] Frame %0d input complete (histogram collected)", $time, frame_count*2);
 
             // 等待CDF处理完成
+            $display("DEBUG: Waiting for processing==0, current processing=%b, cdf_ready=%b, frame_hist_done=%b", processing, cdf_ready, u_dut.frame_hist_done);
             wait(processing == 0);
             $display("[%0t] Frame %0d CDF processing complete (ready for enhancement)", $time, frame_count*2);
 
@@ -503,10 +507,13 @@ module tb_clahe_top_bmp_multi #(
     // 关键信号监控
     // ========================================================================
 
-    // 连接CDF处理状态信号（使用顶层调试端口以避免在post-synth中hierarchical ref失败）
-    assign processing = u_dut.dbg_cdf_processing;
-    assign cdf_ready = u_dut.dbg_cdf_done;
-    assign ping_pong_flag = u_dut.dbg_ping_pong_flag;
+    // // 连接CDF处理状态信号（使用顶层调试端口以避免在post-synth中hierarchical ref失败）
+// // 连接CDF处理状态信号（使用顶层调试端口以避免在post-synth中hierarchical ref失败）
+// assign processing = u_dut.dbg_cdf_processing;
+// assign cdf_ready = u_dut.dbg_cdf_done;
+// assign ping_pong_flag = u_dut.dbg_ping_pong_flag;
+
+
 
     // 关键事件监控（简化版）
     always @(posedge processing) begin
