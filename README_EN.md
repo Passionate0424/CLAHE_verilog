@@ -21,7 +21,26 @@ CLAHE (Contrast Limited Adaptive Histogram Equalization) is a classic image enha
 - ✅ **YUV Format Support**: Supports YUV three-channel data input/output, ensuring data synchronization.
 - ✅ **Complete Simulation Environment**: Supports multiple simulators like ModelSim/Questa, VCS, Icarus Verilog, etc.
 
+## 📅 Roadmap & TODOs
+
+### Optimization Plan (Upcoming for 16tile Project)
+
+We plan to upgrade the `projects/16tile` version to an **8x8 (64 tiles)** configuration.
+**Core Strategy:** Leverage **VLSI DSP Hardware Folding and Memory Interleaving** techniques to map 64 logical tiles into 4 physical RAM banks. Checkerboard interleaving ensures conflict-free parallel access for any 2x2 neighborhood. This approach reduces BRAM usage by **93.75%** while maintaining **1 pixel/cycle** fully pipelined throughput. Additionally, comparator chains and fixed-point shift-add logic are employed to achieve coordinates and weight calculations with **zero hardware multiplier/divider overhead**.
+
+1.  **Documentation**:
+    -   [ ] Generate detailed Architecture/Optimization Plan Document.
+2.  **RTL Implementation**:
+    -   [ ] Create `clahe_ram_banked.v`: Implement 4-Bank physical storage + Checkerboard Interleaving + Crossbar.
+    -   [ ] Update `clahe_coord_counter.v`: Adapt for 8x8 Tile and 160x90 resolution.
+    -   [ ] Update `clahe_top.v`: Integrate new RAM and update parameters.
+    -   [ ] Update `clahe_histogram_stat.v` & `clahe_mapping_parallel.v`: Adapt for 6-bit tile index.
+3.  **Verification**:
+    -   [ ] Run `tb_clahe_top.v` to verify basic functionality.
+    -   [ ] Confirm resource usage reduction (Expected BRAM reduction).
+
 ## 🏗️ Project Structure
+
 
 The repository is organized by function and usage: Source Code (RTL), Testbenches, Simulation Flows, Documentation, and Synthesis/Implementation artifacts.
 

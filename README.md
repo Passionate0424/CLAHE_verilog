@@ -21,7 +21,26 @@ CLAHE（Contrast Limited Adaptive Histogram Equalization）是一种经典的图
 - ✅ **YUV 格式支持**：支持 YUV 三路数据输入输出，确保数据同步
 - ✅ **完整仿真环境**：支持 ModelSim/Questa、VCS、Icarus Verilog 等多种仿真器
 
+## 📅 优化计划 (TODO)
+
+### 16tile 项目优化计划
+
+计划将 `projects/16tile` 升级为 **8x8 (64 tiles)** 配置。
+**核心方案：** 采用 **VLSI DSP 硬件折叠与存储器交织** 技术，将 64 个逻辑 Tile 映射到 4 个物理 RAM Bank 中，通过棋盘式交织实现任意 2x2 邻域的无冲突并行读取。在保持 **1 像素/周期** 全流水吞吐的同时，将 BRAM 资源消耗**减少 93.75%**；同时利用比较器链与定点移位加法实现零乘法器/除法器的坐标与权重计算。
+
+1.  **文档编写**：
+    -   [ ] 生成详细的优化方案文档 (Architecture Document)。
+2.  **RTL 修改**：
+    -   [ ] 创建 `clahe_ram_banked.v`：实现 4-Bank 物理存储 + Checkerboard Interleaving + Crossbar。
+    -   [ ] 更新 `clahe_coord_counter.v`：适配 8x8 Tile 和 160x90 分辨率。
+    -   [ ] 更新 `clahe_top.v`：集成新的 RAM 和参数。
+    -   [ ] 更新 `clahe_histogram_stat.v` 和 `clahe_mapping_parallel.v`：适配 6-bit tile index。
+3.  **验证**：
+    -   [ ] 运行 `tb_clahe_top.v` 验证基本功能。
+    -   [ ] 确认资源使用量（预期 BRAM 减少）。
+
 ## 🏗️ 项目结构
+
 
 本仓库按功能与用途分为若干目录：源码（RTL）、测试平台、仿真流程、文档与综合/实现产物等，便于学习、仿真与上板验证。
 
