@@ -356,11 +356,34 @@ modelsim仿真波形及图片结果如下：
    - 入门学习：使用 `projects/16tile/`
    - 生产应用：使用 `projects/64tile/`
 
-3. **运行仿真**（以 64tile 版本为例）
+3. **运行仿真**
 
+   提供了针对不同版本的仿真脚本，请根据需要选择：
+
+   | 项目版本 | 脚本位置 | 脚本文件名 | 功能描述 |
+   |---------|---------|-----------|---------|
+   | **64tile_optimized** | `projects/64tile_optimized/sim/` | `run_top_opt.do` | **推荐**。64tile 优化版顶层仿真，包含完整的图像处理流程。 |
+   | **64tile** | `projects/64tile/sim/` | `run_clahe_top.do` | 64tile 原版顶层仿真。 |
+   | **16tile** | `projects/16tile/sim/` | `run_tb_clahe_top_bmp_multi.do` | 16tile 版本的多帧 BMP 输入仿真。 |
+
+   **运行命令示例：**
+
+   **64tile 优化版 (Optimized):**
+   ```bash
+   cd projects/64tile_optimized/sim
+   vsim -do run_top_opt.do
+   ```
+
+   **64tile 原版 (Legacy):**
    ```bash
    cd projects/64tile/sim
-   vsim -do run_all.do
+   vsim -do run_clahe_top.do
+   ```
+
+   **16tile 版本:**
+   ```bash
+   cd projects/16tile/sim
+   vsim -do run_tb_clahe_top_bmp_multi.do
    ```
 
  

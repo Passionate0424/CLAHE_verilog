@@ -158,7 +158,7 @@ module tb_clahe_top_bmp_multi #(
                            .V_DISP(V_DISP),
                            .V_FRONT(V_FRONT),
                            .V_TOTAL(V_TOTAL),
-                           .iBMP_FILE_PATH("E:/FPGA_codes/CLAHE/16tile/sim/bmp_in/"),
+                           .iBMP_FILE_PATH("E:/FPGA_codes/CLAHE/projects/16tile/sim/bmp_in/"),
                            .iBMP_FILE_NAME("test_standard.bmp")  // 使用绝对路径（正斜杠）
                        ) u_bmp_reader (
                            .clk(pclk),

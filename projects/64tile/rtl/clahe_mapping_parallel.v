@@ -251,8 +251,19 @@ module clahe_mapping_parallel #(
     //   wx = (local_x * 256) / TILE_WIDTH = (local_x * 256) / 160
     //   wy = (local_y * 256) / TILE_HEIGHT = (local_y * 256) / 90
 
-    assign wx = wx_lut[local_x[7:0]];  // 优化：直接查表，取值范围0-159
-    assign wy = wy_lut[local_y[6:0]];  // 优化：直接查表，取值范围0-89
+    // 修复：插值权重必须相对于由于"Tile中心"定义的Grid Node
+    // 原实现 (local_x) 是相对于Tile边缘，导致相位偏移
+    // 新实现：
+    //   - 左半部分 (local < center): 位于 [LeftCenter, ThisCenter] 之间 -> idx = local + center
+    //   - 右半部分 (local >= center): 位于 [ThisCenter, RightCenter] 之间 -> idx = local - center
+    wire [7:0] wx_idx_fix;
+    wire [7:0] wy_idx_fix;
+
+    assign wx_idx_fix = (local_x < TILE_CENTER_X) ? (local_x + TILE_CENTER_X) : (local_x - TILE_CENTER_X);
+    assign wy_idx_fix = (local_y < TILE_CENTER_Y) ? (local_y + TILE_CENTER_Y) : (local_y - TILE_CENTER_Y);
+
+    assign wx = wx_lut[wx_idx_fix];
+    assign wy = wy_lut[wy_idx_fix];
 
     // ========================================================================
     // 输出接口连接

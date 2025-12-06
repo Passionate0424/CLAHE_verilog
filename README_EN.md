@@ -343,12 +343,35 @@ For detailed architecture description, please refer to `docs/RTL_OVERVIEW.md`.
     -   Introductory Learning: Use `projects/16tile/`
     -   Production Application: Use `projects/64tile/`
 
-3.  **Run Simulation** (Taking 64tile version as an example)
+3. **Run Simulation**
 
-    ```bash
-    cd projects/64tile/sim
-    vsim -do run_all.do
-    ```
+   Simulation scripts are provided for different versions. Please choose according to your needs:
+
+   | Project Version | Script Location | Script Filename | Description |
+   |-----------------|-----------------|-----------------|-------------|
+   | **64tile_optimized** | `projects/64tile_optimized/sim/` | `run_top_opt.do` | **Recommended**. Top-level simulation for the optimized 64-tile version, including the complete image processing flow. |
+   | **64tile** | `projects/64tile/sim/` | `run_clahe_top.do` | Legacy top-level simulation for the 64-tile version. |
+   | **16tile** | `projects/16tile/sim/` | `run_tb_clahe_top_bmp_multi.do` | Simulation for the 16-tile version with multi-frame BMP input. |
+
+   **Command Examples:**
+
+   **64tile Optimized Version:**
+   ```bash
+   cd projects/64tile_optimized/sim
+   vsim -do run_top_opt.do
+   ```
+
+   **64tile Legacy Version:**
+   ```bash
+   cd projects/64tile/sim
+   vsim -do run_clahe_top.do
+   ```
+
+   **16tile Version:**
+   ```bash
+   cd projects/16tile/sim
+   vsim -do run_tb_clahe_top_bmp_multi.do
+   ```
 
 ## 🧪 Test & Verification
 

@@ -215,6 +215,25 @@ module clahe_clipper_cdf #(
     end
 
     // ========================================================================
+    // Simulation Initialization
+    // ========================================================================
+    initial begin
+        state = IDLE;
+        processing = 1'b0;
+        cdf_done = 1'b0;
+        tile_cnt = 6'd0;
+        bin_cnt = 9'd0;
+        excess_total = 32'd0;
+        // RAM signals initialized to 0
+        hist_rd_tile_idx = 6'd0;
+        hist_rd_bin_addr = 8'd0;
+        cdf_wr_tile_idx = 6'd0;
+        cdf_wr_bin_addr = 8'd0;
+        cdf_wr_data = 8'd0;
+        cdf_wr_en = 1'b0;
+    end
+
+    // ========================================================================
     // 处理逻辑
     // ========================================================================
     always @(posedge pclk or negedge rst_n) begin
