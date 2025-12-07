@@ -1,0 +1,7 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"tb_clahe_top_bmp_multi_time_impl.v" \
+"../../../../../clahe_vivado.srcs/sim_1/imports/tb/tb_clahe_top_bmp_multi.v" \
+
+# Do not sort compile order
+nosort
