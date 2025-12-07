@@ -2,8 +2,8 @@
 # Vivado v2018.3 (64-bit)
 # SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
 # IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
-# Start of session at: Sun Dec  7 02:20:08 2025
-# Process ID: 32092
+# Start of session at: Sun Dec  7 16:26:04 2025
+# Process ID: 26496
 # Current directory: E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.runs/synth_1
 # Command line: vivado.exe -log clahe_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source clahe_top.tcl
 # Log file: E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.runs/synth_1/clahe_top.vds
@@ -15,9 +15,9 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 37944 
+INFO: Helper process launched with PID 45736 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 430.664 ; gain = 97.559
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 430.562 ; gain = 98.668
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'clahe_top' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:40]
 	Parameter WIDTH bound to: 1280 - type: integer 
@@ -82,7 +82,7 @@ WARNING: [Synth 8-6014] Unused sequential element wx_d3_reg was removed.  [E:/FP
 WARNING: [Synth 8-6014] Unused sequential element y_d4_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:466]
 WARNING: [Synth 8-6014] Unused sequential element enable_d4_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:471]
 INFO: [Synth 8-6155] done synthesizing module 'clahe_mapping_parallel' (6#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:37]
-WARNING: [Synth 8-6014] Unused sequential element cdf_processing_d1_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:212]
+WARNING: [Synth 8-6014] Unused sequential element cdf_processing_d1_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:219]
 INFO: [Synth 8-6155] done synthesizing module 'clahe_top' (7#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:40]
 WARNING: [Synth 8-3331] design clahe_mapping_parallel has unconnected port pixel_x[10]
 WARNING: [Synth 8-3331] design clahe_mapping_parallel has unconnected port pixel_x[9]
@@ -108,7 +108,7 @@ WARNING: [Synth 8-3331] design clahe_mapping_parallel has unconnected port pixel
 WARNING: [Synth 8-3331] design clahe_mapping_parallel has unconnected port cdf_ready
 WARNING: [Synth 8-3331] design clahe_histogram_stat has unconnected port ping_pong_flag
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 678.965 ; gain = 345.859
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 679.082 ; gain = 347.188
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -121,10 +121,10 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 678.965 ; gain = 345.859
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 679.082 ; gain = 347.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 678.965 ; gain = 345.859
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 679.082 ; gain = 347.188
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7z020clg400-3
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -135,27 +135,27 @@ Parsing XDC File [E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_viva
 Finished Parsing XDC File [E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.srcs/constrs_1/imports/clahe_top_sim.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1076.332 ; gain = 0.129
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1076.219 ; gain = 0.129
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1081.891 ; gain = 0.129
-Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.242 . Memory (MB): peak = 1082.242 ; gain = 5.910
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1081.703 ; gain = 0.129
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.160 . Memory (MB): peak = 1082.148 ; gain = 5.930
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1082.242 ; gain = 749.137
+Finished Constraint Validation : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 1082.148 ; gain = 750.254
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-3
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1082.242 ; gain = 749.137
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 1082.148 ; gain = 750.254
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1082.242 ; gain = 749.137
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 1082.148 ; gain = 750.254
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-4471] merging register 'cdf_wr_tile_idx_reg[5:0]' into 'hist_rd_tile_idx_reg[5:0]' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:250]
 INFO: [Synth 8-5545] ROM "hist_buf_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
@@ -361,7 +361,7 @@ INFO: [Synth 8-5546] ROM "hist_clipped_reg[98]" won't be mapped to RAM because i
 INFO: [Synth 8-5546] ROM "hist_clipped_reg[99]" won't be mapped to RAM because it is too sparse
 INFO: [Common 17-14] Message 'Synth 8-5546' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:40 ; elapsed = 00:00:46 . Memory (MB): peak = 1082.242 ; gain = 749.137
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:28 . Memory (MB): peak = 1082.148 ; gain = 750.254
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1321,8 +1321,8 @@ INFO: [Synth 8-4471] merging register 'mapping_inst/vsync_d1_reg' into 'hist_sta
 INFO: [Synth 8-4471] merging register 'mapping_inst/vsync_d2_reg' into 'hist_stat_inst/vsync_d2_reg' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:359]
 INFO: [Synth 8-4471] merging register 'mapping_inst/y_d1_reg[7:0]' into 'hist_stat_inst/pixel_d1_reg[7:0]' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:320]
 INFO: [Synth 8-4471] merging register 'mapping_inst/y_d2_reg[7:0]' into 'hist_stat_inst/pixel_d2_reg[7:0]' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:355]
-INFO: [Synth 8-4471] merging register 'vsync_d1_reg' into 'hist_stat_inst/vsync_d1_reg' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:180]
-INFO: [Synth 8-4471] merging register 'vsync_d2_reg' into 'hist_stat_inst/vsync_d2_reg' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:181]
+INFO: [Synth 8-4471] merging register 'vsync_d1_reg' into 'hist_stat_inst/vsync_d1_reg' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:187]
+INFO: [Synth 8-4471] merging register 'vsync_d2_reg' into 'hist_stat_inst/vsync_d2_reg' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:188]
 DSP Report: Generating DSP mapping_inst/final_interp1, operation Mode is: A*B.
 DSP Report: operator mapping_inst/final_interp1 is absorbed into DSP mapping_inst/final_interp1.
 DSP Report: Generating DSP mapping_inst/final_interp0, operation Mode is: C+A*B.
@@ -1458,7 +1458,7 @@ INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_tr_tile_idx_
 INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[4]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[4]'
 INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[5]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[5]'
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:19 ; elapsed = 00:01:28 . Memory (MB): peak = 1094.148 ; gain = 761.043
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:54 ; elapsed = 00:01:01 . Memory (MB): peak = 1096.312 ; gain = 764.418
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1733,7 +1733,7 @@ Report RTL Partitions:
 +------+-----------------------+------------+----------+
 |1     |clahe_clipper_cdf__GB0 |           1|     17760|
 |2     |clahe_clipper_cdf__GB1 |           1|      3558|
-|3     |clahe_clipper_cdf__GB2 |           1|      9286|
+|3     |clahe_clipper_cdf__GB2 |           1|      9293|
 |4     |clahe_clipper_cdf__GB3 |           1|     10420|
 |5     |clahe_top__GC0         |           1|     22987|
 +------+-----------------------+------------+----------+
@@ -1741,13 +1741,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:30 ; elapsed = 00:01:40 . Memory (MB): peak = 1094.148 ; gain = 761.043
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:03 ; elapsed = 00:01:11 . Memory (MB): peak = 1096.312 ; gain = 764.418
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:02:01 ; elapsed = 00:02:12 . Memory (MB): peak = 1263.348 ; gain = 930.242
+Finished Timing Optimization : Time (s): cpu = 00:01:36 ; elapsed = 00:01:47 . Memory (MB): peak = 1267.727 ; gain = 935.832
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1897,7 +1897,7 @@ Report RTL Partitions:
 +------+-----------------------+------------+----------+
 |1     |clahe_clipper_cdf__GB3 |           1|     10420|
 |2     |clahe_top__GC0         |           1|     22987|
-|3     |clahe_top_GT0          |           1|     30604|
+|3     |clahe_top_GT0          |           1|     30611|
 +------+-----------------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start Technology Mapping
@@ -1907,7 +1907,7 @@ INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM bloc
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:418]
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:414]
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:02:14 ; elapsed = 00:02:26 . Memory (MB): peak = 1334.758 ; gain = 1001.652
+Finished Technology Mapping : Time (s): cpu = 00:01:48 ; elapsed = 00:02:01 . Memory (MB): peak = 1343.812 ; gain = 1011.918
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1931,7 +1931,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:02:17 ; elapsed = 00:02:28 . Memory (MB): peak = 1334.758 ; gain = 1001.652
+Finished IO Insertion : Time (s): cpu = 00:01:52 ; elapsed = 00:02:05 . Memory (MB): peak = 1343.812 ; gain = 1011.918
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1944,7 +1944,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:02:17 ; elapsed = 00:02:29 . Memory (MB): peak = 1334.758 ; gain = 1001.652
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:52 ; elapsed = 00:02:05 . Memory (MB): peak = 1343.812 ; gain = 1011.918
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1956,25 +1956,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:19 ; elapsed = 00:02:31 . Memory (MB): peak = 1334.758 ; gain = 1001.652
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:54 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:02:19 ; elapsed = 00:02:31 . Memory (MB): peak = 1334.758 ; gain = 1001.652
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:55 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:02:20 ; elapsed = 00:02:31 . Memory (MB): peak = 1334.758 ; gain = 1001.652
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:55 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:02:20 ; elapsed = 00:02:31 . Memory (MB): peak = 1334.758 ; gain = 1001.652
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:55 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -2010,31 +2010,31 @@ Report Cell Usage:
 |2     |CARRY4     |   412|
 |3     |DSP48E1    |     1|
 |4     |DSP48E1_1  |     1|
-|5     |LUT1       |    70|
+|5     |LUT1       |    71|
 |6     |LUT2       |   595|
 |7     |LUT3       |  1464|
 |8     |LUT4       |  1395|
-|9     |LUT5       |  2058|
-|10    |LUT6       |  9465|
+|9     |LUT5       |  2053|
+|10    |LUT6       |  9478|
 |11    |MUXF7      |  2851|
 |12    |MUXF8      |  1297|
 |13    |RAMB18E1   |   128|
 |14    |RAMB18E1_1 |     1|
 |15    |RAMB18E1_2 |     1|
 |16    |SRL16E     |    17|
-|17    |FDCE       | 17048|
+|17    |FDCE       | 17057|
 |18    |FDPE       |     1|
 |19    |FDRE       |    17|
 |20    |IBUF       |    38|
-|21    |OBUF       |    26|
+|21    |OBUF       |    29|
 +------+-----------+------+
 
 Report Instance Areas: 
 +------+-------------------------------+--------------------------------+------+
 |      |Instance                       |Module                          |Cells |
 +------+-------------------------------+--------------------------------+------+
-|1     |top                            |                                | 36887|
-|2     |  clipper_cdf_inst             |clahe_clipper_cdf               | 27884|
+|1     |top                            |                                | 36908|
+|2     |  clipper_cdf_inst             |clahe_clipper_cdf               | 27902|
 |3     |  coord_counter_inst           |clahe_coord_counter             |   300|
 |4     |  hist_stat_inst               |clahe_histogram_stat            |  3615|
 |5     |  mapping_inst                 |clahe_mapping_parallel          |   721|
@@ -2169,27 +2169,27 @@ Report Instance Areas:
 |134   |    \gen_ram_b[9].ram_b_inst   |clahe_simple_dual_ram_model_126 |    10|
 +------+-------------------------------+--------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:02:20 ; elapsed = 00:02:31 . Memory (MB): peak = 1334.758 ; gain = 1001.652
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:55 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:58 ; elapsed = 00:02:19 . Memory (MB): peak = 1334.758 ; gain = 598.375
-Synthesis Optimization Complete : Time (s): cpu = 00:02:20 ; elapsed = 00:02:32 . Memory (MB): peak = 1334.758 ; gain = 1001.652
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:41 ; elapsed = 00:02:00 . Memory (MB): peak = 1343.812 ; gain = 608.852
+Synthesis Optimization Complete : Time (s): cpu = 00:01:55 ; elapsed = 00:02:09 . Memory (MB): peak = 1343.812 ; gain = 1011.918
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 4692 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1334.758 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1343.812 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
 473 Infos, 30 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:02:25 ; elapsed = 00:02:38 . Memory (MB): peak = 1334.758 ; gain = 1014.688
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1334.758 ; gain = 0.000
+synth_design: Time (s): cpu = 00:02:00 ; elapsed = 00:02:16 . Memory (MB): peak = 1343.812 ; gain = 1024.934
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1343.812 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.runs/synth_1/clahe_top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file clahe_top_utilization_synth.rpt -pb clahe_top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sun Dec  7 02:22:55 2025...
+INFO: [Common 17-206] Exiting Vivado at Sun Dec  7 16:28:35 2025...

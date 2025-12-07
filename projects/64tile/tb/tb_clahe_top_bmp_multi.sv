@@ -141,7 +141,12 @@ module tb_clahe_top_bmp_multi #(
                   .out_vsync(out_vsync),
                   .clip_threshold(clip_threshold),
                   .enable_clahe(clahe_enable),
-                  .enable_interp(interp_enable)
+                  .enable_interp(interp_enable),
+
+                  // 调试接口
+                  .dbg_cdf_processing(processing),
+                  .dbg_cdf_done(cdf_ready),
+                  .dbg_ping_pong_flag(ping_pong_flag)
               );
 
     // ========================================================================
@@ -492,9 +497,10 @@ module tb_clahe_top_bmp_multi #(
     // ========================================================================
 
     // 连接CDF处理状态信号（使用顶层调试端口以避免在post-synth中hierarchical ref失败）
-    assign processing = u_dut.cdf_processing;
-    assign cdf_ready = u_dut.cdf_done;
-    assign ping_pong_flag = u_dut.ping_pong_flag;
+    // 连接CDF处理状态信号（使用顶层调试端口以避免在post-synth中hierarchical ref失败）
+    // assign processing = u_dut.cdf_processing;
+    // assign cdf_ready = u_dut.cdf_done;
+    // assign ping_pong_flag = u_dut.ping_pong_flag;
 
     // // 关键事件监控（简化版）
     // always @(posedge processing) begin
