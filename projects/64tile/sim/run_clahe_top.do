@@ -67,6 +67,7 @@ vlog -work work ../rtl/clahe_ram_64tiles_parallel.v
 vlog -work work ../rtl/clahe_histogram_stat.v
 
 # CDF processing
+vlog -work work ../rtl/clahe_true_dual_port_ram.v
 vlog -work work ../rtl/clahe_clipper_cdf.v
 
 # Mapping module (using parallel version)

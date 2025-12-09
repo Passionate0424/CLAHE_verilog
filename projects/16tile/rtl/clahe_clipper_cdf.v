@@ -60,13 +60,13 @@ module clahe_clipper_cdf #(
         input  wire         ping_pong_flag,     // 读取哪个hist RAM (与统计相反)
 
         // 直方图RAM读接口
-        output reg  [3:0]   hist_rd_tile_idx,   // 读tile索引 (0-15)
+        output reg  [$clog2(TILE_NUM)-1:0] hist_rd_tile_idx,   // 读tile索引
         output reg  [7:0]   hist_rd_bin_addr,   // 读bin地址 (0-255)
         input  wire [15:0]  hist_rd_data_a,     // RAM A数据
         input  wire [15:0]  hist_rd_data_b,     // RAM B数据
 
-        // CDF LUT写入接口（写入16块RAM）
-        output reg  [3:0]   cdf_wr_tile_idx,   // 写tile索引
+        // CDF LUT写入接口
+        output reg  [$clog2(TILE_NUM)-1:0] cdf_wr_tile_idx,   // 写tile索引
         output reg  [7:0]   cdf_wr_bin_addr,   // 写bin地址
         output reg  [7:0]   cdf_wr_data,        // 映射后的灰度值
         output reg          cdf_wr_en,         // 写使能
@@ -80,7 +80,6 @@ module clahe_clipper_cdf #(
     // 状态机定义
     // ========================================================================
     // 状态机用于控制整个CDF计算流程
-    // 每个状态对应一个处理阶段，确保数据处理的正确性
     localparam IDLE           = 4'd0;  // 空闲状态，等待触发
     localparam READ_HIST_CLIP = 4'd1;  // 读取直方图并同时进行裁剪（优化合并）
     localparam CLIP_REDIST    = 4'd3;  // 重分配溢出值到其他bins
@@ -95,8 +94,10 @@ module clahe_clipper_cdf #(
     // ========================================================================
     // 内部寄存器和信号
     // ========================================================================
-    reg  [3:0]  tile_cnt;              // 当前处理的tile索引(0-15)
-    reg  [8:0]  bin_cnt;               // 当前处理的bin索引(0-256)，需要9位以支持RAM读延迟
+    localparam TILE_IDX_WIDTH = $clog2(TILE_NUM);
+
+    reg  [TILE_IDX_WIDTH-1:0] tile_cnt;    // 当前处理的tile索引
+    reg  [8:0]  bin_cnt;                   // 当前处理的bin索引(0-256)
 
     // frame_hist_done现在是单周期脉冲，无需边沿检测
 
@@ -349,7 +350,7 @@ module clahe_clipper_cdf #(
     // ========================================================================
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
-            tile_cnt <= 4'd0;
+            tile_cnt <= {TILE_IDX_WIDTH{1'b0}};
             bin_cnt <= 9'd0;
             excess_total <= 17'd0;
             cdf_min <= 16'd0;
@@ -364,9 +365,9 @@ module clahe_clipper_cdf #(
             norm_stage1_addr <= 8'd0;
             norm_stage2_addr <= 8'd0;
 
-            hist_rd_tile_idx <= 4'd0;
+            hist_rd_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
             hist_rd_bin_addr <= 8'd0;
-            cdf_wr_tile_idx <= 4'd0;
+            cdf_wr_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
             cdf_wr_bin_addr <= 8'd0;
             cdf_wr_data <= 8'd0;
             cdf_wr_en <= 1'b0;
@@ -402,9 +403,9 @@ module clahe_clipper_cdf #(
                 // ============================================================
                 IDLE: begin
                     // 保持所有RAM信号稳定，避免X态
-                    hist_rd_tile_idx <= 4'd0;
+                    hist_rd_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
                     hist_rd_bin_addr <= 8'd0;
-                    cdf_wr_tile_idx <= 4'd0;
+                    cdf_wr_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
                     cdf_wr_bin_addr <= 8'd0;
                     cdf_wr_en <= 1'b0;
 
@@ -419,9 +420,10 @@ module clahe_clipper_cdf #(
                     cdf_ram_web_r <= 1'b0;
 
                     if (frame_hist_done) begin
-                        tile_cnt <= 4'd0;
+                        tile_cnt <= {TILE_IDX_WIDTH{1'b0}};
                         bin_cnt <= 9'd0;
                         processing <= 1'b1;
+                        excess_total <= 17'd0; // Reset excess_total for safety
                     end
                 end
 
@@ -783,11 +785,11 @@ module clahe_clipper_cdf #(
                     cdf_ram_web_r <= 1'b0;
 
                     if (tile_cnt < TILE_NUM - 1) begin
-                        tile_cnt <= tile_cnt + 4'd1;
+                        tile_cnt <= tile_cnt + 1'b1;
                         // 预先设置下一个tile的RAM信号
-                        hist_rd_tile_idx <= tile_cnt + 4'd1;
+                        hist_rd_tile_idx <= tile_cnt + 1'b1;
                         hist_rd_bin_addr <= 8'd0;
-                        cdf_wr_tile_idx <= tile_cnt + 4'd1;
+                        cdf_wr_tile_idx <= tile_cnt + 1'b1;
                     end
                     else begin
                         // 保持信号稳定
@@ -816,9 +818,11 @@ module clahe_clipper_cdf #(
                     cdf_ram_web_r <= 1'b0;
 
                     // 保持所有外部RAM信号稳定
-                    hist_rd_tile_idx <= 4'd0;
+                    // 保持所有外部RAM信号稳定
+                    // Parameterization fixed
+                    hist_rd_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
                     hist_rd_bin_addr <= 8'd0;
-                    cdf_wr_tile_idx <= 4'd0;
+                    cdf_wr_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
                     cdf_wr_bin_addr <= 8'd0;
                 end
 
@@ -840,9 +844,9 @@ module clahe_clipper_cdf #(
                     cdf_ram_web_r <= 1'b0;
 
                     // 保持所有外部RAM信号稳定
-                    hist_rd_tile_idx <= 4'd0;
+                    hist_rd_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
                     hist_rd_bin_addr <= 8'd0;
-                    cdf_wr_tile_idx <= 4'd0;
+                    cdf_wr_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
                     cdf_wr_bin_addr <= 8'd0;
                 end
 

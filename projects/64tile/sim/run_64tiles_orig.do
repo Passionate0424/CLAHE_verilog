@@ -21,10 +21,10 @@ vlog -work work ../../64tile_optimized/tb/bmp_for_videoStream_24bit.sv
 # Compile RTL (Original 64tile)
 vlog -work work ../rtl/clahe_coord_counter.v
 vlog -work work ../rtl/clahe_histogram_stat.v
+vlog -work work ../rtl/clahe_true_dual_port_ram.v
 vlog -work work ../rtl/clahe_clipper_cdf.v
 vlog -work work ../rtl/clahe_mapping_parallel.v
 vlog -work work ../rtl/clahe_ram_64tiles_parallel.v
-vlog -work work ../rtl/clahe_ram_true_dual.v
 vlog -work work ../rtl/clahe_simple_dual_ram_model.v
 vlog -work work ../rtl/clahe_top.v
 
