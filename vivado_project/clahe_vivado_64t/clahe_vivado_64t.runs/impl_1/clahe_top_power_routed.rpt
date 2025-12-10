@@ -1,0 +1,288 @@
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version     : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
+| Date             : Wed Dec 10 13:49:55 2025
+| Host             : zph running 64-bit major release  (build 9200)
+| Command          : report_power -file clahe_top_power_routed.rpt -pb clahe_top_power_summary_routed.pb -rpx clahe_top_power_routed.rpx
+| Design           : clahe_top
+| Device           : xc7vx690tffg1761-2
+| Design State     : routed
+| Grade            : commercial
+| Process          : typical
+| Characterization : Production
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Power Report
+
+Table of Contents
+-----------------
+1. Summary
+1.1 On-Chip Components
+1.2 Power Supply Summary
+1.3 Confidence Level
+2. Settings
+2.1 Environment
+2.2 Clock Constraints
+3. Detailed Reports
+3.1 By Hierarchy
+
+1. Summary
+----------
+
++--------------------------+--------------+
+| Total On-Chip Power (W)  | 0.562        |
+| Design Power Budget (W)  | Unspecified* |
+| Power Budget Margin (W)  | NA           |
+| Dynamic (W)              | 0.229        |
+| Device Static (W)        | 0.333        |
+| Effective TJA (C/W)      | 1.1          |
+| Max Ambient (C)          | 84.4         |
+| Junction Temperature (C) | 25.6         |
+| Confidence Level         | Low          |
+| Setting File             | ---          |
+| Simulation Activity File | ---          |
+| Design Nets Matched      | NA           |
++--------------------------+--------------+
+* Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
+
+
+1.1 On-Chip Components
+----------------------
+
++-------------------------+-----------+----------+-----------+-----------------+
+| On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
++-------------------------+-----------+----------+-----------+-----------------+
+| Clocks                  |     0.006 |        3 |       --- |             --- |
+| Slice Logic             |     0.023 |    10669 |       --- |             --- |
+|   LUT as Logic          |     0.021 |     8005 |    433200 |            1.85 |
+|   CARRY4                |     0.001 |      245 |    108300 |            0.23 |
+|   F7/F8 Muxes           |    <0.001 |     1024 |    433200 |            0.24 |
+|   Register              |    <0.001 |      637 |    866400 |            0.07 |
+|   LUT as Shift Register |    <0.001 |        9 |    174200 |           <0.01 |
+|   Others                |     0.000 |      272 |       --- |             --- |
+| Signals                 |     0.033 |     9989 |       --- |             --- |
+| Block RAM               |     0.157 |       66 |      1470 |            4.49 |
+| DSPs                    |     0.002 |        3 |      3600 |            0.08 |
+| I/O                     |     0.008 |       67 |       850 |            7.88 |
+| Static Power            |     0.333 |          |           |                 |
+| Total                   |     0.562 |          |           |                 |
++-------------------------+-----------+----------+-----------+-----------------+
+
+
+1.2 Power Supply Summary
+------------------------
+
++-----------+-------------+-----------+-------------+------------+
+| Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
++-----------+-------------+-----------+-------------+------------+
+| Vccint    |       1.000 |     0.402 |       0.209 |      0.194 |
+| Vccaux    |       1.800 |     0.054 |       0.001 |      0.053 |
+| Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |
+| Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
+| Vcco18    |       1.800 |     0.005 |       0.004 |      0.001 |
+| Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
+| Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |
+| Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |
+| Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |
+| Vccbram   |       1.000 |     0.019 |       0.012 |      0.007 |
+| MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |
+| MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |
+| MGTVccaux |       1.800 |     0.000 |       0.000 |      0.000 |
+| MGTZVccl  |       1.075 |     0.000 |       0.000 |      0.000 |
+| MGTZAVcc  |       1.075 |     0.000 |       0.000 |      0.000 |
+| MGTZVcch  |       1.800 |     0.000 |       0.000 |      0.000 |
+| Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |
++-----------+-------------+-----------+-------------+------------+
+
+
+1.3 Confidence Level
+--------------------
+
++-----------------------------+------------+--------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| User Input Data             | Confidence | Details                                                | Action                                                                                                     |
++-----------------------------+------------+--------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Design implementation state | High       | Design is routed                                       |                                                                                                            |
+| Clock nodes activity        | High       | User specified more than 95% of clocks                 |                                                                                                            |
+| I/O nodes activity          | Low        | More than 75% of inputs are missing user specification | Provide missing input activity with simulation results or by editing the "By Resource Type -> I/Os" view   |
+| Internal nodes activity     | Medium     | User specified less than 25% of internal nodes         | Provide missing internal nodes activity with simulation results or by editing the "By Resource Type" views |
+| Device models               | High       | Device models are Production                           |                                                                                                            |
+|                             |            |                                                        |                                                                                                            |
+| Overall confidence level    | Low        |                                                        |                                                                                                            |
++-----------------------------+------------+--------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+
+
+2. Settings
+-----------
+
+2.1 Environment
+---------------
+
++-----------------------+--------------------------+
+| Ambient Temp (C)      | 25.0                     |
+| ThetaJA (C/W)         | 1.1                      |
+| Airflow (LFM)         | 250                      |
+| Heat Sink             | medium (Medium Profile)  |
+| ThetaSA (C/W)         | 2.2                      |
+| Board Selection       | medium (10"x10")         |
+| # of Board Layers     | 12to15 (12 to 15 Layers) |
+| Board Temperature (C) | 25.0                     |
++-----------------------+--------------------------+
+
+
+2.2 Clock Constraints
+---------------------
+
++-------+--------+-----------------+
+| Clock | Domain | Constraint (ns) |
++-------+--------+-----------------+
+| pclk  | pclk   |            13.5 |
++-------+--------+-----------------+
+
+
+3. Detailed Reports
+-------------------
+
+3.1 By Hierarchy
+----------------
+
++------------------------------+-----------+
+| Name                         | Power (W) |
++------------------------------+-----------+
+| clahe_top                    |     0.229 |
+|   clipper_cdf_inst           |     0.014 |
+|     hist_buf_ram_inst        |     0.001 |
+|   coord_counter_inst         |     0.003 |
+|   hist_stat_inst             |     0.007 |
+|   mapping_inst               |     0.013 |
+|   ram_64tiles_inst           |     0.182 |
+|     gen_ram_a[0].ram_a_inst  |     0.001 |
+|     gen_ram_a[10].ram_a_inst |     0.001 |
+|     gen_ram_a[11].ram_a_inst |     0.002 |
+|     gen_ram_a[12].ram_a_inst |     0.001 |
+|     gen_ram_a[13].ram_a_inst |     0.001 |
+|     gen_ram_a[14].ram_a_inst |     0.001 |
+|     gen_ram_a[15].ram_a_inst |     0.002 |
+|     gen_ram_a[16].ram_a_inst |     0.001 |
+|     gen_ram_a[17].ram_a_inst |     0.001 |
+|     gen_ram_a[18].ram_a_inst |     0.001 |
+|     gen_ram_a[19].ram_a_inst |     0.002 |
+|     gen_ram_a[1].ram_a_inst  |     0.001 |
+|     gen_ram_a[20].ram_a_inst |     0.001 |
+|     gen_ram_a[21].ram_a_inst |     0.001 |
+|     gen_ram_a[22].ram_a_inst |     0.001 |
+|     gen_ram_a[23].ram_a_inst |     0.002 |
+|     gen_ram_a[24].ram_a_inst |     0.001 |
+|     gen_ram_a[25].ram_a_inst |     0.001 |
+|     gen_ram_a[26].ram_a_inst |     0.001 |
+|     gen_ram_a[27].ram_a_inst |     0.002 |
+|     gen_ram_a[28].ram_a_inst |     0.001 |
+|     gen_ram_a[29].ram_a_inst |     0.001 |
+|     gen_ram_a[2].ram_a_inst  |     0.001 |
+|     gen_ram_a[30].ram_a_inst |     0.001 |
+|     gen_ram_a[31].ram_a_inst |     0.002 |
+|     gen_ram_a[32].ram_a_inst |     0.001 |
+|     gen_ram_a[33].ram_a_inst |     0.001 |
+|     gen_ram_a[34].ram_a_inst |     0.001 |
+|     gen_ram_a[35].ram_a_inst |     0.002 |
+|     gen_ram_a[36].ram_a_inst |     0.001 |
+|     gen_ram_a[37].ram_a_inst |     0.001 |
+|     gen_ram_a[38].ram_a_inst |     0.001 |
+|     gen_ram_a[39].ram_a_inst |     0.001 |
+|     gen_ram_a[3].ram_a_inst  |     0.002 |
+|     gen_ram_a[40].ram_a_inst |     0.001 |
+|     gen_ram_a[41].ram_a_inst |     0.001 |
+|     gen_ram_a[42].ram_a_inst |     0.001 |
+|     gen_ram_a[43].ram_a_inst |     0.002 |
+|     gen_ram_a[44].ram_a_inst |     0.001 |
+|     gen_ram_a[45].ram_a_inst |     0.001 |
+|     gen_ram_a[46].ram_a_inst |     0.001 |
+|     gen_ram_a[47].ram_a_inst |     0.001 |
+|     gen_ram_a[48].ram_a_inst |     0.001 |
+|     gen_ram_a[49].ram_a_inst |     0.001 |
+|     gen_ram_a[4].ram_a_inst  |     0.001 |
+|     gen_ram_a[50].ram_a_inst |     0.001 |
+|     gen_ram_a[51].ram_a_inst |     0.002 |
+|     gen_ram_a[52].ram_a_inst |     0.001 |
+|     gen_ram_a[53].ram_a_inst |     0.001 |
+|     gen_ram_a[54].ram_a_inst |     0.001 |
+|     gen_ram_a[55].ram_a_inst |     0.001 |
+|     gen_ram_a[56].ram_a_inst |     0.001 |
+|     gen_ram_a[57].ram_a_inst |     0.001 |
+|     gen_ram_a[58].ram_a_inst |     0.001 |
+|     gen_ram_a[59].ram_a_inst |     0.002 |
+|     gen_ram_a[5].ram_a_inst  |     0.001 |
+|     gen_ram_a[60].ram_a_inst |     0.001 |
+|     gen_ram_a[61].ram_a_inst |     0.001 |
+|     gen_ram_a[62].ram_a_inst |     0.001 |
+|     gen_ram_a[63].ram_a_inst |     0.001 |
+|     gen_ram_a[6].ram_a_inst  |     0.001 |
+|     gen_ram_a[7].ram_a_inst  |     0.002 |
+|     gen_ram_a[8].ram_a_inst  |     0.001 |
+|     gen_ram_a[9].ram_a_inst  |     0.001 |
+|     gen_ram_b[0].ram_b_inst  |     0.001 |
+|     gen_ram_b[10].ram_b_inst |     0.001 |
+|     gen_ram_b[11].ram_b_inst |     0.002 |
+|     gen_ram_b[12].ram_b_inst |     0.001 |
+|     gen_ram_b[13].ram_b_inst |     0.001 |
+|     gen_ram_b[14].ram_b_inst |     0.001 |
+|     gen_ram_b[15].ram_b_inst |     0.002 |
+|     gen_ram_b[16].ram_b_inst |     0.001 |
+|     gen_ram_b[17].ram_b_inst |     0.001 |
+|     gen_ram_b[18].ram_b_inst |     0.001 |
+|     gen_ram_b[19].ram_b_inst |     0.002 |
+|     gen_ram_b[1].ram_b_inst  |     0.001 |
+|     gen_ram_b[20].ram_b_inst |     0.001 |
+|     gen_ram_b[21].ram_b_inst |     0.001 |
+|     gen_ram_b[22].ram_b_inst |     0.001 |
+|     gen_ram_b[23].ram_b_inst |     0.002 |
+|     gen_ram_b[24].ram_b_inst |     0.001 |
+|     gen_ram_b[25].ram_b_inst |     0.001 |
+|     gen_ram_b[26].ram_b_inst |     0.001 |
+|     gen_ram_b[27].ram_b_inst |     0.003 |
+|     gen_ram_b[28].ram_b_inst |     0.001 |
+|     gen_ram_b[29].ram_b_inst |     0.001 |
+|     gen_ram_b[2].ram_b_inst  |     0.001 |
+|     gen_ram_b[30].ram_b_inst |     0.001 |
+|     gen_ram_b[31].ram_b_inst |     0.002 |
+|     gen_ram_b[32].ram_b_inst |     0.001 |
+|     gen_ram_b[33].ram_b_inst |     0.001 |
+|     gen_ram_b[34].ram_b_inst |     0.001 |
+|     gen_ram_b[35].ram_b_inst |     0.002 |
+|     gen_ram_b[36].ram_b_inst |     0.001 |
+|     gen_ram_b[37].ram_b_inst |     0.001 |
+|     gen_ram_b[38].ram_b_inst |     0.001 |
+|     gen_ram_b[39].ram_b_inst |     0.001 |
+|     gen_ram_b[3].ram_b_inst  |     0.002 |
+|     gen_ram_b[40].ram_b_inst |     0.001 |
+|     gen_ram_b[41].ram_b_inst |     0.001 |
+|     gen_ram_b[42].ram_b_inst |     0.001 |
+|     gen_ram_b[43].ram_b_inst |     0.001 |
+|     gen_ram_b[44].ram_b_inst |     0.001 |
+|     gen_ram_b[45].ram_b_inst |     0.001 |
+|     gen_ram_b[46].ram_b_inst |     0.001 |
+|     gen_ram_b[47].ram_b_inst |     0.001 |
+|     gen_ram_b[48].ram_b_inst |     0.001 |
+|     gen_ram_b[49].ram_b_inst |     0.001 |
+|     gen_ram_b[4].ram_b_inst  |     0.001 |
+|     gen_ram_b[50].ram_b_inst |     0.001 |
+|     gen_ram_b[51].ram_b_inst |     0.003 |
+|     gen_ram_b[52].ram_b_inst |     0.001 |
+|     gen_ram_b[53].ram_b_inst |     0.001 |
+|     gen_ram_b[54].ram_b_inst |     0.001 |
+|     gen_ram_b[55].ram_b_inst |     0.001 |
+|     gen_ram_b[56].ram_b_inst |     0.001 |
+|     gen_ram_b[57].ram_b_inst |     0.001 |
+|     gen_ram_b[58].ram_b_inst |     0.001 |
+|     gen_ram_b[59].ram_b_inst |     0.002 |
+|     gen_ram_b[5].ram_b_inst  |     0.001 |
+|     gen_ram_b[60].ram_b_inst |     0.001 |
+|     gen_ram_b[61].ram_b_inst |     0.001 |
+|     gen_ram_b[62].ram_b_inst |     0.001 |
+|     gen_ram_b[63].ram_b_inst |     0.001 |
+|     gen_ram_b[6].ram_b_inst  |     0.001 |
+|     gen_ram_b[7].ram_b_inst  |     0.002 |
+|     gen_ram_b[8].ram_b_inst  |     0.001 |
+|     gen_ram_b[9].ram_b_inst  |     0.001 |
++------------------------------+-----------+
+
+

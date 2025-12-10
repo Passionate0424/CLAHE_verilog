@@ -66,7 +66,8 @@ set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
   set_param simulator.modelsimInstallPath E:/modeltech64_2020.4/win64
-  create_project -in_memory -part xc7z020clg400-3
+  create_project -in_memory -part xc7vx690tffg1761-2
+  set_property board_part xilinx.com:vc709:part0:1.8 [current_project]
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
   set_property webtalk.parent_dir E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.cache/wt [current_project]
@@ -75,7 +76,7 @@ set rc [catch {
   set_property ip_cache_permissions {read write} [current_project]
   add_files -quiet E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.runs/synth_1/clahe_top.dcp
   read_xdc E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.srcs/constrs_1/imports/clahe_top_sim.xdc
-  link_design -top clahe_top -part xc7z020clg400-3
+  link_design -top clahe_top -part xc7vx690tffg1761-2
   close_msg_db -file init_design.pb
 } RESULT]
 if {$rc} {

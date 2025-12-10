@@ -18,7 +18,7 @@ proc create_report { reportName command } {
   }
 }
 set_param simulator.modelsimInstallPath E:/modeltech64_2020.4/win64
-create_project -in_memory -part xc7z020clg400-3
+create_project -in_memory -part xc7vx690tffg1761-2
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
@@ -27,6 +27,7 @@ set_property webtalk.parent_dir E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_
 set_property parent.project_path E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
+set_property board_part xilinx.com:vc709:part0:1.8 [current_project]
 set_property ip_output_repo e:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_verilog -library xil_defaultlib {
@@ -36,6 +37,7 @@ read_verilog -library xil_defaultlib {
   E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v
   E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_ram_64tiles_parallel.v
   E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_simple_dual_ram_model.v
+  E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_true_dual_port_ram.v
   E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v
 }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -52,7 +54,7 @@ set_property used_in_implementation false [get_files E:/FPGA_codes/CLAHE/vivado_
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]
 
-synth_design -top clahe_top -part xc7z020clg400-3
+synth_design -top clahe_top -part xc7vx690tffg1761-2
 
 
 # disable binary constraint mode for synth run checkpoints

@@ -2,22 +2,22 @@
 # Vivado v2018.3 (64-bit)
 # SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
 # IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
-# Start of session at: Sun Dec  7 16:26:04 2025
-# Process ID: 26496
+# Start of session at: Wed Dec 10 13:44:30 2025
+# Process ID: 25808
 # Current directory: E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.runs/synth_1
 # Command line: vivado.exe -log clahe_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source clahe_top.tcl
 # Log file: E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.runs/synth_1/clahe_top.vds
 # Journal file: E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.runs/synth_1\vivado.jou
 #-----------------------------------------------------------
 source clahe_top.tcl -notrace
-Command: synth_design -top clahe_top -part xc7z020clg400-3
+Command: synth_design -top clahe_top -part xc7vx690tffg1761-2
 Starting synth_design
-Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
-INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7vx690t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7vx690t'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 45736 
+INFO: Helper process launched with PID 7308 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 430.562 ; gain = 98.668
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 436.926 ; gain = 104.531
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'clahe_top' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:40]
 	Parameter WIDTH bound to: 1280 - type: integer 
@@ -52,21 +52,28 @@ INFO: [Synth 8-6157] synthesizing module 'clahe_simple_dual_ram_model' [E:/FPGA_
 	Parameter DEPTH bound to: 256 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'clahe_simple_dual_ram_model' (3#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_simple_dual_ram_model.v:37]
 INFO: [Synth 8-6155] done synthesizing module 'clahe_ram_64tiles_parallel' (4#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_ram_64tiles_parallel.v:29]
-INFO: [Synth 8-6157] synthesizing module 'clahe_clipper_cdf' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:33]
+INFO: [Synth 8-6157] synthesizing module 'clahe_clipper_cdf' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:49]
 	Parameter TILE_NUM bound to: 64 - type: integer 
 	Parameter BINS bound to: 256 - type: integer 
 	Parameter TILE_PIXELS bound to: 14400 - type: integer 
 	Parameter IDLE bound to: 4'b0000 
-	Parameter READ_HIST bound to: 4'b0001 
-	Parameter CLIP_SCAN bound to: 4'b0010 
+	Parameter READ_HIST_CLIP bound to: 4'b0001 
 	Parameter CLIP_REDIST bound to: 4'b0011 
 	Parameter CALC_CDF bound to: 4'b0100 
 	Parameter WRITE_LUT bound to: 4'b0101 
 	Parameter NEXT_TILE bound to: 4'b0110 
 	Parameter DONE bound to: 4'b0111 
 	Parameter DONE_PULSE bound to: 4'b1000 
-INFO: [Synth 8-155] case statement is not full and has no default [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:264]
-INFO: [Synth 8-6155] done synthesizing module 'clahe_clipper_cdf' (5#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:33]
+	Parameter TILE_IDX_WIDTH bound to: 6 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'clahe_true_dual_port_ram' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_true_dual_port_ram.v:15]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH bound to: 8 - type: integer 
+	Parameter DEPTH bound to: 256 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'clahe_true_dual_port_ram' (5#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_true_dual_port_ram.v:15]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:401]
+WARNING: [Synth 8-6014] Unused sequential element hist_buf_data_reg_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:397]
+WARNING: [Synth 8-6014] Unused sequential element cdf_ram_data_reg_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:398]
+INFO: [Synth 8-6155] done synthesizing module 'clahe_clipper_cdf' (6#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:49]
 INFO: [Synth 8-6157] synthesizing module 'clahe_mapping_parallel' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:37]
 	Parameter TILE_NUM bound to: 64 - type: integer 
 	Parameter BINS bound to: 256 - type: integer 
@@ -81,9 +88,9 @@ INFO: [Synth 8-6157] synthesizing module 'clahe_mapping_parallel' [E:/FPGA_codes
 WARNING: [Synth 8-6014] Unused sequential element wx_d3_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:413]
 WARNING: [Synth 8-6014] Unused sequential element y_d4_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:466]
 WARNING: [Synth 8-6014] Unused sequential element enable_d4_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:471]
-INFO: [Synth 8-6155] done synthesizing module 'clahe_mapping_parallel' (6#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:37]
+INFO: [Synth 8-6155] done synthesizing module 'clahe_mapping_parallel' (7#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:37]
 WARNING: [Synth 8-6014] Unused sequential element cdf_processing_d1_reg was removed.  [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:219]
-INFO: [Synth 8-6155] done synthesizing module 'clahe_top' (7#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:40]
+INFO: [Synth 8-6155] done synthesizing module 'clahe_top' (8#1) [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_top.v:40]
 WARNING: [Synth 8-3331] design clahe_mapping_parallel has unconnected port pixel_x[10]
 WARNING: [Synth 8-3331] design clahe_mapping_parallel has unconnected port pixel_x[9]
 WARNING: [Synth 8-3331] design clahe_mapping_parallel has unconnected port pixel_x[8]
@@ -108,7 +115,7 @@ WARNING: [Synth 8-3331] design clahe_mapping_parallel has unconnected port pixel
 WARNING: [Synth 8-3331] design clahe_mapping_parallel has unconnected port cdf_ready
 WARNING: [Synth 8-3331] design clahe_histogram_stat has unconnected port ping_pong_flag
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 679.082 ; gain = 347.188
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 544.121 ; gain = 211.727
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -121,12 +128,12 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 679.082 ; gain = 347.188
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 544.121 ; gain = 211.727
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 679.082 ; gain = 347.188
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 544.121 ; gain = 211.727
 ---------------------------------------------------------------------------------
-INFO: [Device 21-403] Loading part xc7z020clg400-3
+INFO: [Device 21-403] Loading part xc7vx690tffg1761-2
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -135,297 +142,115 @@ Parsing XDC File [E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_viva
 Finished Parsing XDC File [E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.srcs/constrs_1/imports/clahe_top_sim.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1076.219 ; gain = 0.129
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1117.367 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1081.703 ; gain = 0.129
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.160 . Memory (MB): peak = 1082.148 ; gain = 5.930
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1117.367 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.039 . Memory (MB): peak = 1117.367 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 1082.148 ; gain = 750.254
+Finished Constraint Validation : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 1117.453 ; gain = 785.059
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
-Loading part: xc7z020clg400-3
+Loading part: xc7vx690tffg1761-2
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 1082.148 ; gain = 750.254
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 1117.453 ; gain = 785.059
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 1082.148 ; gain = 750.254
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 1117.453 ; gain = 785.059
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-4471] merging register 'cdf_wr_tile_idx_reg[5:0]' into 'hist_rd_tile_idx_reg[5:0]' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:250]
-INFO: [Synth 8-5545] ROM "hist_buf_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[4]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[5]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[6]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[7]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[8]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[9]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[10]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[11]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[12]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[13]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[14]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[15]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[16]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[17]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[18]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[19]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[20]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[21]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[22]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[23]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[24]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[25]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[26]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[27]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[28]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[29]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[30]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[31]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[32]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[33]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[34]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[35]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[36]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[37]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[38]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[39]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[40]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[41]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[42]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[43]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[44]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[45]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[46]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[47]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[48]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[49]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[50]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[51]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[52]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[53]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[54]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[55]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[56]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[57]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[58]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[59]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[60]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[61]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[62]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[63]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[64]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[65]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[66]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[67]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[68]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[69]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[70]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[71]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[72]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[73]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[74]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[75]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[76]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[77]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[78]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[79]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[80]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[81]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[82]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[83]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[84]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[85]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[86]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[87]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[88]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[89]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[90]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[91]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[92]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[93]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[94]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[95]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[96]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[97]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[98]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Synth 8-5545] ROM "hist_buf_reg[99]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-INFO: [Common 17-14] Message 'Synth 8-5545' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[0]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[1]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[2]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[3]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[4]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[5]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[6]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[7]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[8]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[9]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[10]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[11]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[12]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[13]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[14]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[15]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[16]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[17]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[18]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[19]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[20]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[21]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[22]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[23]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[24]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[25]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[26]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[27]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[28]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[29]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[30]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[31]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[32]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[33]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[34]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[35]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[36]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[37]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[38]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[39]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[40]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[41]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[42]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[43]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[44]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[45]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[46]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[47]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[48]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[49]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[50]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[51]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[52]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[53]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[54]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[55]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[56]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[57]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[58]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[59]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[60]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[61]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[62]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[63]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[64]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[65]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[66]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[67]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[68]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[69]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[70]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[71]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[72]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[73]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[74]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[75]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[76]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[77]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[78]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[79]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[80]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[81]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[82]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[83]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[84]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[85]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[86]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[87]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[88]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[89]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[90]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[91]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[92]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[93]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[94]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[95]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[96]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[97]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[98]" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "hist_clipped_reg[99]" won't be mapped to RAM because it is too sparse
-INFO: [Common 17-14] Message 'Synth 8-5546' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-4471] merging register 'hist_buf_web_r_reg' into 'hist_buf_enb_r_reg' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:156]
+INFO: [Synth 8-4471] merging register 'cdf_ram_web_r_reg' into 'cdf_ram_enb_r_reg' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:165]
+INFO: [Synth 8-5546] ROM "next_state" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "next_state" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "next_state" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "cdf_range" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "norm_stage2_mult" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "cdf_ram_ena_r" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'clahe_clipper_cdf'
+INFO: [Synth 8-3971] The signal ram_reg was recognized as a true dual port RAM template.
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              000 |                             0000
+          READ_HIST_CLIP |                              001 |                             0001
+             CLIP_REDIST |                              010 |                             0011
+                CALC_CDF |                              011 |                             0100
+               WRITE_LUT |                              100 |                             0101
+               NEXT_TILE |                              101 |                             0110
+                    DONE |                              110 |                             0111
+              DONE_PULSE |                              111 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'clahe_clipper_cdf'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:28 . Memory (MB): peak = 1082.148 ; gain = 750.254
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:21 ; elapsed = 00:00:24 . Memory (MB): peak = 1117.453 ; gain = 785.059
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
-+------+-----------------------+------------+----------+
-|      |RTL Partition          |Replication |Instances |
-+------+-----------------------+------------+----------+
-|1     |clahe_clipper_cdf__GB0 |           1|     27294|
-|2     |clahe_clipper_cdf__GB1 |           1|      6473|
-|3     |clahe_clipper_cdf__GB2 |           1|     18081|
-|4     |clahe_clipper_cdf__GB3 |           1|     16364|
-|5     |clahe_top__GC0         |           1|     24416|
-+------+-----------------------+------------+----------+
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---Adders : 
-	   4 Input     32 Bit       Adders := 1     
 	   2 Input     32 Bit       Adders := 1     
-	   3 Input     32 Bit       Adders := 2     
-	   3 Input     16 Bit       Adders := 1     
-	   2 Input     16 Bit       Adders := 1     
+	   4 Input     17 Bit       Adders := 1     
+	   2 Input     16 Bit       Adders := 2     
+	   3 Input     16 Bit       Adders := 3     
 	   2 Input     11 Bit       Adders := 1     
 	   2 Input     10 Bit       Adders := 1     
 	   2 Input      9 Bit       Adders := 4     
-	   2 Input      8 Bit       Adders := 7     
 	   4 Input      8 Bit       Adders := 1     
+	   2 Input      8 Bit       Adders := 7     
 	   6 Input      7 Bit       Adders := 1     
 	   2 Input      6 Bit       Adders := 1     
 	   2 Input      3 Bit       Adders := 4     
 +---Registers : 
-	               32 Bit    Registers := 261   
+	               32 Bit    Registers := 1     
 	               24 Bit    Registers := 1     
-	               16 Bit    Registers := 646   
+	               17 Bit    Registers := 1     
+	               16 Bit    Registers := 147   
 	               11 Bit    Registers := 1     
 	               10 Bit    Registers := 1     
-	                8 Bit    Registers := 31    
-	                6 Bit    Registers := 11    
-	                1 Bit    Registers := 31    
-+---Multipliers : 
-	                 8x32  Multipliers := 1     
+	                9 Bit    Registers := 1     
+	                8 Bit    Registers := 37    
+	                6 Bit    Registers := 12    
+	                1 Bit    Registers := 38    
 +---RAMs : 
-	               4K Bit         RAMs := 128   
+	               4K Bit         RAMs := 130   
 +---ROMs : 
 	                              ROMs := 2     
 +---Muxes : 
-	   2 Input     32 Bit        Muxes := 3     
-	   2 Input     24 Bit        Muxes := 2     
-	  10 Input     16 Bit        Muxes := 1     
-	   2 Input     16 Bit        Muxes := 396   
+	   2 Input     32 Bit        Muxes := 1     
+	   2 Input     24 Bit        Muxes := 3     
+	   2 Input     17 Bit        Muxes := 1     
+	   8 Input     17 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 397   
 	   2 Input     11 Bit        Muxes := 2     
 	   2 Input     10 Bit        Muxes := 2     
-	   3 Input      9 Bit        Muxes := 1     
-	   2 Input      9 Bit        Muxes := 2     
-	   2 Input      8 Bit        Muxes := 784   
-	  10 Input      8 Bit        Muxes := 2     
-	  10 Input      6 Bit        Muxes := 2     
-	   2 Input      6 Bit        Muxes := 9     
-	   2 Input      3 Bit        Muxes := 10    
+	   2 Input      9 Bit        Muxes := 5     
+	   2 Input      8 Bit        Muxes := 788   
+	   8 Input      8 Bit        Muxes := 3     
+	   2 Input      6 Bit        Muxes := 8     
+	   8 Input      6 Bit        Muxes := 2     
+	   8 Input      4 Bit        Muxes := 1     
 	   7 Input      3 Bit        Muxes := 2     
-	   3 Input      2 Bit        Muxes := 1     
-	  10 Input      1 Bit        Muxes := 782   
-	   2 Input      1 Bit        Muxes := 1046  
-	  11 Input      1 Bit        Muxes := 1     
+	   8 Input      3 Bit        Muxes := 1     
+	   2 Input      3 Bit        Muxes := 10    
+	   9 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 308   
+	   4 Input      1 Bit        Muxes := 1     
+	   8 Input      1 Bit        Muxes := 31    
+	  10 Input      1 Bit        Muxes := 1     
+	   9 Input      1 Bit        Muxes := 2     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -441,39 +266,6 @@ Detailed RTL Component Info :
 	   2 Input      8 Bit        Muxes := 4     
 	   2 Input      6 Bit        Muxes := 1     
 	   2 Input      1 Bit        Muxes := 2     
-Module clahe_clipper_cdf 
-Detailed RTL Component Info : 
-+---Adders : 
-	   4 Input     32 Bit       Adders := 1     
-	   2 Input     32 Bit       Adders := 1     
-	   3 Input     32 Bit       Adders := 2     
-	   3 Input     16 Bit       Adders := 1     
-	   2 Input      9 Bit       Adders := 1     
-	   2 Input      8 Bit       Adders := 1     
-	   2 Input      6 Bit       Adders := 1     
-+---Registers : 
-	               32 Bit    Registers := 261   
-	               16 Bit    Registers := 512   
-	                8 Bit    Registers := 3     
-	                6 Bit    Registers := 2     
-	                1 Bit    Registers := 3     
-+---Multipliers : 
-	                 8x32  Multipliers := 1     
-+---Muxes : 
-	   2 Input     32 Bit        Muxes := 3     
-	  10 Input     16 Bit        Muxes := 1     
-	   2 Input     16 Bit        Muxes := 3     
-	   3 Input      9 Bit        Muxes := 1     
-	   2 Input      9 Bit        Muxes := 2     
-	   2 Input      8 Bit        Muxes := 2     
-	  10 Input      8 Bit        Muxes := 2     
-	  10 Input      6 Bit        Muxes := 2     
-	   2 Input      6 Bit        Muxes := 2     
-	   2 Input      3 Bit        Muxes := 2     
-	   3 Input      2 Bit        Muxes := 1     
-	  10 Input      1 Bit        Muxes := 782   
-	   2 Input      1 Bit        Muxes := 775   
-	  11 Input      1 Bit        Muxes := 1     
 Module clahe_coord_counter 
 Detailed RTL Component Info : 
 +---Adders : 
@@ -503,768 +295,6 @@ Detailed RTL Component Info :
 	   2 Input      8 Bit        Muxes := 2     
 	   2 Input      6 Bit        Muxes := 2     
 	   2 Input      1 Bit        Muxes := 8     
-Module clahe_simple_dual_ram_model__1 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__2 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__3 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__4 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__5 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__6 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__7 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__8 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__9 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__10 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__11 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__12 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__13 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__14 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__15 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__16 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__17 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__18 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__19 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__20 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__21 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__22 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__23 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__24 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__25 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__26 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__27 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__28 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__29 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__30 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__31 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__32 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__33 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__34 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__35 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__36 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__37 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__38 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__39 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__40 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__41 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__42 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__43 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__44 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__45 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__46 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__47 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__48 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__49 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__50 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__51 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__52 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__53 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__54 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__55 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__56 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__57 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__58 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__59 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__60 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__61 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__62 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__63 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__64 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__65 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__66 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__67 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__68 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__69 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__70 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__71 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__72 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__73 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__74 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__75 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__76 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__77 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__78 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__79 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__80 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__81 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__82 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__83 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__84 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__85 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__86 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__87 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__88 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__89 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__90 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__91 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__92 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__93 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__94 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__95 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__96 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__97 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__98 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__99 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__100 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__101 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__102 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__103 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__104 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__105 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__106 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__107 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__108 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__109 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__110 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__111 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__112 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__113 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__114 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__115 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__116 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__117 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__118 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__119 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__120 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__121 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__122 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__123 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__124 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__125 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__126 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
-Module clahe_simple_dual_ram_model__127 
-Detailed RTL Component Info : 
-+---Registers : 
-	               16 Bit    Registers := 1     
-+---RAMs : 
-	               4K Bit         RAMs := 1     
 Module clahe_simple_dual_ram_model 
 Detailed RTL Component Info : 
 +---Registers : 
@@ -1282,6 +312,50 @@ Detailed RTL Component Info :
 	   2 Input     16 Bit        Muxes := 386   
 	   2 Input      8 Bit        Muxes := 774   
 	   2 Input      1 Bit        Muxes := 259   
+Module clahe_true_dual_port_ram 
+Detailed RTL Component Info : 
++---Registers : 
+	               16 Bit    Registers := 2     
++---RAMs : 
+	               4K Bit         RAMs := 1     
+Module clahe_clipper_cdf 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+	   4 Input     17 Bit       Adders := 1     
+	   2 Input     16 Bit       Adders := 1     
+	   3 Input     16 Bit       Adders := 3     
+	   2 Input      9 Bit       Adders := 1     
+	   2 Input      8 Bit       Adders := 1     
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 1     
+	               17 Bit    Registers := 1     
+	               16 Bit    Registers := 9     
+	                9 Bit    Registers := 1     
+	                8 Bit    Registers := 9     
+	                6 Bit    Registers := 3     
+	                1 Bit    Registers := 10    
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 1     
+	   2 Input     24 Bit        Muxes := 1     
+	   2 Input     17 Bit        Muxes := 1     
+	   8 Input     17 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 4     
+	   2 Input      9 Bit        Muxes := 5     
+	   2 Input      8 Bit        Muxes := 6     
+	   8 Input      8 Bit        Muxes := 3     
+	   2 Input      6 Bit        Muxes := 1     
+	   8 Input      6 Bit        Muxes := 2     
+	   8 Input      4 Bit        Muxes := 1     
+	   8 Input      3 Bit        Muxes := 1     
+	   2 Input      3 Bit        Muxes := 2     
+	   9 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 37    
+	   4 Input      1 Bit        Muxes := 1     
+	   8 Input      1 Bit        Muxes := 31    
+	  10 Input      1 Bit        Muxes := 1     
+	   9 Input      1 Bit        Muxes := 2     
 Module clahe_mapping_parallel 
 Detailed RTL Component Info : 
 +---Adders : 
@@ -1308,8 +382,8 @@ Finished RTL Hierarchical Component Statistics
 Start Part Resource Summary
 ---------------------------------------------------------------------------------
 Part Resources:
-DSPs: 220 (col length:60)
-BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+DSPs: 3600 (col length:200)
+BRAMs: 2940 (col length: RAMB18 200 RAMB36 100)
 ---------------------------------------------------------------------------------
 Finished Part Resource Summary
 ---------------------------------------------------------------------------------
@@ -1317,6 +391,12 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 Warning: Parallel synthesis criteria is not met 
+INFO: [Synth 8-5546] ROM "cdf_ram_ena_r" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "next_state" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "next_state" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "norm_stage2_mult" won't be mapped to RAM because it is too sparse
+DSP Report: Generating DSP norm_stage2_mult0, operation Mode is: A*(B:0xff).
+DSP Report: operator norm_stage2_mult0 is absorbed into DSP norm_stage2_mult0.
 INFO: [Synth 8-4471] merging register 'mapping_inst/vsync_d1_reg' into 'hist_stat_inst/vsync_d1_reg' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:324]
 INFO: [Synth 8-4471] merging register 'mapping_inst/vsync_d2_reg' into 'hist_stat_inst/vsync_d2_reg' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:359]
 INFO: [Synth 8-4471] merging register 'mapping_inst/y_d1_reg[7:0]' into 'hist_stat_inst/pixel_d1_reg[7:0]' [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:320]
@@ -1429,36 +509,55 @@ INFO: [Synth 8-4652] Swapped enable and write-enable on 1 RAM instances of RAM g
 INFO: [Synth 8-4652] Swapped enable and write-enable on 1 RAM instances of RAM gen_ram_b[34].ram_b_inst/ram_reg to conserve power
 INFO: [Synth 8-4652] Swapped enable and write-enable on 1 RAM instances of RAM gen_ram_b[35].ram_b_inst/ram_reg to conserve power
 INFO: [Common 17-14] Message 'Synth 8-4652' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][0] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][1] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][2] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][3] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][4] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][5] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][6] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][7] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][8] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][9] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][10] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][11] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][12] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][13] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][14] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_insti_4/\hist_buf_reg[255][15] )
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[0]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[0]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[1]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[1]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[2]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[2]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[3]' (FDC) to 'i_0/ram_64tiles_inst/mapping_br_tile_idx_d1_reg[3]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[4]' (FDC) to 'i_0/ram_64tiles_inst/mapping_br_tile_idx_d1_reg[4]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[5]' (FDC) to 'i_0/ram_64tiles_inst/mapping_br_tile_idx_d1_reg[5]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_br_tile_idx_d1_reg[0]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[0]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_br_tile_idx_d1_reg[1]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[1]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_br_tile_idx_d1_reg[2]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[2]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[3]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[3]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[4]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[4]'
-INFO: [Synth 8-3886] merging instance 'i_0/ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[5]' (FDC) to 'i_0/ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[5]'
+INFO: [Synth 8-3971] The signal hist_buf_ram_inst/ram_reg was recognized as a true dual port RAM template.
+INFO: [Synth 8-3971] The signal cdf_ram_inst/ram_reg was recognized as a true dual port RAM template.
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[1] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[2] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[4] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[5] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[6] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[7] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[8] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[9] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[10] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[11] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[12] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[13] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[14] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_dinb_r_reg[15] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_addrb_r_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_addrb_r_reg[1] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_addrb_r_reg[2] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_addrb_r_reg[3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_addrb_r_reg[4] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_addrb_r_reg[5] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_addrb_r_reg[6] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\cdf_ram_addrb_r_reg[7] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/cdf_ram_enb_r_reg)
+INFO: [Synth 8-3886] merging instance 'clipper_cdf_inst/norm_stage2_mult_reg[31]' (FDCE) to 'clipper_cdf_inst/norm_stage2_mult_reg[30]'
+INFO: [Synth 8-3886] merging instance 'clipper_cdf_inst/norm_stage2_mult_reg[24]' (FDCE) to 'clipper_cdf_inst/norm_stage2_mult_reg[30]'
+INFO: [Synth 8-3886] merging instance 'clipper_cdf_inst/norm_stage2_mult_reg[25]' (FDCE) to 'clipper_cdf_inst/norm_stage2_mult_reg[30]'
+INFO: [Synth 8-3886] merging instance 'clipper_cdf_inst/norm_stage2_mult_reg[26]' (FDCE) to 'clipper_cdf_inst/norm_stage2_mult_reg[30]'
+INFO: [Synth 8-3886] merging instance 'clipper_cdf_inst/norm_stage2_mult_reg[27]' (FDCE) to 'clipper_cdf_inst/norm_stage2_mult_reg[30]'
+INFO: [Synth 8-3886] merging instance 'clipper_cdf_inst/norm_stage2_mult_reg[28]' (FDCE) to 'clipper_cdf_inst/norm_stage2_mult_reg[30]'
+INFO: [Synth 8-3886] merging instance 'clipper_cdf_inst/norm_stage2_mult_reg[29]' (FDCE) to 'clipper_cdf_inst/norm_stage2_mult_reg[30]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (clipper_cdf_inst/\norm_stage2_mult_reg[30] )
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[0]' (FDC) to 'ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[0]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[1]' (FDC) to 'ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[1]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[2]' (FDC) to 'ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[2]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[3]' (FDC) to 'ram_64tiles_inst/mapping_br_tile_idx_d1_reg[3]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[4]' (FDC) to 'ram_64tiles_inst/mapping_br_tile_idx_d1_reg[4]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_bl_tile_idx_d1_reg[5]' (FDC) to 'ram_64tiles_inst/mapping_br_tile_idx_d1_reg[5]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_br_tile_idx_d1_reg[0]' (FDC) to 'ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[0]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_br_tile_idx_d1_reg[1]' (FDC) to 'ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[1]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_br_tile_idx_d1_reg[2]' (FDC) to 'ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[2]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[3]' (FDC) to 'ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[3]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[4]' (FDC) to 'ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[4]'
+INFO: [Synth 8-3886] merging instance 'ram_64tiles_inst/mapping_tr_tile_idx_d1_reg[5]' (FDC) to 'ram_64tiles_inst/mapping_tl_tile_idx_d1_reg[5]'
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:54 ; elapsed = 00:01:01 . Memory (MB): peak = 1096.312 ; gain = 764.418
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1202.023 ; gain = 869.629
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1605,6 +704,8 @@ Block RAM: Preliminary Mapping  Report (see note below)
 |clahe_simple_dual_ram_model: | ram_reg    | 256 x 16(NO_CHANGE)    | W |   | 256 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
 |clahe_simple_dual_ram_model: | ram_reg    | 256 x 16(NO_CHANGE)    | W |   | 256 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
 |clahe_simple_dual_ram_model: | ram_reg    | 256 x 16(NO_CHANGE)    | W |   | 256 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
+|clahe_true_dual_port_ram:    | ram_reg    | 256 x 16(READ_FIRST)   | W | R | 256 x 16(READ_FIRST)   | W | R | Port A and B     | 1      | 0      | 
+|clahe_true_dual_port_ram:    | ram_reg    | 256 x 16(READ_FIRST)   | W | R | 256 x 16(READ_FIRST)   | W | R | Port A and B     | 1      | 0      | 
 +-----------------------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 
 Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
@@ -1613,6 +714,7 @@ DSP: Preliminary Mapping  Report (see note below)
 +-----------------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 |Module Name            | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
 +-----------------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|clahe_clipper_cdf      | A*(B:0xff)  | 16     | 8      | -      | -      | 24     | 0    | 0    | -    | -    | -     | 0    | 0    | 
 |clahe_mapping_parallel | A*B         | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 0    | 0    | 
 |clahe_mapping_parallel | C+A*B       | 16     | 8      | 24     | -      | 24     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
 +-----------------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
@@ -1621,133 +723,129 @@ Note: The table above is a preliminary report that shows the DSPs inferred at th
 ---------------------------------------------------------------------------------
 Finished ROM, RAM, DSP and Shift Register Reporting
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_1/gen_ram_a[0].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_3/gen_ram_a[1].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_4/gen_ram_a[2].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_5/gen_ram_a[3].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_6/gen_ram_a[4].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_7/gen_ram_a[5].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_17/gen_ram_a[6].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_18/gen_ram_a[7].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_19/gen_ram_a[8].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_20/gen_ram_a[9].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_21/gen_ram_a[10].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_22/gen_ram_a[11].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_23/gen_ram_a[12].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_24/gen_ram_a[13].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_25/gen_ram_a[14].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_26/gen_ram_a[15].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_27/gen_ram_a[16].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_28/gen_ram_a[17].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_29/gen_ram_a[18].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_30/gen_ram_a[19].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_31/gen_ram_a[20].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_32/gen_ram_a[21].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_33/gen_ram_a[22].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_34/gen_ram_a[23].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_35/gen_ram_a[24].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_36/gen_ram_a[25].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_37/gen_ram_a[26].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_38/gen_ram_a[27].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_39/gen_ram_a[28].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_40/gen_ram_a[29].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_41/gen_ram_a[30].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_42/gen_ram_a[31].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_43/gen_ram_a[32].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_44/gen_ram_a[33].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_45/gen_ram_a[34].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_46/gen_ram_a[35].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_47/gen_ram_a[36].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_48/gen_ram_a[37].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_49/gen_ram_a[38].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_50/gen_ram_a[39].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_51/gen_ram_a[40].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_52/gen_ram_a[41].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_53/gen_ram_a[42].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_54/gen_ram_a[43].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_55/gen_ram_a[44].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_56/gen_ram_a[45].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_57/gen_ram_a[46].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_58/gen_ram_a[47].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_59/gen_ram_a[48].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_60/gen_ram_a[49].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_61/gen_ram_a[50].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_62/gen_ram_a[51].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_63/gen_ram_a[52].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_64/gen_ram_a[53].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_65/gen_ram_a[54].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_66/gen_ram_a[55].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_67/gen_ram_a[56].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_68/gen_ram_a[57].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_69/gen_ram_a[58].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_70/gen_ram_a[59].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_71/gen_ram_a[60].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_72/gen_ram_a[61].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_73/gen_ram_a[62].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_74/gen_ram_a[63].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_75/gen_ram_b[0].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_76/gen_ram_b[1].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_77/gen_ram_b[2].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_78/gen_ram_b[3].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_79/gen_ram_b[4].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_80/gen_ram_b[5].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_81/gen_ram_b[6].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_82/gen_ram_b[7].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_83/gen_ram_b[8].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_84/gen_ram_b[9].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_85/gen_ram_b[10].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_86/gen_ram_b[11].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_87/gen_ram_b[12].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_88/gen_ram_b[13].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_89/gen_ram_b[14].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_90/gen_ram_b[15].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_91/gen_ram_b[16].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_92/gen_ram_b[17].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_93/gen_ram_b[18].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_94/gen_ram_b[19].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_95/gen_ram_b[20].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_96/gen_ram_b[21].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_97/gen_ram_b[22].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_98/gen_ram_b[23].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_99/gen_ram_b[24].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_100/gen_ram_b[25].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_101/gen_ram_b[26].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_102/gen_ram_b[27].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_103/gen_ram_b[28].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_104/gen_ram_b[29].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_105/gen_ram_b[30].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_106/gen_ram_b[31].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_107/gen_ram_b[32].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_108/gen_ram_b[33].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_109/gen_ram_b[34].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
-INFO: [Synth 8-6837] The timing for the instance i_0/ram_64tiles_inst/i_110/gen_ram_b[35].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_1/gen_ram_a[0].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_3/gen_ram_a[1].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_4/gen_ram_a[2].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_5/gen_ram_a[3].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_6/gen_ram_a[4].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_7/gen_ram_a[5].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_17/gen_ram_a[6].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_18/gen_ram_a[7].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_19/gen_ram_a[8].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_20/gen_ram_a[9].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_21/gen_ram_a[10].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_22/gen_ram_a[11].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_23/gen_ram_a[12].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_24/gen_ram_a[13].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_25/gen_ram_a[14].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_26/gen_ram_a[15].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_27/gen_ram_a[16].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_28/gen_ram_a[17].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_29/gen_ram_a[18].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_30/gen_ram_a[19].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_31/gen_ram_a[20].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_32/gen_ram_a[21].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_33/gen_ram_a[22].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_34/gen_ram_a[23].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_35/gen_ram_a[24].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_36/gen_ram_a[25].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_37/gen_ram_a[26].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_38/gen_ram_a[27].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_39/gen_ram_a[28].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_40/gen_ram_a[29].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_41/gen_ram_a[30].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_42/gen_ram_a[31].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_43/gen_ram_a[32].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_44/gen_ram_a[33].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_45/gen_ram_a[34].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_46/gen_ram_a[35].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_47/gen_ram_a[36].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_48/gen_ram_a[37].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_49/gen_ram_a[38].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_50/gen_ram_a[39].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_51/gen_ram_a[40].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_52/gen_ram_a[41].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_53/gen_ram_a[42].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_54/gen_ram_a[43].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_55/gen_ram_a[44].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_56/gen_ram_a[45].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_57/gen_ram_a[46].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_58/gen_ram_a[47].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_59/gen_ram_a[48].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_60/gen_ram_a[49].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_61/gen_ram_a[50].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_62/gen_ram_a[51].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_63/gen_ram_a[52].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_64/gen_ram_a[53].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_65/gen_ram_a[54].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_66/gen_ram_a[55].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_67/gen_ram_a[56].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_68/gen_ram_a[57].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_69/gen_ram_a[58].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_70/gen_ram_a[59].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_71/gen_ram_a[60].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_72/gen_ram_a[61].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_73/gen_ram_a[62].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_74/gen_ram_a[63].ram_a_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_75/gen_ram_b[0].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_76/gen_ram_b[1].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_77/gen_ram_b[2].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_78/gen_ram_b[3].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_79/gen_ram_b[4].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_80/gen_ram_b[5].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_81/gen_ram_b[6].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_82/gen_ram_b[7].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_83/gen_ram_b[8].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_84/gen_ram_b[9].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_85/gen_ram_b[10].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_86/gen_ram_b[11].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_87/gen_ram_b[12].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_88/gen_ram_b[13].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_89/gen_ram_b[14].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_90/gen_ram_b[15].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_91/gen_ram_b[16].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_92/gen_ram_b[17].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_93/gen_ram_b[18].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_94/gen_ram_b[19].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_95/gen_ram_b[20].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_96/gen_ram_b[21].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_97/gen_ram_b[22].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_98/gen_ram_b[23].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_99/gen_ram_b[24].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_100/gen_ram_b[25].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_101/gen_ram_b[26].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_102/gen_ram_b[27].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_103/gen_ram_b[28].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_104/gen_ram_b[29].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_105/gen_ram_b[30].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_106/gen_ram_b[31].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_107/gen_ram_b[32].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_108/gen_ram_b[33].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_109/gen_ram_b[34].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-6837] The timing for the instance ram_64tiles_inst/i_110/gen_ram_b[35].ram_b_inst/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Common 17-14] Message 'Synth 8-6837' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:364]
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:417]
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:414]
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:418]
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:414]
 
 Report RTL Partitions: 
-+------+-----------------------+------------+----------+
-|      |RTL Partition          |Replication |Instances |
-+------+-----------------------+------------+----------+
-|1     |clahe_clipper_cdf__GB0 |           1|     17760|
-|2     |clahe_clipper_cdf__GB1 |           1|      3558|
-|3     |clahe_clipper_cdf__GB2 |           1|      9293|
-|4     |clahe_clipper_cdf__GB3 |           1|     10420|
-|5     |clahe_top__GC0         |           1|     22987|
-+------+-----------------------+------------+----------+
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:03 ; elapsed = 00:01:11 . Memory (MB): peak = 1096.312 ; gain = 764.418
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:46 ; elapsed = 00:00:49 . Memory (MB): peak = 1202.023 ; gain = 869.629
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:01:36 ; elapsed = 00:01:47 . Memory (MB): peak = 1267.727 ; gain = 935.832
+Finished Timing Optimization : Time (s): cpu = 00:00:52 ; elapsed = 00:00:55 . Memory (MB): peak = 1290.547 ; gain = 958.152
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1885,6 +983,8 @@ Block RAM: Final Mapping  Report
 |clahe_simple_dual_ram_model: | ram_reg    | 256 x 16(NO_CHANGE)    | W |   | 256 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
 |clahe_simple_dual_ram_model: | ram_reg    | 256 x 16(NO_CHANGE)    | W |   | 256 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
 |clahe_simple_dual_ram_model: | ram_reg    | 256 x 16(NO_CHANGE)    | W |   | 256 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
+|clahe_true_dual_port_ram:    | ram_reg    | 256 x 16(READ_FIRST)   | W | R | 256 x 16(READ_FIRST)   | W | R | Port A and B     | 1      | 0      | 
+|clahe_true_dual_port_ram:    | ram_reg    | 256 x 16(READ_FIRST)   | W | R | 256 x 16(READ_FIRST)   | W | R | Port A and B     | 1      | 0      | 
 +-----------------------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 
 ---------------------------------------------------------------------------------
@@ -1892,22 +992,21 @@ Finished ROM, RAM, DSP and Shift Register Reporting
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
-+------+-----------------------+------------+----------+
-|      |RTL Partition          |Replication |Instances |
-+------+-----------------------+------------+----------+
-|1     |clahe_clipper_cdf__GB3 |           1|     10420|
-|2     |clahe_top__GC0         |           1|     22987|
-|3     |clahe_top_GT0          |           1|     30611|
-+------+-----------------------+------------+----------+
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-3886] merging instance 'i_24340' (FDCE) to 'i_24339'
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_clipper_cdf.v:364]
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:417]
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:414]
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:418]
 INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [E:/FPGA_codes/CLAHE/projects/64tile/rtl/clahe_mapping_parallel.v:414]
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:01:48 ; elapsed = 00:02:01 . Memory (MB): peak = 1343.812 ; gain = 1011.918
+Finished Technology Mapping : Time (s): cpu = 00:00:56 ; elapsed = 00:01:00 . Memory (MB): peak = 1357.832 ; gain = 1025.438
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1931,7 +1030,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:01:52 ; elapsed = 00:02:05 . Memory (MB): peak = 1343.812 ; gain = 1011.918
+Finished IO Insertion : Time (s): cpu = 00:00:58 ; elapsed = 00:01:01 . Memory (MB): peak = 1357.832 ; gain = 1025.438
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1944,7 +1043,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:52 ; elapsed = 00:02:05 . Memory (MB): peak = 1343.812 ; gain = 1011.918
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:58 ; elapsed = 00:01:01 . Memory (MB): peak = 1357.832 ; gain = 1025.438
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1956,25 +1055,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:54 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1357.832 ; gain = 1025.438
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:55 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1357.832 ; gain = 1025.438
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:55 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:59 ; elapsed = 00:01:02 . Memory (MB): peak = 1357.832 ; gain = 1025.438
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:55 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:59 ; elapsed = 00:01:02 . Memory (MB): peak = 1357.832 ; gain = 1025.438
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -2007,189 +1106,192 @@ Report Cell Usage:
 |      |Cell       |Count |
 +------+-----------+------+
 |1     |BUFG       |     1|
-|2     |CARRY4     |   412|
-|3     |DSP48E1    |     1|
+|2     |CARRY4     |   245|
+|3     |DSP48E1    |     2|
 |4     |DSP48E1_1  |     1|
-|5     |LUT1       |    71|
-|6     |LUT2       |   595|
-|7     |LUT3       |  1464|
-|8     |LUT4       |  1395|
-|9     |LUT5       |  2053|
-|10    |LUT6       |  9478|
-|11    |MUXF7      |  2851|
-|12    |MUXF8      |  1297|
+|5     |LUT1       |    42|
+|6     |LUT2       |   399|
+|7     |LUT3       |   865|
+|8     |LUT4       |  1239|
+|9     |LUT5       |  1583|
+|10    |LUT6       |  4346|
+|11    |MUXF7      |   768|
+|12    |MUXF8      |   256|
 |13    |RAMB18E1   |   128|
-|14    |RAMB18E1_1 |     1|
+|14    |RAMB18E1_1 |     2|
 |15    |RAMB18E1_2 |     1|
-|16    |SRL16E     |    17|
-|17    |FDCE       | 17057|
-|18    |FDPE       |     1|
-|19    |FDRE       |    17|
-|20    |IBUF       |    38|
-|21    |OBUF       |    29|
+|16    |RAMB18E1_3 |     1|
+|17    |SRL16E     |    17|
+|18    |FDCE       |   619|
+|19    |FDPE       |     1|
+|20    |FDRE       |    17|
+|21    |IBUF       |    38|
+|22    |OBUF       |    29|
 +------+-----------+------+
 
 Report Instance Areas: 
 +------+-------------------------------+--------------------------------+------+
 |      |Instance                       |Module                          |Cells |
 +------+-------------------------------+--------------------------------+------+
-|1     |top                            |                                | 36908|
-|2     |  clipper_cdf_inst             |clahe_clipper_cdf               | 27902|
-|3     |  coord_counter_inst           |clahe_coord_counter             |   300|
-|4     |  hist_stat_inst               |clahe_histogram_stat            |  3615|
-|5     |  mapping_inst                 |clahe_mapping_parallel          |   721|
-|6     |  ram_64tiles_inst             |clahe_ram_64tiles_parallel      |  4222|
-|7     |    \gen_ram_a[0].ram_a_inst   |clahe_simple_dual_ram_model     |    10|
-|8     |    \gen_ram_a[10].ram_a_inst  |clahe_simple_dual_ram_model_0   |    10|
-|9     |    \gen_ram_a[11].ram_a_inst  |clahe_simple_dual_ram_model_1   |   107|
-|10    |    \gen_ram_a[12].ram_a_inst  |clahe_simple_dual_ram_model_2   |    10|
-|11    |    \gen_ram_a[13].ram_a_inst  |clahe_simple_dual_ram_model_3   |    10|
-|12    |    \gen_ram_a[14].ram_a_inst  |clahe_simple_dual_ram_model_4   |    10|
-|13    |    \gen_ram_a[15].ram_a_inst  |clahe_simple_dual_ram_model_5   |    59|
-|14    |    \gen_ram_a[16].ram_a_inst  |clahe_simple_dual_ram_model_6   |    10|
-|15    |    \gen_ram_a[17].ram_a_inst  |clahe_simple_dual_ram_model_7   |    10|
-|16    |    \gen_ram_a[18].ram_a_inst  |clahe_simple_dual_ram_model_8   |    10|
-|17    |    \gen_ram_a[19].ram_a_inst  |clahe_simple_dual_ram_model_9   |   139|
-|18    |    \gen_ram_a[1].ram_a_inst   |clahe_simple_dual_ram_model_10  |    10|
-|19    |    \gen_ram_a[20].ram_a_inst  |clahe_simple_dual_ram_model_11  |    10|
-|20    |    \gen_ram_a[21].ram_a_inst  |clahe_simple_dual_ram_model_12  |    10|
-|21    |    \gen_ram_a[22].ram_a_inst  |clahe_simple_dual_ram_model_13  |    10|
-|22    |    \gen_ram_a[23].ram_a_inst  |clahe_simple_dual_ram_model_14  |    59|
-|23    |    \gen_ram_a[24].ram_a_inst  |clahe_simple_dual_ram_model_15  |    10|
-|24    |    \gen_ram_a[25].ram_a_inst  |clahe_simple_dual_ram_model_16  |    10|
-|25    |    \gen_ram_a[26].ram_a_inst  |clahe_simple_dual_ram_model_17  |    10|
-|26    |    \gen_ram_a[27].ram_a_inst  |clahe_simple_dual_ram_model_18  |   139|
-|27    |    \gen_ram_a[28].ram_a_inst  |clahe_simple_dual_ram_model_19  |    10|
-|28    |    \gen_ram_a[29].ram_a_inst  |clahe_simple_dual_ram_model_20  |    10|
-|29    |    \gen_ram_a[2].ram_a_inst   |clahe_simple_dual_ram_model_21  |    10|
-|30    |    \gen_ram_a[30].ram_a_inst  |clahe_simple_dual_ram_model_22  |    10|
-|31    |    \gen_ram_a[31].ram_a_inst  |clahe_simple_dual_ram_model_23  |    59|
-|32    |    \gen_ram_a[32].ram_a_inst  |clahe_simple_dual_ram_model_24  |    10|
-|33    |    \gen_ram_a[33].ram_a_inst  |clahe_simple_dual_ram_model_25  |    10|
-|34    |    \gen_ram_a[34].ram_a_inst  |clahe_simple_dual_ram_model_26  |    10|
-|35    |    \gen_ram_a[35].ram_a_inst  |clahe_simple_dual_ram_model_27  |   139|
-|36    |    \gen_ram_a[36].ram_a_inst  |clahe_simple_dual_ram_model_28  |    10|
-|37    |    \gen_ram_a[37].ram_a_inst  |clahe_simple_dual_ram_model_29  |    10|
-|38    |    \gen_ram_a[38].ram_a_inst  |clahe_simple_dual_ram_model_30  |    10|
-|39    |    \gen_ram_a[39].ram_a_inst  |clahe_simple_dual_ram_model_31  |    59|
-|40    |    \gen_ram_a[3].ram_a_inst   |clahe_simple_dual_ram_model_32  |   139|
-|41    |    \gen_ram_a[40].ram_a_inst  |clahe_simple_dual_ram_model_33  |    10|
-|42    |    \gen_ram_a[41].ram_a_inst  |clahe_simple_dual_ram_model_34  |    10|
-|43    |    \gen_ram_a[42].ram_a_inst  |clahe_simple_dual_ram_model_35  |    10|
-|44    |    \gen_ram_a[43].ram_a_inst  |clahe_simple_dual_ram_model_36  |   107|
-|45    |    \gen_ram_a[44].ram_a_inst  |clahe_simple_dual_ram_model_37  |    10|
-|46    |    \gen_ram_a[45].ram_a_inst  |clahe_simple_dual_ram_model_38  |    10|
-|47    |    \gen_ram_a[46].ram_a_inst  |clahe_simple_dual_ram_model_39  |    10|
-|48    |    \gen_ram_a[47].ram_a_inst  |clahe_simple_dual_ram_model_40  |    59|
-|49    |    \gen_ram_a[48].ram_a_inst  |clahe_simple_dual_ram_model_41  |    10|
-|50    |    \gen_ram_a[49].ram_a_inst  |clahe_simple_dual_ram_model_42  |    10|
-|51    |    \gen_ram_a[4].ram_a_inst   |clahe_simple_dual_ram_model_43  |    10|
-|52    |    \gen_ram_a[50].ram_a_inst  |clahe_simple_dual_ram_model_44  |    10|
-|53    |    \gen_ram_a[51].ram_a_inst  |clahe_simple_dual_ram_model_45  |   187|
-|54    |    \gen_ram_a[52].ram_a_inst  |clahe_simple_dual_ram_model_46  |    10|
-|55    |    \gen_ram_a[53].ram_a_inst  |clahe_simple_dual_ram_model_47  |    10|
-|56    |    \gen_ram_a[54].ram_a_inst  |clahe_simple_dual_ram_model_48  |    10|
-|57    |    \gen_ram_a[55].ram_a_inst  |clahe_simple_dual_ram_model_49  |    59|
-|58    |    \gen_ram_a[56].ram_a_inst  |clahe_simple_dual_ram_model_50  |    10|
-|59    |    \gen_ram_a[57].ram_a_inst  |clahe_simple_dual_ram_model_51  |    10|
-|60    |    \gen_ram_a[58].ram_a_inst  |clahe_simple_dual_ram_model_52  |    10|
-|61    |    \gen_ram_a[59].ram_a_inst  |clahe_simple_dual_ram_model_53  |   171|
-|62    |    \gen_ram_a[5].ram_a_inst   |clahe_simple_dual_ram_model_54  |    10|
-|63    |    \gen_ram_a[60].ram_a_inst  |clahe_simple_dual_ram_model_55  |    10|
-|64    |    \gen_ram_a[61].ram_a_inst  |clahe_simple_dual_ram_model_56  |    10|
-|65    |    \gen_ram_a[62].ram_a_inst  |clahe_simple_dual_ram_model_57  |    10|
-|66    |    \gen_ram_a[63].ram_a_inst  |clahe_simple_dual_ram_model_58  |    60|
-|67    |    \gen_ram_a[6].ram_a_inst   |clahe_simple_dual_ram_model_59  |    10|
-|68    |    \gen_ram_a[7].ram_a_inst   |clahe_simple_dual_ram_model_60  |    59|
-|69    |    \gen_ram_a[8].ram_a_inst   |clahe_simple_dual_ram_model_61  |    10|
-|70    |    \gen_ram_a[9].ram_a_inst   |clahe_simple_dual_ram_model_62  |    10|
-|71    |    \gen_ram_b[0].ram_b_inst   |clahe_simple_dual_ram_model_63  |    12|
-|72    |    \gen_ram_b[10].ram_b_inst  |clahe_simple_dual_ram_model_64  |    10|
-|73    |    \gen_ram_b[11].ram_b_inst  |clahe_simple_dual_ram_model_65  |   106|
-|74    |    \gen_ram_b[12].ram_b_inst  |clahe_simple_dual_ram_model_66  |    11|
-|75    |    \gen_ram_b[13].ram_b_inst  |clahe_simple_dual_ram_model_67  |    10|
-|76    |    \gen_ram_b[14].ram_b_inst  |clahe_simple_dual_ram_model_68  |    10|
-|77    |    \gen_ram_b[15].ram_b_inst  |clahe_simple_dual_ram_model_69  |    58|
-|78    |    \gen_ram_b[16].ram_b_inst  |clahe_simple_dual_ram_model_70  |    11|
-|79    |    \gen_ram_b[17].ram_b_inst  |clahe_simple_dual_ram_model_71  |    10|
-|80    |    \gen_ram_b[18].ram_b_inst  |clahe_simple_dual_ram_model_72  |    10|
-|81    |    \gen_ram_b[19].ram_b_inst  |clahe_simple_dual_ram_model_73  |   138|
-|82    |    \gen_ram_b[1].ram_b_inst   |clahe_simple_dual_ram_model_74  |    10|
-|83    |    \gen_ram_b[20].ram_b_inst  |clahe_simple_dual_ram_model_75  |    11|
-|84    |    \gen_ram_b[21].ram_b_inst  |clahe_simple_dual_ram_model_76  |    10|
-|85    |    \gen_ram_b[22].ram_b_inst  |clahe_simple_dual_ram_model_77  |    10|
-|86    |    \gen_ram_b[23].ram_b_inst  |clahe_simple_dual_ram_model_78  |    58|
-|87    |    \gen_ram_b[24].ram_b_inst  |clahe_simple_dual_ram_model_79  |    11|
-|88    |    \gen_ram_b[25].ram_b_inst  |clahe_simple_dual_ram_model_80  |    10|
-|89    |    \gen_ram_b[26].ram_b_inst  |clahe_simple_dual_ram_model_81  |    10|
-|90    |    \gen_ram_b[27].ram_b_inst  |clahe_simple_dual_ram_model_82  |   138|
-|91    |    \gen_ram_b[28].ram_b_inst  |clahe_simple_dual_ram_model_83  |    11|
-|92    |    \gen_ram_b[29].ram_b_inst  |clahe_simple_dual_ram_model_84  |    10|
-|93    |    \gen_ram_b[2].ram_b_inst   |clahe_simple_dual_ram_model_85  |    10|
-|94    |    \gen_ram_b[30].ram_b_inst  |clahe_simple_dual_ram_model_86  |    10|
-|95    |    \gen_ram_b[31].ram_b_inst  |clahe_simple_dual_ram_model_87  |    58|
-|96    |    \gen_ram_b[32].ram_b_inst  |clahe_simple_dual_ram_model_88  |    11|
-|97    |    \gen_ram_b[33].ram_b_inst  |clahe_simple_dual_ram_model_89  |    10|
-|98    |    \gen_ram_b[34].ram_b_inst  |clahe_simple_dual_ram_model_90  |    10|
-|99    |    \gen_ram_b[35].ram_b_inst  |clahe_simple_dual_ram_model_91  |   138|
-|100   |    \gen_ram_b[36].ram_b_inst  |clahe_simple_dual_ram_model_92  |    11|
-|101   |    \gen_ram_b[37].ram_b_inst  |clahe_simple_dual_ram_model_93  |    10|
-|102   |    \gen_ram_b[38].ram_b_inst  |clahe_simple_dual_ram_model_94  |    10|
-|103   |    \gen_ram_b[39].ram_b_inst  |clahe_simple_dual_ram_model_95  |    58|
-|104   |    \gen_ram_b[3].ram_b_inst   |clahe_simple_dual_ram_model_96  |   138|
-|105   |    \gen_ram_b[40].ram_b_inst  |clahe_simple_dual_ram_model_97  |    11|
-|106   |    \gen_ram_b[41].ram_b_inst  |clahe_simple_dual_ram_model_98  |    10|
-|107   |    \gen_ram_b[42].ram_b_inst  |clahe_simple_dual_ram_model_99  |    10|
-|108   |    \gen_ram_b[43].ram_b_inst  |clahe_simple_dual_ram_model_100 |   106|
-|109   |    \gen_ram_b[44].ram_b_inst  |clahe_simple_dual_ram_model_101 |    11|
-|110   |    \gen_ram_b[45].ram_b_inst  |clahe_simple_dual_ram_model_102 |    10|
-|111   |    \gen_ram_b[46].ram_b_inst  |clahe_simple_dual_ram_model_103 |    10|
-|112   |    \gen_ram_b[47].ram_b_inst  |clahe_simple_dual_ram_model_104 |    58|
-|113   |    \gen_ram_b[48].ram_b_inst  |clahe_simple_dual_ram_model_105 |    11|
-|114   |    \gen_ram_b[49].ram_b_inst  |clahe_simple_dual_ram_model_106 |    10|
-|115   |    \gen_ram_b[4].ram_b_inst   |clahe_simple_dual_ram_model_107 |    11|
-|116   |    \gen_ram_b[50].ram_b_inst  |clahe_simple_dual_ram_model_108 |    10|
-|117   |    \gen_ram_b[51].ram_b_inst  |clahe_simple_dual_ram_model_109 |   234|
-|118   |    \gen_ram_b[52].ram_b_inst  |clahe_simple_dual_ram_model_110 |    11|
-|119   |    \gen_ram_b[53].ram_b_inst  |clahe_simple_dual_ram_model_111 |    10|
-|120   |    \gen_ram_b[54].ram_b_inst  |clahe_simple_dual_ram_model_112 |    10|
-|121   |    \gen_ram_b[55].ram_b_inst  |clahe_simple_dual_ram_model_113 |    58|
-|122   |    \gen_ram_b[56].ram_b_inst  |clahe_simple_dual_ram_model_114 |    11|
-|123   |    \gen_ram_b[57].ram_b_inst  |clahe_simple_dual_ram_model_115 |    10|
-|124   |    \gen_ram_b[58].ram_b_inst  |clahe_simple_dual_ram_model_116 |    10|
-|125   |    \gen_ram_b[59].ram_b_inst  |clahe_simple_dual_ram_model_117 |   138|
-|126   |    \gen_ram_b[5].ram_b_inst   |clahe_simple_dual_ram_model_118 |    10|
-|127   |    \gen_ram_b[60].ram_b_inst  |clahe_simple_dual_ram_model_119 |    11|
-|128   |    \gen_ram_b[61].ram_b_inst  |clahe_simple_dual_ram_model_120 |    10|
-|129   |    \gen_ram_b[62].ram_b_inst  |clahe_simple_dual_ram_model_121 |    10|
-|130   |    \gen_ram_b[63].ram_b_inst  |clahe_simple_dual_ram_model_122 |    58|
-|131   |    \gen_ram_b[6].ram_b_inst   |clahe_simple_dual_ram_model_123 |    10|
-|132   |    \gen_ram_b[7].ram_b_inst   |clahe_simple_dual_ram_model_124 |    58|
-|133   |    \gen_ram_b[8].ram_b_inst   |clahe_simple_dual_ram_model_125 |    11|
-|134   |    \gen_ram_b[9].ram_b_inst   |clahe_simple_dual_ram_model_126 |    10|
+|1     |top                            |                                | 10600|
+|2     |  clipper_cdf_inst             |clahe_clipper_cdf               |  1609|
+|3     |    cdf_ram_inst               |clahe_true_dual_port_ram        |    33|
+|4     |    hist_buf_ram_inst          |clahe_true_dual_port_ram_127    |    66|
+|5     |  coord_counter_inst           |clahe_coord_counter             |   300|
+|6     |  hist_stat_inst               |clahe_histogram_stat            |  3615|
+|7     |  mapping_inst                 |clahe_mapping_parallel          |   723|
+|8     |  ram_64tiles_inst             |clahe_ram_64tiles_parallel      |  4245|
+|9     |    \gen_ram_a[0].ram_a_inst   |clahe_simple_dual_ram_model     |    10|
+|10    |    \gen_ram_a[10].ram_a_inst  |clahe_simple_dual_ram_model_0   |    10|
+|11    |    \gen_ram_a[11].ram_a_inst  |clahe_simple_dual_ram_model_1   |   107|
+|12    |    \gen_ram_a[12].ram_a_inst  |clahe_simple_dual_ram_model_2   |    10|
+|13    |    \gen_ram_a[13].ram_a_inst  |clahe_simple_dual_ram_model_3   |    10|
+|14    |    \gen_ram_a[14].ram_a_inst  |clahe_simple_dual_ram_model_4   |    10|
+|15    |    \gen_ram_a[15].ram_a_inst  |clahe_simple_dual_ram_model_5   |    59|
+|16    |    \gen_ram_a[16].ram_a_inst  |clahe_simple_dual_ram_model_6   |    10|
+|17    |    \gen_ram_a[17].ram_a_inst  |clahe_simple_dual_ram_model_7   |    10|
+|18    |    \gen_ram_a[18].ram_a_inst  |clahe_simple_dual_ram_model_8   |    10|
+|19    |    \gen_ram_a[19].ram_a_inst  |clahe_simple_dual_ram_model_9   |   139|
+|20    |    \gen_ram_a[1].ram_a_inst   |clahe_simple_dual_ram_model_10  |    10|
+|21    |    \gen_ram_a[20].ram_a_inst  |clahe_simple_dual_ram_model_11  |    10|
+|22    |    \gen_ram_a[21].ram_a_inst  |clahe_simple_dual_ram_model_12  |    10|
+|23    |    \gen_ram_a[22].ram_a_inst  |clahe_simple_dual_ram_model_13  |    10|
+|24    |    \gen_ram_a[23].ram_a_inst  |clahe_simple_dual_ram_model_14  |    59|
+|25    |    \gen_ram_a[24].ram_a_inst  |clahe_simple_dual_ram_model_15  |    10|
+|26    |    \gen_ram_a[25].ram_a_inst  |clahe_simple_dual_ram_model_16  |    10|
+|27    |    \gen_ram_a[26].ram_a_inst  |clahe_simple_dual_ram_model_17  |    10|
+|28    |    \gen_ram_a[27].ram_a_inst  |clahe_simple_dual_ram_model_18  |   139|
+|29    |    \gen_ram_a[28].ram_a_inst  |clahe_simple_dual_ram_model_19  |    10|
+|30    |    \gen_ram_a[29].ram_a_inst  |clahe_simple_dual_ram_model_20  |    10|
+|31    |    \gen_ram_a[2].ram_a_inst   |clahe_simple_dual_ram_model_21  |    10|
+|32    |    \gen_ram_a[30].ram_a_inst  |clahe_simple_dual_ram_model_22  |    10|
+|33    |    \gen_ram_a[31].ram_a_inst  |clahe_simple_dual_ram_model_23  |    59|
+|34    |    \gen_ram_a[32].ram_a_inst  |clahe_simple_dual_ram_model_24  |    10|
+|35    |    \gen_ram_a[33].ram_a_inst  |clahe_simple_dual_ram_model_25  |    10|
+|36    |    \gen_ram_a[34].ram_a_inst  |clahe_simple_dual_ram_model_26  |    10|
+|37    |    \gen_ram_a[35].ram_a_inst  |clahe_simple_dual_ram_model_27  |   139|
+|38    |    \gen_ram_a[36].ram_a_inst  |clahe_simple_dual_ram_model_28  |    10|
+|39    |    \gen_ram_a[37].ram_a_inst  |clahe_simple_dual_ram_model_29  |    10|
+|40    |    \gen_ram_a[38].ram_a_inst  |clahe_simple_dual_ram_model_30  |    10|
+|41    |    \gen_ram_a[39].ram_a_inst  |clahe_simple_dual_ram_model_31  |    59|
+|42    |    \gen_ram_a[3].ram_a_inst   |clahe_simple_dual_ram_model_32  |   139|
+|43    |    \gen_ram_a[40].ram_a_inst  |clahe_simple_dual_ram_model_33  |    10|
+|44    |    \gen_ram_a[41].ram_a_inst  |clahe_simple_dual_ram_model_34  |    10|
+|45    |    \gen_ram_a[42].ram_a_inst  |clahe_simple_dual_ram_model_35  |    10|
+|46    |    \gen_ram_a[43].ram_a_inst  |clahe_simple_dual_ram_model_36  |   107|
+|47    |    \gen_ram_a[44].ram_a_inst  |clahe_simple_dual_ram_model_37  |    10|
+|48    |    \gen_ram_a[45].ram_a_inst  |clahe_simple_dual_ram_model_38  |    10|
+|49    |    \gen_ram_a[46].ram_a_inst  |clahe_simple_dual_ram_model_39  |    10|
+|50    |    \gen_ram_a[47].ram_a_inst  |clahe_simple_dual_ram_model_40  |    59|
+|51    |    \gen_ram_a[48].ram_a_inst  |clahe_simple_dual_ram_model_41  |    10|
+|52    |    \gen_ram_a[49].ram_a_inst  |clahe_simple_dual_ram_model_42  |    10|
+|53    |    \gen_ram_a[4].ram_a_inst   |clahe_simple_dual_ram_model_43  |    10|
+|54    |    \gen_ram_a[50].ram_a_inst  |clahe_simple_dual_ram_model_44  |    10|
+|55    |    \gen_ram_a[51].ram_a_inst  |clahe_simple_dual_ram_model_45  |   187|
+|56    |    \gen_ram_a[52].ram_a_inst  |clahe_simple_dual_ram_model_46  |    10|
+|57    |    \gen_ram_a[53].ram_a_inst  |clahe_simple_dual_ram_model_47  |    10|
+|58    |    \gen_ram_a[54].ram_a_inst  |clahe_simple_dual_ram_model_48  |    10|
+|59    |    \gen_ram_a[55].ram_a_inst  |clahe_simple_dual_ram_model_49  |    59|
+|60    |    \gen_ram_a[56].ram_a_inst  |clahe_simple_dual_ram_model_50  |    10|
+|61    |    \gen_ram_a[57].ram_a_inst  |clahe_simple_dual_ram_model_51  |    10|
+|62    |    \gen_ram_a[58].ram_a_inst  |clahe_simple_dual_ram_model_52  |    10|
+|63    |    \gen_ram_a[59].ram_a_inst  |clahe_simple_dual_ram_model_53  |   171|
+|64    |    \gen_ram_a[5].ram_a_inst   |clahe_simple_dual_ram_model_54  |    10|
+|65    |    \gen_ram_a[60].ram_a_inst  |clahe_simple_dual_ram_model_55  |    10|
+|66    |    \gen_ram_a[61].ram_a_inst  |clahe_simple_dual_ram_model_56  |    10|
+|67    |    \gen_ram_a[62].ram_a_inst  |clahe_simple_dual_ram_model_57  |    10|
+|68    |    \gen_ram_a[63].ram_a_inst  |clahe_simple_dual_ram_model_58  |    60|
+|69    |    \gen_ram_a[6].ram_a_inst   |clahe_simple_dual_ram_model_59  |    10|
+|70    |    \gen_ram_a[7].ram_a_inst   |clahe_simple_dual_ram_model_60  |    59|
+|71    |    \gen_ram_a[8].ram_a_inst   |clahe_simple_dual_ram_model_61  |    10|
+|72    |    \gen_ram_a[9].ram_a_inst   |clahe_simple_dual_ram_model_62  |    10|
+|73    |    \gen_ram_b[0].ram_b_inst   |clahe_simple_dual_ram_model_63  |    12|
+|74    |    \gen_ram_b[10].ram_b_inst  |clahe_simple_dual_ram_model_64  |    10|
+|75    |    \gen_ram_b[11].ram_b_inst  |clahe_simple_dual_ram_model_65  |   106|
+|76    |    \gen_ram_b[12].ram_b_inst  |clahe_simple_dual_ram_model_66  |    11|
+|77    |    \gen_ram_b[13].ram_b_inst  |clahe_simple_dual_ram_model_67  |    10|
+|78    |    \gen_ram_b[14].ram_b_inst  |clahe_simple_dual_ram_model_68  |    10|
+|79    |    \gen_ram_b[15].ram_b_inst  |clahe_simple_dual_ram_model_69  |    58|
+|80    |    \gen_ram_b[16].ram_b_inst  |clahe_simple_dual_ram_model_70  |    11|
+|81    |    \gen_ram_b[17].ram_b_inst  |clahe_simple_dual_ram_model_71  |    10|
+|82    |    \gen_ram_b[18].ram_b_inst  |clahe_simple_dual_ram_model_72  |    10|
+|83    |    \gen_ram_b[19].ram_b_inst  |clahe_simple_dual_ram_model_73  |   138|
+|84    |    \gen_ram_b[1].ram_b_inst   |clahe_simple_dual_ram_model_74  |    10|
+|85    |    \gen_ram_b[20].ram_b_inst  |clahe_simple_dual_ram_model_75  |    11|
+|86    |    \gen_ram_b[21].ram_b_inst  |clahe_simple_dual_ram_model_76  |    10|
+|87    |    \gen_ram_b[22].ram_b_inst  |clahe_simple_dual_ram_model_77  |    10|
+|88    |    \gen_ram_b[23].ram_b_inst  |clahe_simple_dual_ram_model_78  |    58|
+|89    |    \gen_ram_b[24].ram_b_inst  |clahe_simple_dual_ram_model_79  |    11|
+|90    |    \gen_ram_b[25].ram_b_inst  |clahe_simple_dual_ram_model_80  |    10|
+|91    |    \gen_ram_b[26].ram_b_inst  |clahe_simple_dual_ram_model_81  |    10|
+|92    |    \gen_ram_b[27].ram_b_inst  |clahe_simple_dual_ram_model_82  |   138|
+|93    |    \gen_ram_b[28].ram_b_inst  |clahe_simple_dual_ram_model_83  |    11|
+|94    |    \gen_ram_b[29].ram_b_inst  |clahe_simple_dual_ram_model_84  |    10|
+|95    |    \gen_ram_b[2].ram_b_inst   |clahe_simple_dual_ram_model_85  |    10|
+|96    |    \gen_ram_b[30].ram_b_inst  |clahe_simple_dual_ram_model_86  |    10|
+|97    |    \gen_ram_b[31].ram_b_inst  |clahe_simple_dual_ram_model_87  |    58|
+|98    |    \gen_ram_b[32].ram_b_inst  |clahe_simple_dual_ram_model_88  |    11|
+|99    |    \gen_ram_b[33].ram_b_inst  |clahe_simple_dual_ram_model_89  |    10|
+|100   |    \gen_ram_b[34].ram_b_inst  |clahe_simple_dual_ram_model_90  |    10|
+|101   |    \gen_ram_b[35].ram_b_inst  |clahe_simple_dual_ram_model_91  |   138|
+|102   |    \gen_ram_b[36].ram_b_inst  |clahe_simple_dual_ram_model_92  |    11|
+|103   |    \gen_ram_b[37].ram_b_inst  |clahe_simple_dual_ram_model_93  |    10|
+|104   |    \gen_ram_b[38].ram_b_inst  |clahe_simple_dual_ram_model_94  |    10|
+|105   |    \gen_ram_b[39].ram_b_inst  |clahe_simple_dual_ram_model_95  |    58|
+|106   |    \gen_ram_b[3].ram_b_inst   |clahe_simple_dual_ram_model_96  |   138|
+|107   |    \gen_ram_b[40].ram_b_inst  |clahe_simple_dual_ram_model_97  |    11|
+|108   |    \gen_ram_b[41].ram_b_inst  |clahe_simple_dual_ram_model_98  |    10|
+|109   |    \gen_ram_b[42].ram_b_inst  |clahe_simple_dual_ram_model_99  |    10|
+|110   |    \gen_ram_b[43].ram_b_inst  |clahe_simple_dual_ram_model_100 |   106|
+|111   |    \gen_ram_b[44].ram_b_inst  |clahe_simple_dual_ram_model_101 |    11|
+|112   |    \gen_ram_b[45].ram_b_inst  |clahe_simple_dual_ram_model_102 |    10|
+|113   |    \gen_ram_b[46].ram_b_inst  |clahe_simple_dual_ram_model_103 |    10|
+|114   |    \gen_ram_b[47].ram_b_inst  |clahe_simple_dual_ram_model_104 |    58|
+|115   |    \gen_ram_b[48].ram_b_inst  |clahe_simple_dual_ram_model_105 |    11|
+|116   |    \gen_ram_b[49].ram_b_inst  |clahe_simple_dual_ram_model_106 |    10|
+|117   |    \gen_ram_b[4].ram_b_inst   |clahe_simple_dual_ram_model_107 |    11|
+|118   |    \gen_ram_b[50].ram_b_inst  |clahe_simple_dual_ram_model_108 |    10|
+|119   |    \gen_ram_b[51].ram_b_inst  |clahe_simple_dual_ram_model_109 |   257|
+|120   |    \gen_ram_b[52].ram_b_inst  |clahe_simple_dual_ram_model_110 |    11|
+|121   |    \gen_ram_b[53].ram_b_inst  |clahe_simple_dual_ram_model_111 |    10|
+|122   |    \gen_ram_b[54].ram_b_inst  |clahe_simple_dual_ram_model_112 |    10|
+|123   |    \gen_ram_b[55].ram_b_inst  |clahe_simple_dual_ram_model_113 |    58|
+|124   |    \gen_ram_b[56].ram_b_inst  |clahe_simple_dual_ram_model_114 |    11|
+|125   |    \gen_ram_b[57].ram_b_inst  |clahe_simple_dual_ram_model_115 |    10|
+|126   |    \gen_ram_b[58].ram_b_inst  |clahe_simple_dual_ram_model_116 |    10|
+|127   |    \gen_ram_b[59].ram_b_inst  |clahe_simple_dual_ram_model_117 |   138|
+|128   |    \gen_ram_b[5].ram_b_inst   |clahe_simple_dual_ram_model_118 |    10|
+|129   |    \gen_ram_b[60].ram_b_inst  |clahe_simple_dual_ram_model_119 |    11|
+|130   |    \gen_ram_b[61].ram_b_inst  |clahe_simple_dual_ram_model_120 |    10|
+|131   |    \gen_ram_b[62].ram_b_inst  |clahe_simple_dual_ram_model_121 |    10|
+|132   |    \gen_ram_b[63].ram_b_inst  |clahe_simple_dual_ram_model_122 |    58|
+|133   |    \gen_ram_b[6].ram_b_inst   |clahe_simple_dual_ram_model_123 |    10|
+|134   |    \gen_ram_b[7].ram_b_inst   |clahe_simple_dual_ram_model_124 |    58|
+|135   |    \gen_ram_b[8].ram_b_inst   |clahe_simple_dual_ram_model_125 |    11|
+|136   |    \gen_ram_b[9].ram_b_inst   |clahe_simple_dual_ram_model_126 |    10|
 +------+-------------------------------+--------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:55 ; elapsed = 00:02:08 . Memory (MB): peak = 1343.812 ; gain = 1011.918
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:59 ; elapsed = 00:01:02 . Memory (MB): peak = 1357.832 ; gain = 1025.438
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:41 ; elapsed = 00:02:00 . Memory (MB): peak = 1343.812 ; gain = 608.852
-Synthesis Optimization Complete : Time (s): cpu = 00:01:55 ; elapsed = 00:02:09 . Memory (MB): peak = 1343.812 ; gain = 1011.918
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:42 ; elapsed = 00:00:50 . Memory (MB): peak = 1357.832 ; gain = 452.105
+Synthesis Optimization Complete : Time (s): cpu = 00:00:59 ; elapsed = 00:01:02 . Memory (MB): peak = 1357.832 ; gain = 1025.438
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 4692 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 1404 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1343.812 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1357.832 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-473 Infos, 30 Warnings, 0 Critical Warnings and 0 Errors encountered.
+309 Infos, 32 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:02:00 ; elapsed = 00:02:16 . Memory (MB): peak = 1343.812 ; gain = 1024.934
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1343.812 ; gain = 0.000
+synth_design: Time (s): cpu = 00:01:04 ; elapsed = 00:01:08 . Memory (MB): peak = 1357.832 ; gain = 1038.602
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1357.832 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'E:/FPGA_codes/CLAHE/vivado_project/clahe_vivado_64t/clahe_vivado_64t.runs/synth_1/clahe_top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file clahe_top_utilization_synth.rpt -pb clahe_top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sun Dec  7 16:28:35 2025...
+INFO: [Common 17-206] Exiting Vivado at Wed Dec 10 13:45:45 2025...
