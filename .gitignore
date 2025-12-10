@@ -33,11 +33,14 @@ qsys_*/
 *.bsp
 
 # 综合工具文件
-*.rpt
+# *.rpt
 *.htm
 *.html
 synplify.log
 *.syn
+*.qtl
+*.qdb
+*.qpg
 
 # 仿真临时文件
 # sim/

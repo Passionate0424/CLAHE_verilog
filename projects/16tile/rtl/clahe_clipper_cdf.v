@@ -287,7 +287,8 @@ module clahe_clipper_cdf #(
                 // 读取直方图并裁剪状态：逐个读取256个bins并同时进行裁剪判断
                 // 修复：由于RAM有1周期延迟，需要257个周期（0-256）
                 if (bin_cnt == 9'd256) begin
-                    if (excess_total > 0) begin
+                    // 修复：同时检查当前寄存器值和当前正在处理的bin是否溢出
+                    if (excess_total > 0 || (hist_rd_data > clip_limit)) begin
                         next_state = CLIP_REDIST;  // 有溢出，需要重分配
                     end
                     else begin
