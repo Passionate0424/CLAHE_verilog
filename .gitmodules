@@ -1,0 +1,3 @@
+[submodule "optimized"]
+	path = optimized
+	url = https://github.com/Passionate0424/CLAHE_optimized_private.git
