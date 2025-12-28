@@ -16,7 +16,7 @@ vlog -work work ../../16tile/tb/bmp_to_videoStream.sv
 # Simpler: reference the one in `../tb/` if I copied it, but I didn't copy the helper.
 # I will reference the one in `../../64tile_optimized/tb/bmp_for_videoStream_24bit.sv` to be 100% sure we use the same util.
 
-vlog -work work ../../64tile_optimized/tb/bmp_for_videoStream_24bit.sv
+vlog -work work ../../16tile/tb/bmp_for_videoStream_24bit.sv
 
 # Compile RTL (Original 64tile)
 vlog -work work ../rtl/clahe_coord_counter.v

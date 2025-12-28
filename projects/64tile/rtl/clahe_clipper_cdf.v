@@ -65,57 +65,57 @@
 // ============================================================================
 
 module clahe_clipper_cdf #(
-        parameter TILE_NUM = 16,
-        parameter BINS = 256,
-        parameter TILE_PIXELS = 57600  // 320*180
-    )(
-        input  wire         pclk,
-        input  wire         rst_n,
+    parameter TILE_NUM    = 16,
+    parameter BINS        = 256,
+    parameter TILE_PIXELS = 57600  // 320*180
+) (
+    input wire pclk,
+    input wire rst_n,
 
-        // 控制信号
-        input  wire         frame_hist_done,    // 直方图统计完成，触发处理
-        input  wire [15:0]  clip_limit,         // 裁剪阈值
-        input  wire         ping_pong_flag,     // 读取哪个hist RAM (与统计相反)
+    // 控制信号
+    input wire        frame_hist_done,  // 直方图统计完成，触发处理
+    input wire [15:0] clip_limit,       // 裁剪阈值
+    input wire        ping_pong_flag,   // 读取哪个hist RAM (与统计相反)
 
-        // 直方图RAM读接口
-        output reg  [$clog2(TILE_NUM)-1:0] hist_rd_tile_idx,   // 读tile索引
-        output reg  [7:0]   hist_rd_bin_addr,   // 读bin地址 (0-255)
-        input  wire [15:0]  hist_rd_data_a,     // RAM A数据
-        input  wire [15:0]  hist_rd_data_b,     // RAM B数据
+    // 直方图RAM读接口
+    output reg  [$clog2(TILE_NUM)-1:0] hist_rd_tile_idx,  // 读tile索引
+    output reg  [                 7:0] hist_rd_bin_addr,  // 读bin地址 (0-255)
+    input  wire [                15:0] hist_rd_data_a,    // RAM A数据
+    input  wire [                15:0] hist_rd_data_b,    // RAM B数据
 
-        // CDF LUT写入接口
-        output reg  [$clog2(TILE_NUM)-1:0] cdf_wr_tile_idx,   // 写tile索引
-        output reg  [7:0]   cdf_wr_bin_addr,   // 写bin地址
-        output reg  [7:0]   cdf_wr_data,        // 映射后的灰度值
-        output reg          cdf_wr_en,         // 写使能
+    // CDF LUT写入接口
+    output reg [$clog2(TILE_NUM)-1:0] cdf_wr_tile_idx,  // 写tile索引
+    output reg [                 7:0] cdf_wr_bin_addr,  // 写bin地址
+    output reg [                 7:0] cdf_wr_data,      // 映射后的灰度值
+    output reg                        cdf_wr_en,        // 写使能
 
-        // 状态输出
-        output reg          cdf_done,           // CDF计算完成，可开始映射
-        output reg          processing          // 处理中标志
-    );
+    // 状态输出
+    output reg cdf_done,   // CDF计算完成，可开始映射
+    output reg processing  // 处理中标志
+);
 
     // ========================================================================
     // 状态机定义
     // ========================================================================
     // 状态机用于控制整个CDF计算流程
-    localparam IDLE           = 4'd0;  // 空闲状态，等待触发
+    localparam IDLE = 4'd0;  // 空闲状态，等待触发
     localparam READ_HIST_CLIP = 4'd1;  // 读取直方图并同时进行裁剪（优化合并）
-    localparam CLIP_REDIST    = 4'd3;  // 重分配溢出值到其他bins
-    localparam CALC_CDF       = 4'd4;  // 计算累积分布函数
-    localparam WRITE_LUT      = 4'd5;  // 写入CDF查找表到RAM
-    localparam NEXT_TILE      = 4'd6;  // 处理下一个tile
-    localparam DONE           = 4'd7;  // 所有tile处理完成
-    localparam DONE_PULSE     = 4'd8;  // 完成脉冲状态，用于重置cdf_done
+    localparam CLIP_REDIST = 4'd3;  // 重分配溢出值到其他bins
+    localparam CALC_CDF = 4'd4;  // 计算累积分布函数
+    localparam WRITE_LUT = 4'd5;  // 写入CDF查找表到RAM
+    localparam NEXT_TILE = 4'd6;  // 处理下一个tile
+    localparam DONE = 4'd7;  // 所有tile处理完成
+    localparam DONE_PULSE = 4'd8;  // 完成脉冲状态，用于重置cdf_done
 
-    reg  [3:0]  state, next_state;       // 当前状态和下一状态
+    reg [3:0] state, next_state;  // 当前状态和下一状态
 
     // ========================================================================
     // 内部寄存器和信号
     // ========================================================================
     localparam TILE_IDX_WIDTH = $clog2(TILE_NUM);
 
-    reg  [TILE_IDX_WIDTH-1:0] tile_cnt;    // 当前处理的tile索引
-    reg  [8:0]  bin_cnt;                   // 当前处理的bin索引(0-256)
+    reg  [TILE_IDX_WIDTH-1:0] tile_cnt;  // 当前处理的tile索引
+    reg  [               8:0] bin_cnt;  // 当前处理的bin索引(0-256)
 
     // frame_hist_done现在是单周期脉冲，无需边沿检测
 
@@ -123,151 +123,155 @@ module clahe_clipper_cdf #(
     // RAM优化：使用RAM替代大型寄存器数组
     // ========================================================================
     // hist_buf RAM: 存储直方图数据（256×16bit）
-    wire        hist_buf_ena;
-    wire        hist_buf_wea;
-    wire [7:0]  hist_buf_addra;
-    wire [15:0] hist_buf_dina;
-    wire [15:0] hist_buf_douta;
-    wire        hist_buf_enb;
-    wire        hist_buf_web;
-    wire [7:0]  hist_buf_addrb;
-    wire [15:0] hist_buf_dinb;
-    wire [15:0] hist_buf_doutb;
+    wire                      hist_buf_ena;
+    wire                      hist_buf_wea;
+    wire [               7:0] hist_buf_addra;
+    wire [              15:0] hist_buf_dina;
+    wire [              15:0] hist_buf_douta;
+    wire                      hist_buf_enb;
+    wire                      hist_buf_web;
+    wire [               7:0] hist_buf_addrb;
+    wire [              15:0] hist_buf_dinb;
+    wire [              15:0] hist_buf_doutb;
 
     // cdf RAM: 存储CDF数据（256×16bit）
-    wire        cdf_ram_ena;
-    wire        cdf_ram_wea;
-    wire [7:0]  cdf_ram_addra;
-    wire [15:0] cdf_ram_dina;
-    wire [15:0] cdf_ram_douta;
-    wire        cdf_ram_enb;
-    wire        cdf_ram_web;
-    wire [7:0]  cdf_ram_addrb;
-    wire [15:0] cdf_ram_dinb;
-    wire [15:0] cdf_ram_doutb;
+    wire                      cdf_ram_ena;
+    wire                      cdf_ram_wea;
+    wire [               7:0] cdf_ram_addra;
+    wire [              15:0] cdf_ram_dina;
+    wire [              15:0] cdf_ram_douta;
+    wire                      cdf_ram_enb;
+    wire                      cdf_ram_web;
+    wire [               7:0] cdf_ram_addrb;
+    wire [              15:0] cdf_ram_dinb;
+    wire [              15:0] cdf_ram_doutb;
 
     // RAM控制信号寄存器
-    reg         hist_buf_ena_r;
-    reg         hist_buf_wea_r;
-    reg  [7:0]  hist_buf_addra_r;
-    reg  [15:0] hist_buf_dina_r;
-    reg         hist_buf_enb_r;
-    reg         hist_buf_web_r;
-    reg  [7:0]  hist_buf_addrb_r;
-    reg  [15:0] hist_buf_dinb_r;
+    reg                       hist_buf_ena_r;
+    reg                       hist_buf_wea_r;
+    reg  [               7:0] hist_buf_addra_r;
+    reg  [              15:0] hist_buf_dina_r;
+    reg                       hist_buf_enb_r;
+    reg                       hist_buf_web_r;
+    reg  [               7:0] hist_buf_addrb_r;
+    reg  [              15:0] hist_buf_dinb_r;
 
-    reg         cdf_ram_ena_r;
-    reg         cdf_ram_wea_r;
-    reg  [7:0]  cdf_ram_addra_r;
-    reg  [15:0] cdf_ram_dina_r;
-    reg         cdf_ram_enb_r;
-    reg         cdf_ram_web_r;
-    reg  [7:0]  cdf_ram_addrb_r;
-    reg  [15:0] cdf_ram_dinb_r;
+    reg                       cdf_ram_ena_r;
+    reg                       cdf_ram_wea_r;
+    reg  [               7:0] cdf_ram_addra_r;
+    reg  [              15:0] cdf_ram_dina_r;
+    reg                       cdf_ram_enb_r;
+    reg                       cdf_ram_web_r;
+    reg  [               7:0] cdf_ram_addrb_r;
+    reg  [              15:0] cdf_ram_dinb_r;
 
     // 连接寄存器到RAM
-    assign hist_buf_ena = hist_buf_ena_r;
-    assign hist_buf_wea = hist_buf_wea_r;
+    assign hist_buf_ena   = hist_buf_ena_r;
+    assign hist_buf_wea   = hist_buf_wea_r;
     assign hist_buf_addra = hist_buf_addra_r;
-    assign hist_buf_dina = hist_buf_dina_r;
-    assign hist_buf_enb = hist_buf_enb_r;
-    assign hist_buf_web = hist_buf_web_r;
+    assign hist_buf_dina  = hist_buf_dina_r;
+    assign hist_buf_enb   = hist_buf_enb_r;
+    assign hist_buf_web   = hist_buf_web_r;
     assign hist_buf_addrb = hist_buf_addrb_r;
-    assign hist_buf_dinb = hist_buf_dinb_r;
+    assign hist_buf_dinb  = hist_buf_dinb_r;
 
-    assign cdf_ram_ena = cdf_ram_ena_r;
-    assign cdf_ram_wea = cdf_ram_wea_r;
-    assign cdf_ram_addra = cdf_ram_addra_r;
-    assign cdf_ram_dina = cdf_ram_dina_r;
-    assign cdf_ram_enb = cdf_ram_enb_r;
-    assign cdf_ram_web = cdf_ram_web_r;
-    assign cdf_ram_addrb = cdf_ram_addrb_r;
-    assign cdf_ram_dinb = cdf_ram_dinb_r;
+    assign cdf_ram_ena    = cdf_ram_ena_r;
+    assign cdf_ram_wea    = cdf_ram_wea_r;
+    assign cdf_ram_addra  = cdf_ram_addra_r;
+    assign cdf_ram_dina   = cdf_ram_dina_r;
+    assign cdf_ram_enb    = cdf_ram_enb_r;
+    assign cdf_ram_web    = cdf_ram_web_r;
+    assign cdf_ram_addrb  = cdf_ram_addrb_r;
+    assign cdf_ram_dinb   = cdf_ram_dinb_r;
 
     // Clip相关信号 - 标准CLAHE实现
-    reg  [16:0] excess_total;          // 总溢出量 (最大57600+裕度)
-    wire [8:0]  excess_per_bin;        // 每个bin分配的溢出量（整数部分）
-    wire [7:0]  excess_remainder;      // 余数部分（需要分配给前N个bins）
+    reg  [16:0] excess_total;  // 总溢出量 (最大57600+裕度)
+    wire [ 8:0] excess_per_bin;  // 每个bin分配的溢出量（整数部分）
+    wire [ 7:0] excess_remainder;  // 余数部分（需要分配给前N个bins）
 
     // CDF相关信号 - 标准CLAHE实现（带流水线优化）
     // 57600像素累加，用16位安全（最大65535 > 57600）
-    reg  [15:0] cdf_min;               // CDF最小值
-    reg         cdf_min_found;         // cdf_min是否已找到（用于查找第一个非零CDF）
-    reg  [15:0] cdf_max;               // CDF最大值
-    reg  [15:0] cdf_range;             // CDF范围
-    reg  [15:0] cdf_temp;              // 临时累加值
+    reg  [15:0] cdf_min;  // CDF最小值
+    reg         cdf_min_found;  // cdf_min是否已找到（用于查找第一个非零CDF）
+    reg  [15:0] cdf_max;  // CDF最大值
+    reg  [15:0] cdf_range;  // CDF范围
+    reg  [15:0] cdf_temp;  // 临时累加值
 
     // 归一化流水线寄存器（3级流水：读取→乘法→除法）
-    reg  [15:0] norm_stage1_diff;      // 阶段1：cdf - cdf_min
-    reg  [31:0] norm_stage2_mult;      // 阶段2：diff * 255
-    reg  [7:0]  norm_stage1_addr;      // 阶段1的地址（用于延迟对齐）
-    reg  [7:0]  norm_stage2_addr;      // 阶段2的地址（用于延迟对齐）
+    reg  [15:0] norm_stage1_diff;  // 阶段1：cdf - cdf_min
+    reg  [31:0] norm_stage2_mult;  // 阶段2：diff * 255
+    reg  [ 7:0] norm_stage1_addr;  // 阶段1的地址（用于延迟对齐）
+    reg  [ 7:0] norm_stage2_addr;  // 阶段2的地址（用于延迟对齐）
 
     // RAM读取数据缓存（用于处理RAM的1周期延迟）
-    reg  [15:0] hist_buf_data_reg;     // hist_buf读取数据缓存
-    reg  [15:0] cdf_ram_data_reg;      // cdf_ram读取数据缓存
+    reg  [15:0] hist_buf_data_reg;  // hist_buf读取数据缓存
+    reg  [15:0] cdf_ram_data_reg;  // cdf_ram读取数据缓存
 
     // 乒乓RAM数据选择
     // CDF读取当前帧统计的RAM（与统计写入同一组）
     // ping_pong_flag=0：统计写RAM_A，CDF读RAM_A
     // ping_pong_flag=1：统计写RAM_B，CDF读RAM_B
-    wire [15:0] hist_rd_data;           // 根据ping_pong_flag选择读取的RAM数据
+    wire [15:0] hist_rd_data;  // 根据ping_pong_flag选择读取的RAM数据
     assign hist_rd_data = ping_pong_flag ? hist_rd_data_b : hist_rd_data_a;
 
     // 标准CLAHE：将溢出量平均分配到所有256个bins
     assign excess_per_bin = excess_total[16:8];      // 整数部分：除以256（等效于右移8位）
-    assign excess_remainder = excess_total[7:0];     // 余数部分：模256（等效于取低8位）
+    assign excess_remainder = excess_total[7:0];  // 余数部分：模256（等效于取低8位）
+
+    // 饱和减法中间信号：防止cdf - cdf_min无符号下溢
+    wire [16:0] cdf_diff_extended = {1'b0, cdf_ram_douta} - {1'b0, cdf_min};
+    wire [15:0] cdf_diff_saturated = cdf_diff_extended[16] ? 16'd0 : cdf_diff_extended[15:0];
 
     // 归一化除法结果（带饱和处理）
     wire [31:0] norm_div_result;
-    wire [7:0]  norm_saturated;
+    wire [ 7:0] norm_saturated;
     assign norm_div_result = (cdf_range > 0) ? (norm_stage2_mult / {16'd0, cdf_range}) : 32'd128;
-    assign norm_saturated = (norm_div_result > 32'd255) ? 8'd255 : norm_div_result[7:0];
+    assign norm_saturated  = (norm_div_result > 32'd255) ? 8'd255 : norm_div_result[7:0];
 
     // ========================================================================
     // RAM实例化：hist_buf和cdf使用真双端口RAM
     // ========================================================================
     // hist_buf RAM实例：用于存储直方图数据
     clahe_true_dual_port_ram #(
-                                 .DATA_WIDTH(16),
-                                 .ADDR_WIDTH(8),
-                                 .DEPTH(256)
-                             ) hist_buf_ram_inst (
-                                 .clk(pclk),
-                                 // 端口A
-                                 .ena(hist_buf_ena),
-                                 .wea(hist_buf_wea),
-                                 .addra(hist_buf_addra),
-                                 .dina(hist_buf_dina),
-                                 .douta(hist_buf_douta),
-                                 // 端口B
-                                 .enb(hist_buf_enb),
-                                 .web(hist_buf_web),
-                                 .addrb(hist_buf_addrb),
-                                 .dinb(hist_buf_dinb),
-                                 .doutb(hist_buf_doutb)
-                             );
+        .DATA_WIDTH(16),
+        .ADDR_WIDTH(8),
+        .DEPTH     (256)
+    ) hist_buf_ram_inst (
+        .clk  (pclk),
+        // 端口A
+        .ena  (hist_buf_ena),
+        .wea  (hist_buf_wea),
+        .addra(hist_buf_addra),
+        .dina (hist_buf_dina),
+        .douta(hist_buf_douta),
+        // 端口B
+        .enb  (hist_buf_enb),
+        .web  (hist_buf_web),
+        .addrb(hist_buf_addrb),
+        .dinb (hist_buf_dinb),
+        .doutb(hist_buf_doutb)
+    );
 
     // cdf RAM实例：用于存储CDF数据
     clahe_true_dual_port_ram #(
-                                 .DATA_WIDTH(16),
-                                 .ADDR_WIDTH(8),
-                                 .DEPTH(256)
-                             ) cdf_ram_inst (
-                                 .clk(pclk),
-                                 // 端口A
-                                 .ena(cdf_ram_ena),
-                                 .wea(cdf_ram_wea),
-                                 .addra(cdf_ram_addra),
-                                 .dina(cdf_ram_dina),
-                                 .douta(cdf_ram_douta),
-                                 // 端口B
-                                 .enb(cdf_ram_enb),
-                                 .web(cdf_ram_web),
-                                 .addrb(cdf_ram_addrb),
-                                 .dinb(cdf_ram_dinb),
-                                 .doutb(cdf_ram_doutb)
-                             );
+        .DATA_WIDTH(16),
+        .ADDR_WIDTH(8),
+        .DEPTH     (256)
+    ) cdf_ram_inst (
+        .clk  (pclk),
+        // 端口A
+        .ena  (cdf_ram_ena),
+        .wea  (cdf_ram_wea),
+        .addra(cdf_ram_addra),
+        .dina (cdf_ram_dina),
+        .douta(cdf_ram_douta),
+        // 端口B
+        .enb  (cdf_ram_enb),
+        .web  (cdf_ram_web),
+        .addrb(cdf_ram_addrb),
+        .dinb (cdf_ram_dinb),
+        .doutb(cdf_ram_doutb)
+    );
 
     integer i;
 
@@ -279,8 +283,7 @@ module clahe_clipper_cdf #(
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
             state <= IDLE;  // 复位时回到空闲状态
-        end
-        else begin
+        end else begin
             state <= next_state;  // 更新到下一状态
         end
     end
@@ -308,9 +311,8 @@ module clahe_clipper_cdf #(
                     // 修复：同时检查当前寄存器值和当前正在处理的bin是否溢出
                     if (excess_total > 0 || (hist_rd_data > clip_limit)) begin
                         next_state = CLIP_REDIST;  // 有溢出，需要重分配
-                    end
-                    else begin
-                        next_state = CALC_CDF;     // 无溢出，直接计算CDF
+                    end else begin
+                        next_state = CALC_CDF;  // 无溢出，直接计算CDF
                     end
                 end
             end
@@ -342,9 +344,8 @@ module clahe_clipper_cdf #(
             NEXT_TILE: begin
                 // 下一个tile状态：检查是否还有tile需要处理
                 if (tile_cnt == TILE_NUM - 1) begin
-                    next_state = DONE;           // 所有tile处理完成
-                end
-                else begin
+                    next_state = DONE;  // 所有tile处理完成
+                end else begin
                     next_state = READ_HIST_CLIP;  // 还有tile，继续处理
                 end
             end
@@ -359,8 +360,7 @@ module clahe_clipper_cdf #(
                 next_state = IDLE;
             end
 
-            default:
-                next_state = IDLE;  // 异常情况，回到空闲状态
+            default: next_state = IDLE;  // 异常情况，回到空闲状态
         endcase
     end
 
@@ -369,53 +369,52 @@ module clahe_clipper_cdf #(
     // ========================================================================
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
-            tile_cnt <= {TILE_IDX_WIDTH{1'b0}};
-            bin_cnt <= 9'd0;
-            excess_total <= 17'd0;
-            cdf_min <= 16'd0;
-            cdf_min_found <= 1'b0;
-            cdf_max <= 16'd0;
-            cdf_range <= 16'd0;
-            cdf_temp <= 16'd0;
+            tile_cnt          <= {TILE_IDX_WIDTH{1'b0}};
+            bin_cnt           <= 9'd0;
+            excess_total      <= 17'd0;
+            cdf_min           <= 16'd0;
+            cdf_min_found     <= 1'b0;
+            cdf_max           <= 16'd0;
+            cdf_range         <= 16'd0;
+            cdf_temp          <= 16'd0;
 
             // 归一化流水线寄存器
-            norm_stage1_diff <= 16'd0;
-            norm_stage2_mult <= 32'd0;
-            norm_stage1_addr <= 8'd0;
-            norm_stage2_addr <= 8'd0;
+            norm_stage1_diff  <= 16'd0;
+            norm_stage2_mult  <= 32'd0;
+            norm_stage1_addr  <= 8'd0;
+            norm_stage2_addr  <= 8'd0;
 
-            hist_rd_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
-            hist_rd_bin_addr <= 8'd0;
-            cdf_wr_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
-            cdf_wr_bin_addr <= 8'd0;
-            cdf_wr_data <= 8'd0;
-            cdf_wr_en <= 1'b0;
-            processing <= 1'b0;
-            cdf_done <= 1'b0;
+            hist_rd_tile_idx  <= {TILE_IDX_WIDTH{1'b0}};
+            hist_rd_bin_addr  <= 8'd0;
+            cdf_wr_tile_idx   <= {TILE_IDX_WIDTH{1'b0}};
+            cdf_wr_bin_addr   <= 8'd0;
+            cdf_wr_data       <= 8'd0;
+            cdf_wr_en         <= 1'b0;
+            processing        <= 1'b0;
+            cdf_done          <= 1'b0;
 
             // RAM控制信号初始化
-            hist_buf_ena_r <= 1'b0;
-            hist_buf_wea_r <= 1'b0;
-            hist_buf_addra_r <= 8'd0;
-            hist_buf_dina_r <= 16'd0;
-            hist_buf_enb_r <= 1'b0;
-            hist_buf_web_r <= 1'b0;
-            hist_buf_addrb_r <= 8'd0;
-            hist_buf_dinb_r <= 16'd0;
+            hist_buf_ena_r    <= 1'b0;
+            hist_buf_wea_r    <= 1'b0;
+            hist_buf_addra_r  <= 8'd0;
+            hist_buf_dina_r   <= 16'd0;
+            hist_buf_enb_r    <= 1'b0;
+            hist_buf_web_r    <= 1'b0;
+            hist_buf_addrb_r  <= 8'd0;
+            hist_buf_dinb_r   <= 16'd0;
 
-            cdf_ram_ena_r <= 1'b0;
-            cdf_ram_wea_r <= 1'b0;
-            cdf_ram_addra_r <= 8'd0;
-            cdf_ram_dina_r <= 16'd0;
-            cdf_ram_enb_r <= 1'b0;
-            cdf_ram_web_r <= 1'b0;
-            cdf_ram_addrb_r <= 8'd0;
-            cdf_ram_dinb_r <= 16'd0;
+            cdf_ram_ena_r     <= 1'b0;
+            cdf_ram_wea_r     <= 1'b0;
+            cdf_ram_addra_r   <= 8'd0;
+            cdf_ram_dina_r    <= 16'd0;
+            cdf_ram_enb_r     <= 1'b0;
+            cdf_ram_web_r     <= 1'b0;
+            cdf_ram_addrb_r   <= 8'd0;
+            cdf_ram_dinb_r    <= 16'd0;
 
             hist_buf_data_reg <= 16'd0;
-            cdf_ram_data_reg <= 16'd0;
-        end
-        else begin
+            cdf_ram_data_reg  <= 16'd0;
+        end else begin
             case (state)
                 // ============================================================
                 // IDLE: 等待触发
@@ -424,25 +423,25 @@ module clahe_clipper_cdf #(
                     // 保持所有RAM信号稳定，避免X态
                     hist_rd_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
                     hist_rd_bin_addr <= 8'd0;
-                    cdf_wr_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
-                    cdf_wr_bin_addr <= 8'd0;
-                    cdf_wr_en <= 1'b0;
+                    cdf_wr_tile_idx  <= {TILE_IDX_WIDTH{1'b0}};
+                    cdf_wr_bin_addr  <= 8'd0;
+                    cdf_wr_en        <= 1'b0;
 
                     // 禁用内部RAM
-                    hist_buf_ena_r <= 1'b0;
-                    hist_buf_wea_r <= 1'b0;
-                    hist_buf_enb_r <= 1'b0;
-                    hist_buf_web_r <= 1'b0;
-                    cdf_ram_ena_r <= 1'b0;
-                    cdf_ram_wea_r <= 1'b0;
-                    cdf_ram_enb_r <= 1'b0;
-                    cdf_ram_web_r <= 1'b0;
+                    hist_buf_ena_r   <= 1'b0;
+                    hist_buf_wea_r   <= 1'b0;
+                    hist_buf_enb_r   <= 1'b0;
+                    hist_buf_web_r   <= 1'b0;
+                    cdf_ram_ena_r    <= 1'b0;
+                    cdf_ram_wea_r    <= 1'b0;
+                    cdf_ram_enb_r    <= 1'b0;
+                    cdf_ram_web_r    <= 1'b0;
 
                     if (frame_hist_done) begin
-                        tile_cnt <= {TILE_IDX_WIDTH{1'b0}};
-                        bin_cnt <= 9'd0;
-                        processing <= 1'b1;
-                        excess_total <= 17'd0; // Reset excess_total for safety
+                        tile_cnt     <= {TILE_IDX_WIDTH{1'b0}};
+                        bin_cnt      <= 9'd0;
+                        processing   <= 1'b1;
+                        excess_total <= 17'd0;  // Reset excess_total for safety
                     end
                 end
 
@@ -451,26 +450,25 @@ module clahe_clipper_cdf #(
                 // 优化：合并原READ_HIST和CLIP_SCAN，节省257个周期
                 // ============================================================
                 READ_HIST_CLIP: begin
-                    hist_rd_tile_idx <= tile_cnt;    // 选择当前tile对应的RAM
-                    cdf_wr_tile_idx <= tile_cnt;     // 保持CDF写信号稳定
-                    cdf_wr_bin_addr <= 8'd0;
-                    cdf_wr_en <= 1'b0;
+                    hist_rd_tile_idx <= tile_cnt;  // 选择当前tile对应的RAM
+                    cdf_wr_tile_idx  <= tile_cnt;  // 保持CDF写信号稳定
+                    cdf_wr_bin_addr  <= 8'd0;
+                    cdf_wr_en        <= 1'b0;
 
                     // 禁用cdf RAM
-                    cdf_ram_ena_r <= 1'b0;
-                    cdf_ram_wea_r <= 1'b0;
-                    cdf_ram_enb_r <= 1'b0;
-                    cdf_ram_web_r <= 1'b0;
+                    cdf_ram_ena_r    <= 1'b0;
+                    cdf_ram_wea_r    <= 1'b0;
+                    cdf_ram_enb_r    <= 1'b0;
+                    cdf_ram_web_r    <= 1'b0;
 
                     // 周期0: 初始化excess_total并发出第一个地址
                     if (bin_cnt == 0) begin
-                        excess_total <= 17'd0;
+                        excess_total     <= 17'd0;
                         hist_rd_bin_addr <= 8'd0;
-                        hist_buf_ena_r <= 1'b0;
-                        hist_buf_wea_r <= 1'b0;
-                        bin_cnt <= bin_cnt + 9'd1;
-                    end
-                    // 周期1-255: 读取并处理数据
+                        hist_buf_ena_r   <= 1'b0;
+                        hist_buf_wea_r   <= 1'b0;
+                        bin_cnt          <= bin_cnt + 9'd1;
+                    end  // 周期1-255: 读取并处理数据
                     else if (bin_cnt < 9'd256) begin
                         // 继续发出下一个地址（周期1-255发出地址1-255）
                         hist_rd_bin_addr <= bin_cnt[7:0];
@@ -485,19 +483,17 @@ module clahe_clipper_cdf #(
                                 hist_buf_wea_r <= 1'b1;
                                 hist_buf_addra_r <= bin_cnt[7:0] - 1;
                                 hist_buf_dina_r <= clip_limit;  // 裁剪到阈值
-                            end
-                            else begin
+                            end else begin
                                 // 未超阈值：写入原始值
-                                hist_buf_ena_r <= 1'b1;
-                                hist_buf_wea_r <= 1'b1;
+                                hist_buf_ena_r   <= 1'b1;
+                                hist_buf_wea_r   <= 1'b1;
                                 hist_buf_addra_r <= bin_cnt[7:0] - 1;
-                                hist_buf_dina_r <= hist_rd_data;  // 保持原值
+                                hist_buf_dina_r  <= hist_rd_data;  // 保持原值
                             end
                         end
 
                         bin_cnt <= bin_cnt + 9'd1;
-                    end
-                    // 周期256: 处理最后一个bin（bin 255）并重置计数器
+                    end  // 周期256: 处理最后一个bin（bin 255）并重置计数器
                     else if (bin_cnt == 9'd256) begin
                         // 处理bin 255的数据
                         if (hist_rd_data > clip_limit) begin
@@ -507,23 +503,21 @@ module clahe_clipper_cdf #(
                             hist_buf_wea_r <= 1'b1;
                             hist_buf_addra_r <= 8'd255;
                             hist_buf_dina_r <= clip_limit;  // 裁剪到阈值
-                        end
-                        else begin
+                        end else begin
                             // 未超阈值：写入原始值
-                            hist_buf_ena_r <= 1'b1;
-                            hist_buf_wea_r <= 1'b1;
+                            hist_buf_ena_r   <= 1'b1;
+                            hist_buf_wea_r   <= 1'b1;
                             hist_buf_addra_r <= 8'd255;
-                            hist_buf_dina_r <= hist_rd_data;  // 保持原值
+                            hist_buf_dina_r  <= hist_rd_data;  // 保持原值
                         end
 
                         // 立即重置计数器，准备进入下一状态
                         bin_cnt <= 9'd0;
-                    end
-                    else begin
+                    end else begin
                         // 安全分支：不应该到达这里
                         hist_buf_ena_r <= 1'b0;
                         hist_buf_wea_r <= 1'b0;
-                        bin_cnt <= 9'd0;
+                        bin_cnt        <= 9'd0;
                     end
                 end
 
@@ -535,55 +529,51 @@ module clahe_clipper_cdf #(
                     // 保持外部RAM信号稳定，避免X态
                     hist_rd_tile_idx <= tile_cnt;
                     hist_rd_bin_addr <= 8'd0;
-                    cdf_wr_tile_idx <= tile_cnt;
-                    cdf_wr_bin_addr <= 8'd0;
-                    cdf_wr_en <= 1'b0;
+                    cdf_wr_tile_idx  <= tile_cnt;
+                    cdf_wr_bin_addr  <= 8'd0;
+                    cdf_wr_en        <= 1'b0;
 
                     // 禁用cdf RAM
-                    cdf_ram_ena_r <= 1'b0;
-                    cdf_ram_wea_r <= 1'b0;
-                    cdf_ram_enb_r <= 1'b0;
-                    cdf_ram_web_r <= 1'b0;
+                    cdf_ram_ena_r    <= 1'b0;
+                    cdf_ram_wea_r    <= 1'b0;
+                    cdf_ram_enb_r    <= 1'b0;
+                    cdf_ram_web_r    <= 1'b0;
 
                     // 标准CLAHE：所有bins都接收溢出值
                     // 使用端口A读取，端口B写回
                     // 周期0-255: 发出读地址0-255
                     // 周期1-256: 接收并处理数据0-255，写回到端口B
                     if (bin_cnt < 9'd256) begin
-                        hist_buf_ena_r <= 1'b1;
-                        hist_buf_wea_r <= 1'b0;
+                        hist_buf_ena_r   <= 1'b1;
+                        hist_buf_wea_r   <= 1'b0;
                         hist_buf_addra_r <= bin_cnt[7:0];
-                    end
-                    else begin
+                    end else begin
                         hist_buf_ena_r <= 1'b0;
                         hist_buf_wea_r <= 1'b0;
                     end
 
                     // 从周期1开始处理读取的数据并写回，周期256处理最后一个数据
                     if (bin_cnt > 0 && bin_cnt <= 9'd256) begin
-                        hist_buf_enb_r <= 1'b1;
-                        hist_buf_web_r <= 1'b1;
+                        hist_buf_enb_r   <= 1'b1;
+                        hist_buf_web_r   <= 1'b1;
                         hist_buf_addrb_r <= bin_cnt[7:0] - 1;
 
                         // 标准CLAHE余数分配：前remainder个bins额外加1
                         if ((bin_cnt[7:0] - 1) < excess_remainder) begin
                             // 前remainder个bins：加上 avg_increment + 1
                             hist_buf_dinb_r <= hist_buf_douta + {7'd0, excess_per_bin} + 16'd1;
-                        end
-                        else begin
+                        end else begin
                             // 剩余bins：只加上 avg_increment
                             hist_buf_dinb_r <= hist_buf_douta + {7'd0, excess_per_bin};
                         end
-                    end
-                    else begin
+                    end else begin
                         hist_buf_enb_r <= 1'b0;
                         hist_buf_web_r <= 1'b0;
                     end
 
                     if (bin_cnt < 9'd256) begin
                         bin_cnt <= bin_cnt + 9'd1;
-                    end
-                    else begin
+                    end else begin
                         bin_cnt <= 9'd0;
                     end
                 end
@@ -595,52 +585,51 @@ module clahe_clipper_cdf #(
                     // 保持外部RAM信号稳定，避免X态
                     hist_rd_tile_idx <= tile_cnt;
                     hist_rd_bin_addr <= 8'd0;
-                    cdf_wr_tile_idx <= tile_cnt;
-                    cdf_wr_bin_addr <= 8'd0;
-                    cdf_wr_en <= 1'b0;
+                    cdf_wr_tile_idx  <= tile_cnt;
+                    cdf_wr_bin_addr  <= 8'd0;
+                    cdf_wr_en        <= 1'b0;
 
                     // 禁用hist_buf RAM（不再需要）
-                    hist_buf_enb_r <= 1'b0;
-                    hist_buf_web_r <= 1'b0;
+                    hist_buf_enb_r   <= 1'b0;
+                    hist_buf_web_r   <= 1'b0;
 
                     // 周期0: 发出读地址0
                     // 周期1-255: 接收bin 0-254数据，写入cdf[0-254]，发出读地址1-255
                     // 周期256: 接收bin 255数据，写入cdf[255]
                     if (bin_cnt == 0) begin
                         // 初始化：第一个周期发出读地址0
-                        hist_buf_ena_r <= 1'b1;
-                        hist_buf_wea_r <= 1'b0;
+                        hist_buf_ena_r   <= 1'b1;
+                        hist_buf_wea_r   <= 1'b0;
                         hist_buf_addra_r <= 8'd0;
 
-                        cdf_temp <= 16'd0;
-                        cdf_min <= 16'd0;
-                        cdf_min_found <= 1'b0;  // 重置cdf_min查找标志
-                        cdf_max <= 16'd0;
+                        cdf_temp         <= 16'd0;
+                        cdf_min          <= 16'd0;
+                        cdf_min_found    <= 1'b0;  // 重置cdf_min查找标志
+                        cdf_max          <= 16'd0;
 
                         // 禁用cdf RAM写入
-                        cdf_ram_ena_r <= 1'b0;
-                        cdf_ram_wea_r <= 1'b0;
+                        cdf_ram_ena_r    <= 1'b0;
+                        cdf_ram_wea_r    <= 1'b0;
 
-                        bin_cnt <= 9'd1;
-                    end
-                    else if (bin_cnt <= 9'd255) begin
+                        bin_cnt          <= 9'd1;
+                    end else if (bin_cnt <= 9'd255) begin
                         // 周期1-255: 发出下一个读地址，同时处理上一周期的数据
-                        hist_buf_ena_r <= 1'b1;
-                        hist_buf_wea_r <= 1'b0;
+                        hist_buf_ena_r   <= 1'b1;
+                        hist_buf_wea_r   <= 1'b0;
                         hist_buf_addra_r <= bin_cnt[7:0];
 
                         // 处理上一周期读取的数据
-                        cdf_temp <= cdf_temp + hist_buf_douta;
+                        cdf_temp         <= cdf_temp + hist_buf_douta;
 
                         // 写入CDF到RAM
-                        cdf_ram_ena_r <= 1'b1;
-                        cdf_ram_wea_r <= 1'b1;
-                        cdf_ram_addra_r <= bin_cnt[7:0] - 1;
-                        cdf_ram_dina_r <= cdf_temp + hist_buf_douta;
+                        cdf_ram_ena_r    <= 1'b1;
+                        cdf_ram_wea_r    <= 1'b1;
+                        cdf_ram_addra_r  <= bin_cnt[7:0] - 1;
+                        cdf_ram_dina_r   <= cdf_temp + hist_buf_douta;
 
                         // 标准CLAHE：查找第一个非零CDF值作为cdf_min
                         if (!cdf_min_found && (cdf_temp + hist_buf_douta) > 16'd0) begin
-                            cdf_min <= cdf_temp + hist_buf_douta;
+                            cdf_min       <= cdf_temp + hist_buf_douta;
                             cdf_min_found <= 1'b1;
                         end
 
@@ -650,23 +639,22 @@ module clahe_clipper_cdf #(
                         end
 
                         bin_cnt <= bin_cnt + 9'd1;
-                    end
-                    else begin
+                    end else begin
                         // 周期256: 处理bin 255的数据
-                        hist_buf_ena_r <= 1'b0;
-                        hist_buf_wea_r <= 1'b0;
+                        hist_buf_ena_r  <= 1'b0;
+                        hist_buf_wea_r  <= 1'b0;
 
-                        cdf_temp <= cdf_temp + hist_buf_douta;
+                        cdf_temp        <= cdf_temp + hist_buf_douta;
 
                         // 写入最后一个CDF值
-                        cdf_ram_ena_r <= 1'b1;
-                        cdf_ram_wea_r <= 1'b1;
+                        cdf_ram_ena_r   <= 1'b1;
+                        cdf_ram_wea_r   <= 1'b1;
                         cdf_ram_addra_r <= 8'd255;
-                        cdf_ram_dina_r <= cdf_temp + hist_buf_douta;
+                        cdf_ram_dina_r  <= cdf_temp + hist_buf_douta;
 
                         // 标准CLAHE：查找第一个非零CDF值作为cdf_min
                         if (!cdf_min_found && (cdf_temp + hist_buf_douta) > 16'd0) begin
-                            cdf_min <= cdf_temp + hist_buf_douta;
+                            cdf_min       <= cdf_temp + hist_buf_douta;
                             cdf_min_found <= 1'b1;
                         end
 
@@ -690,19 +678,19 @@ module clahe_clipper_cdf #(
                     hist_rd_bin_addr <= 8'd0;
 
                     // 禁用hist_buf RAM
-                    hist_buf_ena_r <= 1'b0;
-                    hist_buf_wea_r <= 1'b0;
-                    hist_buf_enb_r <= 1'b0;
-                    hist_buf_web_r <= 1'b0;
+                    hist_buf_ena_r   <= 1'b0;
+                    hist_buf_wea_r   <= 1'b0;
+                    hist_buf_enb_r   <= 1'b0;
+                    hist_buf_web_r   <= 1'b0;
 
                     // 周期0: 初始化，计算cdf_range，发出读地址0
                     if (bin_cnt == 0) begin
-                        cdf_range <= cdf_max - cdf_min;
+                        cdf_range        <= cdf_max - cdf_min;
 
                         // 发出第一个CDF读地址
-                        cdf_ram_ena_r <= 1'b1;
-                        cdf_ram_wea_r <= 1'b0;
-                        cdf_ram_addra_r <= 8'd0;
+                        cdf_ram_ena_r    <= 1'b1;
+                        cdf_ram_wea_r    <= 1'b0;
+                        cdf_ram_addra_r  <= 8'd0;
 
                         // 初始化流水线
                         norm_stage1_diff <= 16'd0;
@@ -710,26 +698,25 @@ module clahe_clipper_cdf #(
                         norm_stage1_addr <= 8'd0;
                         norm_stage2_addr <= 8'd0;
 
-                        cdf_wr_tile_idx <= tile_cnt;
-                        cdf_wr_en <= 1'b0;
-                        bin_cnt <= 9'd1;
-                    end
-                    // 周期1-256: 持续读取CDF数据，流水线处理
+                        cdf_wr_tile_idx  <= tile_cnt;
+                        cdf_wr_en        <= 1'b0;
+                        bin_cnt          <= 9'd1;
+                    end  // 周期1-256: 持续读取CDF数据，流水线处理
                     else if (bin_cnt <= 9'd256) begin
                         // 继续发出CDF读地址（周期1-255发出地址1-255）
                         if (bin_cnt < 9'd256) begin
-                            cdf_ram_ena_r <= 1'b1;
-                            cdf_ram_wea_r <= 1'b0;
+                            cdf_ram_ena_r   <= 1'b1;
+                            cdf_ram_wea_r   <= 1'b0;
                             cdf_ram_addra_r <= bin_cnt[7:0];
-                        end
-                        else begin
+                        end else begin
                             // 周期256：停止读取
                             cdf_ram_ena_r <= 1'b0;
                             cdf_ram_wea_r <= 1'b0;
                         end
 
-                        // === 流水线阶段1：减法（处理上一周期读取的数据）===
-                        norm_stage1_diff <= cdf_ram_douta - cdf_min;
+                        // === 流水线阶段1：饱和减法（处理上一周期读取的数据）===
+                        // 使用17位扩展防止无符号下溢：当cdf_ram_douta < cdf_min时输出0
+                        norm_stage1_diff <= cdf_diff_saturated;
                         norm_stage1_addr <= bin_cnt[7:0] - 1;
 
                         // === 流水线阶段2：乘法 ===
@@ -741,17 +728,15 @@ module clahe_clipper_cdf #(
                         if (bin_cnt >= 9'd3) begin
                             cdf_wr_tile_idx <= tile_cnt;
                             cdf_wr_bin_addr <= norm_stage2_addr;
-                            cdf_wr_en <= 1'b1;
+                            cdf_wr_en       <= 1'b1;
                             // 使用饱和后的归一化结果
-                            cdf_wr_data <= norm_saturated;
-                        end
-                        else begin
+                            cdf_wr_data     <= norm_saturated;
+                        end else begin
                             cdf_wr_en <= 1'b0;
                         end
 
                         bin_cnt <= bin_cnt + 9'd1;
-                    end
-                    // 周期257-258: 流水线排空，完成最后2个数据的写入
+                    end  // 周期257-258: 流水线排空，完成最后2个数据的写入
                     else if (bin_cnt <= 9'd258) begin
                         cdf_ram_ena_r <= 1'b0;
                         cdf_ram_wea_r <= 1'b0;
@@ -763,25 +748,23 @@ module clahe_clipper_cdf #(
                             norm_stage2_addr <= norm_stage1_addr;
 
                             // Stage3: 写bin 254 (除法)
-                            cdf_wr_tile_idx <= tile_cnt;
-                            cdf_wr_bin_addr <= norm_stage2_addr;
-                            cdf_wr_en <= 1'b1;
-                            cdf_wr_data <= norm_saturated;
-                        end
-                        else if (bin_cnt == 9'd258) begin
+                            cdf_wr_tile_idx  <= tile_cnt;
+                            cdf_wr_bin_addr  <= norm_stage2_addr;
+                            cdf_wr_en        <= 1'b1;
+                            cdf_wr_data      <= norm_saturated;
+                        end else if (bin_cnt == 9'd258) begin
                             // Stage3: 写bin 255 (除法，最后一个)
                             cdf_wr_tile_idx <= tile_cnt;
                             cdf_wr_bin_addr <= norm_stage2_addr;
-                            cdf_wr_en <= 1'b1;
-                            cdf_wr_data <= norm_saturated;
+                            cdf_wr_en       <= 1'b1;
+                            cdf_wr_data     <= norm_saturated;
                         end
 
                         bin_cnt <= bin_cnt + 9'd1;
-                    end
-                    else begin
+                    end else begin
                         // 完成，准备退出
                         cdf_wr_en <= 1'b0;
-                        bin_cnt <= 9'd0;
+                        bin_cnt   <= 9'd0;
                     end
                 end
 
@@ -789,32 +772,31 @@ module clahe_clipper_cdf #(
                 // NEXT_TILE: 移动到下一个tile
                 // ============================================================
                 NEXT_TILE: begin
-                    cdf_wr_en <= 1'b0;
+                    cdf_wr_en       <= 1'b0;
                     cdf_wr_bin_addr <= 8'd0;
-                    bin_cnt <= 9'd0;  // 重置bin计数器，为下一个tile准备
+                    bin_cnt         <= 9'd0;  // 重置bin计数器，为下一个tile准备
 
                     // 禁用内部RAM
-                    hist_buf_ena_r <= 1'b0;
-                    hist_buf_wea_r <= 1'b0;
-                    hist_buf_enb_r <= 1'b0;
-                    hist_buf_web_r <= 1'b0;
-                    cdf_ram_ena_r <= 1'b0;
-                    cdf_ram_wea_r <= 1'b0;
-                    cdf_ram_enb_r <= 1'b0;
-                    cdf_ram_web_r <= 1'b0;
+                    hist_buf_ena_r  <= 1'b0;
+                    hist_buf_wea_r  <= 1'b0;
+                    hist_buf_enb_r  <= 1'b0;
+                    hist_buf_web_r  <= 1'b0;
+                    cdf_ram_ena_r   <= 1'b0;
+                    cdf_ram_wea_r   <= 1'b0;
+                    cdf_ram_enb_r   <= 1'b0;
+                    cdf_ram_web_r   <= 1'b0;
 
                     if (tile_cnt < TILE_NUM - 1) begin
-                        tile_cnt <= tile_cnt + 1'b1;
+                        tile_cnt         <= tile_cnt + 1'b1;
                         // 预先设置下一个tile的RAM信号
                         hist_rd_tile_idx <= tile_cnt + 1'b1;
                         hist_rd_bin_addr <= 8'd0;
-                        cdf_wr_tile_idx <= tile_cnt + 1'b1;
-                    end
-                    else begin
+                        cdf_wr_tile_idx  <= tile_cnt + 1'b1;
+                    end else begin
                         // 保持信号稳定
                         hist_rd_tile_idx <= tile_cnt;
                         hist_rd_bin_addr <= 8'd0;
-                        cdf_wr_tile_idx <= tile_cnt;
+                        cdf_wr_tile_idx  <= tile_cnt;
                     end
                 end
 
@@ -822,51 +804,51 @@ module clahe_clipper_cdf #(
                 // DONE: 所有tile处理完成
                 // ============================================================
                 DONE: begin
-                    processing <= 1'b0;
-                    cdf_done <= 1'b1;  // 单周期脉冲
-                    cdf_wr_en <= 1'b0;
+                    processing       <= 1'b0;
+                    cdf_done         <= 1'b1;  // 单周期脉冲
+                    cdf_wr_en        <= 1'b0;
 
                     // 禁用内部RAM
-                    hist_buf_ena_r <= 1'b0;
-                    hist_buf_wea_r <= 1'b0;
-                    hist_buf_enb_r <= 1'b0;
-                    hist_buf_web_r <= 1'b0;
-                    cdf_ram_ena_r <= 1'b0;
-                    cdf_ram_wea_r <= 1'b0;
-                    cdf_ram_enb_r <= 1'b0;
-                    cdf_ram_web_r <= 1'b0;
+                    hist_buf_ena_r   <= 1'b0;
+                    hist_buf_wea_r   <= 1'b0;
+                    hist_buf_enb_r   <= 1'b0;
+                    hist_buf_web_r   <= 1'b0;
+                    cdf_ram_ena_r    <= 1'b0;
+                    cdf_ram_wea_r    <= 1'b0;
+                    cdf_ram_enb_r    <= 1'b0;
+                    cdf_ram_web_r    <= 1'b0;
 
                     // 保持所有外部RAM信号稳定
                     // 保持所有外部RAM信号稳定
                     // Parameterization fixed
                     hist_rd_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
                     hist_rd_bin_addr <= 8'd0;
-                    cdf_wr_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
-                    cdf_wr_bin_addr <= 8'd0;
+                    cdf_wr_tile_idx  <= {TILE_IDX_WIDTH{1'b0}};
+                    cdf_wr_bin_addr  <= 8'd0;
                 end
 
                 // ============================================================
                 // DONE_PULSE: 完成脉冲状态，重置cdf_done信号
                 // ============================================================
                 DONE_PULSE: begin
-                    cdf_done <= 1'b0;  // 重置cdf_done信号
-                    cdf_wr_en <= 1'b0;
+                    cdf_done         <= 1'b0;  // 重置cdf_done信号
+                    cdf_wr_en        <= 1'b0;
 
                     // 禁用内部RAM
-                    hist_buf_ena_r <= 1'b0;
-                    hist_buf_wea_r <= 1'b0;
-                    hist_buf_enb_r <= 1'b0;
-                    hist_buf_web_r <= 1'b0;
-                    cdf_ram_ena_r <= 1'b0;
-                    cdf_ram_wea_r <= 1'b0;
-                    cdf_ram_enb_r <= 1'b0;
-                    cdf_ram_web_r <= 1'b0;
+                    hist_buf_ena_r   <= 1'b0;
+                    hist_buf_wea_r   <= 1'b0;
+                    hist_buf_enb_r   <= 1'b0;
+                    hist_buf_web_r   <= 1'b0;
+                    cdf_ram_ena_r    <= 1'b0;
+                    cdf_ram_wea_r    <= 1'b0;
+                    cdf_ram_enb_r    <= 1'b0;
+                    cdf_ram_web_r    <= 1'b0;
 
                     // 保持所有外部RAM信号稳定
                     hist_rd_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
                     hist_rd_bin_addr <= 8'd0;
-                    cdf_wr_tile_idx <= {TILE_IDX_WIDTH{1'b0}};
-                    cdf_wr_bin_addr <= 8'd0;
+                    cdf_wr_tile_idx  <= {TILE_IDX_WIDTH{1'b0}};
+                    cdf_wr_bin_addr  <= 8'd0;
                 end
 
             endcase

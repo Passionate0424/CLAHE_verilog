@@ -36,16 +36,16 @@
 // 日期: 2025-10-15
 // ============================================================================
 
-`timescale 1ns/1ps
+`timescale 1ns / 1ps
 
 module tb_clahe_top #(
-        // ========================================================================
-        // 全局参数接口 - 可通过仿真命令行或do文件设置
-        // ========================================================================
-        parameter ENABLE_CLAHE  = 1,     // CLAHE功能全局使能：1=启用，0=禁用
-        parameter ENABLE_INTERP = 1,     // 插值功能全局使能：1=启用，0=禁用
-        parameter CLIP_THRESHOLD = 20     // 默认clip阈值
-    ) ();
+    // ========================================================================
+    // 全局参数接口 - 可通过仿真命令行或do文件设置
+    // ========================================================================
+    parameter ENABLE_CLAHE   = 1,  // CLAHE功能全局使能：1=启用，0=禁用
+    parameter ENABLE_INTERP  = 1,  // 插值功能全局使能：1=启用，0=禁用
+    parameter CLIP_THRESHOLD = 20  // 默认clip阈值
+) ();
 
     // ========================================================================
     // 参数定义
@@ -59,21 +59,21 @@ module tb_clahe_top #(
     // ========================================================================
     reg         pclk;
     reg         rst_n;
-    reg         clahe_enable;       // 内部控制信号，可被全局参数覆盖
-    reg         interp_enable;      // 内部控制信号，可被全局参数覆盖
-    reg  [7:0]  clip_threshold;
+    reg         clahe_enable;  // 内部控制信号，可被全局参数覆盖
+    reg         interp_enable;  // 内部控制信号，可被全局参数覆盖
+    reg  [15:0] clip_threshold;
 
     reg         in_href;
     reg         in_vsync;
-    reg  [7:0]  in_y;
-    reg  [7:0]  in_u;
-    reg  [7:0]  in_v;
+    reg  [ 7:0] in_y;
+    reg  [ 7:0] in_u;
+    reg  [ 7:0] in_v;
 
     wire        out_href;
     wire        out_vsync;
-    wire [7:0]  out_y;
-    wire [7:0]  out_u;
-    wire [7:0]  out_v;
+    wire [ 7:0] out_y;
+    wire [ 7:0] out_u;
+    wire [ 7:0] out_v;
 
     // 从DUT内部访问调试信号
     wire        processing = u_dut.cdf_processing;
@@ -81,19 +81,19 @@ module tb_clahe_top #(
 
     // 测试变量
     integer x, y, frame;
-    integer pixel_count;
-    reg [7:0] test_pattern [0:255];
+    integer       pixel_count;
+    reg     [7:0] test_pattern    [0:255];
 
     // 统计
-    integer total_frames;
-    integer enhanced_pixels;
+    integer       total_frames;
+    integer       enhanced_pixels;
 
     // BMP保存相关信号
-    wire        bmp_in_ready;
-    wire        bmp_out_ready;
-    wire [7:0]  bmp_in_b, bmp_in_g, bmp_in_r;
-    wire [7:0]  bmp_out_b, bmp_out_g, bmp_out_r;
-    wire        bmp_in_frame_sync_n;   // 输入BMP的同步信号
+    wire          bmp_in_ready;
+    wire          bmp_out_ready;
+    wire [7:0] bmp_in_b, bmp_in_g, bmp_in_r;
+    wire [7:0] bmp_out_b, bmp_out_g, bmp_out_r;
+    wire        bmp_in_frame_sync_n;  // 输入BMP的同步信号
     wire        bmp_out_frame_sync_n;  // 输出BMP的同步信号
     wire [15:0] bmp_xres;
     wire [15:0] bmp_yres;
@@ -102,65 +102,65 @@ module tb_clahe_top #(
     // DUT实例化 - 64块RAM版本
     // ========================================================================
     clahe_top u_dut (
-                  .pclk(pclk),
-                  .rst_n(rst_n),
-                  .in_y(in_y),
-                  .in_u(in_u),
-                  .in_v(in_v),
-                  .in_href(in_href),
-                  .in_vsync(in_vsync),
-                  .out_y(out_y),
-                  .out_u(out_u),
-                  .out_v(out_v),
-                  .out_href(out_href),
-                  .out_vsync(out_vsync),
-                  .clip_threshold(clip_threshold),
-                  .enable_clahe(clahe_enable),
-                  .enable_interp(interp_enable)
-              );
+        .pclk          (pclk),
+        .rst_n         (rst_n),
+        .in_y          (in_y),
+        .in_u          (in_u),
+        .in_v          (in_v),
+        .in_href       (in_href),
+        .in_vsync      (in_vsync),
+        .out_y         (out_y),
+        .out_u         (out_u),
+        .out_v         (out_v),
+        .out_href      (out_href),
+        .out_vsync     (out_vsync),
+        .clip_threshold(clip_threshold),
+        .enable_clahe  (clahe_enable),
+        .enable_interp (interp_enable)
+    );
 
     // ========================================================================
     // BMP保存模块 - 输入图像
     // ========================================================================
     bmp_for_videoStream_24bit #(
-                                  .iREADY(10),
-                                  .iBMP_FILE_PATH("sim_outputs/"),
-                                  .iBMP_FILE_NAME("frame_input")
-                              ) u_bmp_input (
-                                  .clk(pclk),
-                                  .rst_n(rst_n),
-                                  .frame_sync_n(bmp_in_frame_sync_n),
-                                  .vin_ready(bmp_in_ready),
-                                  .vin_dat({bmp_in_r, bmp_in_g, bmp_in_b}),
-                                  .vin_valid(in_href),
-                                  .vin_xres(bmp_xres),
-                                  .vin_yres(bmp_yres)
-                              );
+        .iREADY        (10),
+        .iBMP_FILE_PATH("sim_outputs/"),
+        .iBMP_FILE_NAME("frame_input")
+    ) u_bmp_input (
+        .clk         (pclk),
+        .rst_n       (rst_n),
+        .frame_sync_n(bmp_in_frame_sync_n),
+        .vin_ready   (bmp_in_ready),
+        .vin_dat     ({bmp_in_r, bmp_in_g, bmp_in_b}),
+        .vin_valid   (in_href),
+        .vin_xres    (bmp_xres),
+        .vin_yres    (bmp_yres)
+    );
 
     // ========================================================================
     // BMP保存模块 - 输出图像
     // ========================================================================
     bmp_for_videoStream_24bit #(
-                                  .iREADY(10),
-                                  .iBMP_FILE_PATH("sim_outputs/"),
-                                  .iBMP_FILE_NAME("frame_output")
-                              ) u_bmp_output (
-                                  .clk(pclk),
-                                  .rst_n(rst_n),
-                                  .frame_sync_n(bmp_out_frame_sync_n),
-                                  .vin_ready(bmp_out_ready),
-                                  .vin_dat({bmp_out_r, bmp_out_g, bmp_out_b}),
-                                  .vin_valid(out_href),
-                                  .vin_xres(bmp_xres),
-                                  .vin_yres(bmp_yres)
-                              );
+        .iREADY        (10),
+        .iBMP_FILE_PATH("sim_outputs/"),
+        .iBMP_FILE_NAME("frame_output")
+    ) u_bmp_output (
+        .clk         (pclk),
+        .rst_n       (rst_n),
+        .frame_sync_n(bmp_out_frame_sync_n),
+        .vin_ready   (bmp_out_ready),
+        .vin_dat     ({bmp_out_r, bmp_out_g, bmp_out_b}),
+        .vin_valid   (out_href),
+        .vin_xres    (bmp_xres),
+        .vin_yres    (bmp_yres)
+    );
 
     // ========================================================================
     // YUV到RGB转换（简化版 - 将Y作为灰度图）
     // ========================================================================
-    assign bmp_in_r = in_y;
-    assign bmp_in_g = in_y;
-    assign bmp_in_b = in_y;
+    assign bmp_in_r  = in_y;
+    assign bmp_in_g  = in_y;
+    assign bmp_in_b  = in_y;
 
     assign bmp_out_r = out_y;
     assign bmp_out_g = out_y;
@@ -175,8 +175,7 @@ module tb_clahe_top #(
         if (!rst_n) begin
             in_vsync_d1 <= 0;
             in_vsync_d2 <= 0;
-        end
-        else begin
+        end else begin
             in_vsync_d1 <= in_vsync;
             in_vsync_d2 <= in_vsync_d1;
         end
@@ -189,24 +188,22 @@ module tb_clahe_top #(
         if (!rst_n) begin
             out_vsync_d1 <= 0;
             out_vsync_d2 <= 0;
-        end
-        else begin
+        end else begin
             out_vsync_d1 <= out_vsync;
             out_vsync_d2 <= out_vsync_d1;
         end
     end
     assign bmp_out_frame_sync_n = !(out_vsync_d1 && !out_vsync_d2);  // 检测vsync上升沿
 
-    assign bmp_xres = WIDTH;
-    assign bmp_yres = HEIGHT;
+    assign bmp_xres             = WIDTH;
+    assign bmp_yres             = HEIGHT;
 
     // ========================================================================
     // 时钟生成
     // ========================================================================
     initial begin
         pclk = 0;
-        forever
-            #(CLK_PERIOD/2) pclk = ~pclk;
+        forever #(CLK_PERIOD / 2) pclk = ~pclk;
     end
 
     // ========================================================================
@@ -217,21 +214,21 @@ module tb_clahe_top #(
         $system("if not exist sim_outputs mkdir sim_outputs");
 
         // 初始化
-        rst_n = 0;
+        rst_n           = 0;
         // 使用全局参数初始化控制信号
-        clahe_enable = ENABLE_CLAHE;
-        interp_enable = ENABLE_INTERP;
-        clip_threshold = CLIP_THRESHOLD;
-        in_href = 0;
-        in_vsync = 0;
-        in_y = 0;
-        in_u = 128;
-        in_v = 128;
-        total_frames = 0;
+        clahe_enable    = ENABLE_CLAHE;
+        interp_enable   = ENABLE_INTERP;
+        clip_threshold  = CLIP_THRESHOLD;
+        in_href         = 0;
+        in_vsync        = 0;
+        in_y            = 0;
+        in_u            = 128;
+        in_v            = 128;
+        total_frames    = 0;
         enhanced_pixels = 0;
 
         // 复位
-        #(CLK_PERIOD*20);
+        #(CLK_PERIOD * 20);
         rst_n = 1;
         $display("\n========================================");
         $display("  CLAHE Top Module Test");
@@ -244,7 +241,7 @@ module tb_clahe_top #(
         $display("    Clip Threshold: %0d", CLIP_THRESHOLD);
         $display("========================================\n");
         $display("[%0t] Reset released", $time);
-        #(CLK_PERIOD*10);
+        #(CLK_PERIOD * 10);
 
         // ====================================================================
         // 测试序列：只测试复杂场景，去掉所有纯色测试
@@ -264,7 +261,7 @@ module tb_clahe_top #(
         wait_frame_complete();
         $display("[INFO] Frame 0 completed - Bypass mode (CDF building)");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         // ====================================================================
         // 阶段2: 低对比度图像组（相似分布特性）
@@ -274,28 +271,28 @@ module tb_clahe_top #(
         wait_frame_complete();
         $display("[INFO] Frame 1 completed - Low contrast stable");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 3] Frame 2 - Very low contrast (120-130 range)");
         gen_frame_very_low_contrast();  // 范围更窄但相似的分布
         wait_frame_complete();
         $display("[INFO] Frame 2 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 4] Frame 3 - Low contrast again");
         gen_frame_low_contrast();  // 再次相似图像
         wait_frame_complete();
         $display("[INFO] Frame 3 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 5] Frame 4 - Very low contrast again");
         gen_frame_very_low_contrast();  // 连续相似帧
         wait_frame_complete();
         $display("[INFO] Frame 4 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         // ====================================================================
         // 阶段3: 渐变图像组（相似渐变特性，模拟真实光照变化）
@@ -305,42 +302,42 @@ module tb_clahe_top #(
         wait_frame_complete();
         $display("[INFO] Frame 5 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 7] Frame 6 - Horizontal gradient again");
         gen_frame_gradient();  // 相同渐变，CDF应该稳定
         wait_frame_complete();
         $display("[INFO] Frame 6 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 8] Frame 7 - Vertical gradient");
         gen_frame_vertical_gradient();  // 相似的渐变特性
         wait_frame_complete();
         $display("[INFO] Frame 7 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 9] Frame 8 - Vertical gradient again");
         gen_frame_vertical_gradient();  // 连续相似帧
         wait_frame_complete();
         $display("[INFO] Frame 8 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 10] Frame 9 - Diagonal gradient");
         gen_frame_diagonal_gradient();  // 相似的渐变特性
         wait_frame_complete();
         $display("[INFO] Frame 9 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 11] Frame 10 - Diagonal gradient again");
         gen_frame_diagonal_gradient();  // 相同渐变
         wait_frame_complete();
         $display("[INFO] Frame 10 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         // ====================================================================
         // 阶段4: 特殊图案（高对比度场景）
@@ -350,14 +347,14 @@ module tb_clahe_top #(
         wait_frame_complete();
         $display("[INFO] Frame 11 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 13] Frame 12 - Checkerboard pattern again");
         gen_frame_checkerboard();  // 相同图案
         wait_frame_complete();
         $display("[INFO] Frame 12 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         // ====================================================================
         // 阶段5: 混合场景测试（渐变+低对比度交替）
@@ -367,49 +364,49 @@ module tb_clahe_top #(
         wait_frame_complete();
         $display("[INFO] Frame 13 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 15] Frame 14 - Very low contrast");
         gen_frame_very_low_contrast();
         wait_frame_complete();
         $display("[INFO] Frame 14 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 16] Frame 15 - Horizontal gradient");
         gen_frame_gradient();
         wait_frame_complete();
         $display("[INFO] Frame 15 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 17] Frame 16 - Low contrast");
         gen_frame_low_contrast();
         wait_frame_complete();
         $display("[INFO] Frame 16 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 18] Frame 17 - Vertical gradient");
         gen_frame_vertical_gradient();
         wait_frame_complete();
         $display("[INFO] Frame 17 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 19] Frame 18 - Very low contrast");
         gen_frame_very_low_contrast();
         wait_frame_complete();
         $display("[INFO] Frame 18 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         $display("\n[TEST 20] Frame 19 - Diagonal gradient");
         gen_frame_diagonal_gradient();
         wait_frame_complete();
         $display("[INFO] Frame 19 completed");
         total_frames = total_frames + 1;
-        #(CLK_PERIOD*1000000);
+        #(CLK_PERIOD * 1000000);
 
         // ====================================================================
         // 测试总结
@@ -422,7 +419,7 @@ module tb_clahe_top #(
         $display("\n[%0t] All tests completed successfully!", $time);
         $display("========================================\n");
 
-        #(CLK_PERIOD*1000000);  // 增加帧间隙，确保CDF处理完全稳定
+        #(CLK_PERIOD * 1000000);  // 增加帧间隙，确保CDF处理完全稳定
         $stop;
     end
 
@@ -441,13 +438,13 @@ module tb_clahe_top #(
 
             for (y = 0; y < HEIGHT; y = y + 1) begin
                 // 行消隐
-                repeat(5) @(posedge pclk);
+                repeat (5) @(posedge pclk);
 
                 // 在时钟沿前设置数据和href
                 in_href = 1;
-                in_y = brightness;
-                in_u = 8'd128;
-                in_v = 8'd128;
+                in_y    = brightness;
+                in_u    = 8'd128;
+                in_v    = 8'd128;
                 @(posedge pclk);
 
                 for (x = 1; x < WIDTH; x = x + 1) begin
@@ -474,13 +471,13 @@ module tb_clahe_top #(
             @(posedge pclk);
 
             for (y = 0; y < HEIGHT; y = y + 1) begin
-                repeat(5) @(posedge pclk);
+                repeat (5) @(posedge pclk);
 
                 // 在时钟沿前设置数据和href
                 in_href = 1;
-                in_y = 8'd100 + ((0 + y) % 40);
-                in_u = 8'd128;
-                in_v = 8'd128;
+                in_y    = 8'd100 + ((0 + y) % 40);
+                in_u    = 8'd128;
+                in_v    = 8'd128;
                 @(posedge pclk);
 
                 for (x = 1; x < WIDTH; x = x + 1) begin
@@ -508,12 +505,12 @@ module tb_clahe_top #(
             @(posedge pclk);
 
             for (y = 0; y < HEIGHT; y = y + 1) begin
-                repeat(5) @(posedge pclk);
+                repeat (5) @(posedge pclk);
 
                 in_href = 1;
-                in_y = (0 * 256) / WIDTH;
-                in_u = 8'd128;
-                in_v = 8'd128;
+                in_y    = (0 * 256) / WIDTH;
+                in_u    = 8'd128;
+                in_v    = 8'd128;
                 @(posedge pclk);
 
                 for (x = 1; x < WIDTH; x = x + 1) begin
@@ -541,12 +538,12 @@ module tb_clahe_top #(
             @(posedge pclk);
 
             for (y = 0; y < HEIGHT; y = y + 1) begin
-                repeat(5) @(posedge pclk);
+                repeat (5) @(posedge pclk);
 
                 in_href = 1;
-                in_y = (y * 256) / HEIGHT;
-                in_u = 8'd128;
-                in_v = 8'd128;
+                in_y    = (y * 256) / HEIGHT;
+                in_u    = 8'd128;
+                in_v    = 8'd128;
                 @(posedge pclk);
 
                 for (x = 1; x < WIDTH; x = x + 1) begin
@@ -574,12 +571,12 @@ module tb_clahe_top #(
             @(posedge pclk);
 
             for (y = 0; y < HEIGHT; y = y + 1) begin
-                repeat(5) @(posedge pclk);
+                repeat (5) @(posedge pclk);
 
                 in_href = 1;
-                in_y = ((0 + y) * 256) / (WIDTH + HEIGHT);
-                in_u = 8'd128;
-                in_v = 8'd128;
+                in_y    = ((0 + y) * 256) / (WIDTH + HEIGHT);
+                in_u    = 8'd128;
+                in_v    = 8'd128;
                 @(posedge pclk);
 
                 for (x = 1; x < WIDTH; x = x + 1) begin
@@ -607,24 +604,20 @@ module tb_clahe_top #(
             @(posedge pclk);
 
             for (y = 0; y < HEIGHT; y = y + 1) begin
-                repeat(5) @(posedge pclk);
+                repeat (5) @(posedge pclk);
 
                 in_href = 1;
                 // 棋盘图案：每64像素切换
-                if (((0 / 64) + (y / 64)) % 2 == 0)
-                    in_y = 8'd50;   // 暗块
-                else
-                    in_y = 8'd200;  // 亮块
+                if (((0 / 64) + (y / 64)) % 2 == 0) in_y = 8'd50;  // 暗块
+                else in_y = 8'd200;  // 亮块
                 in_u = 8'd128;
                 in_v = 8'd128;
                 @(posedge pclk);
 
                 for (x = 1; x < WIDTH; x = x + 1) begin
                     // 棋盘图案：每64像素切换
-                    if (((x / 64) + (y / 64)) % 2 == 0)
-                        in_y = 8'd50;   // 暗块
-                    else
-                        in_y = 8'd200;  // 亮块
+                    if (((x / 64) + (y / 64)) % 2 == 0) in_y = 8'd50;  // 暗块
+                    else in_y = 8'd200;  // 亮块
                     in_u = 8'd128;
                     in_v = 8'd128;
                     @(posedge pclk);
@@ -647,12 +640,12 @@ module tb_clahe_top #(
             @(posedge pclk);
 
             for (y = 0; y < HEIGHT; y = y + 1) begin
-                repeat(5) @(posedge pclk);
+                repeat (5) @(posedge pclk);
 
                 in_href = 1;
-                in_y = 8'd120 + ((0 + y) % 10);
-                in_u = 8'd128;
-                in_v = 8'd128;
+                in_y    = 8'd120 + ((0 + y) % 10);
+                in_u    = 8'd128;
+                in_v    = 8'd128;
                 @(posedge pclk);
 
                 for (x = 1; x < WIDTH; x = x + 1) begin
@@ -675,16 +668,16 @@ module tb_clahe_top #(
     task wait_frame_complete;
         begin
             // 等待vsync下降沿
-            wait(in_vsync == 0);
+            wait (in_vsync == 0);
 
             // 等待处理完成（如果在处理中）
             if (processing) begin
                 $display("[%0t] Waiting for CDF processing...", $time);
-                wait(processing == 0);
+                wait (processing == 0);
                 $display("[%0t] CDF processing completed", $time);
             end
 
-            #(CLK_PERIOD*10);
+            #(CLK_PERIOD * 10);
         end
     endtask
 
@@ -696,23 +689,23 @@ module tb_clahe_top #(
     reg [31:0] black_pixels;
     reg [31:0] total_pixels;
     integer in_y_sum, out_y_sum;
-    reg [31:0] bmp_write_pixels;  // BMP实际写入的像素数
-    integer bmp_y_sum;
+    reg     [31:0] bmp_write_pixels;  // BMP实际写入的像素数
+    integer        bmp_y_sum;
 
     initial begin
-        black_pixels = 0;
-        total_pixels = 0;
-        in_y_sum = 0;
-        out_y_sum = 0;
+        black_pixels     = 0;
+        total_pixels     = 0;
+        in_y_sum         = 0;
+        out_y_sum        = 0;
         bmp_write_pixels = 0;
-        bmp_y_sum = 0;
+        bmp_y_sum        = 0;
     end
 
     always @(posedge pclk) begin
         if (out_href) begin
             total_pixels = total_pixels + 1;
-            in_y_sum = in_y_sum + in_y;
-            out_y_sum = out_y_sum + out_y;
+            in_y_sum     = in_y_sum + in_y;
+            out_y_sum    = out_y_sum + out_y;
 
             if (out_y == 0) begin
                 black_pixels = black_pixels + 1;
@@ -728,7 +721,7 @@ module tb_clahe_top #(
         // 监控BMP模块实际接收到的数据
         if (bmp_out_ready && out_href) begin
             bmp_write_pixels = bmp_write_pixels + 1;
-            bmp_y_sum = bmp_y_sum + bmp_out_r;  // bmp_out_r = out_y
+            bmp_y_sum        = bmp_y_sum + bmp_out_r;  // bmp_out_r = out_y
         end
 
         // 帧结束时输出统计
@@ -736,35 +729,35 @@ module tb_clahe_top #(
             if (total_pixels > 0) begin
                 $display("[DEBUG] Frame stats:");
                 $display("  CLAHE output pixels: %0d", total_pixels);
-                $display("  Black pixels in CLAHE output: %0d (%.1f%%)", black_pixels, (black_pixels*100.0)/total_pixels);
-                $display("  Avg input Y: %0d", in_y_sum/total_pixels);
-                $display("  Avg CLAHE output Y: %0d", out_y_sum/total_pixels);
+                $display("  Black pixels in CLAHE output: %0d (%.1f%%)", black_pixels,
+                         (black_pixels * 100.0) / total_pixels);
+                $display("  Avg input Y: %0d", in_y_sum / total_pixels);
+                $display("  Avg CLAHE output Y: %0d", out_y_sum / total_pixels);
                 if (bmp_write_pixels > 0) begin
                     $display("  BMP write pixels: %0d", bmp_write_pixels);
-                    $display("  Avg BMP write Y: %0d", bmp_y_sum/bmp_write_pixels);
-                    $display("  Pixel count match: %s", (bmp_write_pixels == total_pixels) ? "YES" : "NO");
+                    $display("  Avg BMP write Y: %0d", bmp_y_sum / bmp_write_pixels);
+                    $display("  Pixel count match: %s",
+                             (bmp_write_pixels == total_pixels) ? "YES" : "NO");
                 end
                 $display("  CDF ready: %0d, CLAHE enable: %0d", cdf_ready, clahe_enable);
             end
-            black_pixels = 0;
-            total_pixels = 0;
-            in_y_sum = 0;
-            out_y_sum = 0;
+            black_pixels     = 0;
+            total_pixels     = 0;
+            in_y_sum         = 0;
+            out_y_sum        = 0;
             bmp_write_pixels = 0;
-            bmp_y_sum = 0;
+            bmp_y_sum        = 0;
         end
     end
 
     // 监控前几个输出像素的详细信息
     integer pixel_debug_cnt;
-    initial
-        pixel_debug_cnt = 0;
+    initial pixel_debug_cnt = 0;
 
     always @(posedge pclk) begin
         if (!rst_n || (in_vsync && !in_vsync_d1)) begin
             pixel_debug_cnt = 0;
-        end
-        else if (out_href && pixel_debug_cnt < 5) begin
+        end else if (out_href && pixel_debug_cnt < 5) begin
             // 只监控前5个像素
             $display("[PIXEL %0d] in_y=%0d, out_y=%0d", pixel_debug_cnt, in_y, out_y);
             pixel_debug_cnt = pixel_debug_cnt + 1;
@@ -781,18 +774,15 @@ module tb_clahe_top #(
         if (!rst_n) begin
             out_sx <= 16'd0;
             out_sy <= 16'd0;
-        end
-        else begin
+        end else begin
             // 帧起始（out_vsync上升沿）时复位坐标
             if (out_vsync && !out_vsync_d1) begin
                 out_sx <= 16'd0;
                 out_sy <= 16'd0;
-            end
-            else if (out_href) begin
+            end else if (out_href) begin
                 if (out_sx < WIDTH - 1) begin
                     out_sx <= out_sx + 16'd1;
-                end
-                else begin
+                end else begin
                     out_sx <= 16'd0;
                     out_sy <= out_sy + 16'd1;
                 end
@@ -808,39 +798,25 @@ module tb_clahe_top #(
         if (out_href && out_sy == 16'd300) begin
             // 监控第一个tile边界 X=159,160
             if (out_sx >= 16'd157 && out_sx <= 16'd162) begin
-                $display("[BOUNDARY1] y=%0d x=%0d | tile_x=%0d local_x=%0d | wx=%0d wy=%0d | interp_en=%0d | cdf[tl=%0d tr=%0d bl=%0d br=%0d] | interp[top=%0d bot=%0d] | final=%0d | out_y=%0d",
-                         out_sy, out_sx,
-                         u_dut.mapping_inst.tile_x,
-                         u_dut.mapping_inst.local_x,
-                         u_dut.mapping_inst.wx,
-                         u_dut.mapping_inst.wy,
-                         u_dut.mapping_inst.interp_d3,
-                         u_dut.mapping_inst.cdf_tl_d2,
-                         u_dut.mapping_inst.cdf_tr_d2,
-                         u_dut.mapping_inst.cdf_bl_d2,
-                         u_dut.mapping_inst.cdf_br_d2,
-                         u_dut.mapping_inst.interp_top,
-                         u_dut.mapping_inst.interp_bottom,
-                         u_dut.mapping_inst.final_interp,
-                         out_y);
+                $display(
+                    "[BOUNDARY1] y=%0d x=%0d | tile_x=%0d local_x=%0d | wx=%0d wy=%0d | interp_en=%0d | cdf[tl=%0d tr=%0d bl=%0d br=%0d] | interp[top=%0d bot=%0d] | final=%0d | out_y=%0d",
+                    out_sy, out_sx, u_dut.mapping_inst.tile_x, u_dut.mapping_inst.local_x,
+                    u_dut.mapping_inst.wx, u_dut.mapping_inst.wy, u_dut.mapping_inst.interp_d3,
+                    u_dut.mapping_inst.cdf_tl_d2, u_dut.mapping_inst.cdf_tr_d2,
+                    u_dut.mapping_inst.cdf_bl_d2, u_dut.mapping_inst.cdf_br_d2,
+                    u_dut.mapping_inst.interp_top, u_dut.mapping_inst.interp_bottom,
+                    u_dut.mapping_inst.final_interp, out_y);
             end
             // 监控第二个tile边界 X=319,320
             if (out_sx >= 16'd317 && out_sx <= 16'd322) begin
-                $display("[BOUNDARY2] y=%0d x=%0d | tile_x=%0d local_x=%0d | wx=%0d wy=%0d | interp_en=%0d | cdf[tl=%0d tr=%0d bl=%0d br=%0d] | interp[top=%0d bot=%0d] | final=%0d | out_y=%0d",
-                         out_sy, out_sx,
-                         u_dut.mapping_inst.tile_x,
-                         u_dut.mapping_inst.local_x,
-                         u_dut.mapping_inst.wx,
-                         u_dut.mapping_inst.wy,
-                         u_dut.mapping_inst.interp_d3,
-                         u_dut.mapping_inst.cdf_tl_d2,
-                         u_dut.mapping_inst.cdf_tr_d2,
-                         u_dut.mapping_inst.cdf_bl_d2,
-                         u_dut.mapping_inst.cdf_br_d2,
-                         u_dut.mapping_inst.interp_top,
-                         u_dut.mapping_inst.interp_bottom,
-                         u_dut.mapping_inst.final_interp,
-                         out_y);
+                $display(
+                    "[BOUNDARY2] y=%0d x=%0d | tile_x=%0d local_x=%0d | wx=%0d wy=%0d | interp_en=%0d | cdf[tl=%0d tr=%0d bl=%0d br=%0d] | interp[top=%0d bot=%0d] | final=%0d | out_y=%0d",
+                    out_sy, out_sx, u_dut.mapping_inst.tile_x, u_dut.mapping_inst.local_x,
+                    u_dut.mapping_inst.wx, u_dut.mapping_inst.wy, u_dut.mapping_inst.interp_d3,
+                    u_dut.mapping_inst.cdf_tl_d2, u_dut.mapping_inst.cdf_tr_d2,
+                    u_dut.mapping_inst.cdf_bl_d2, u_dut.mapping_inst.cdf_br_d2,
+                    u_dut.mapping_inst.interp_top, u_dut.mapping_inst.interp_bottom,
+                    u_dut.mapping_inst.final_interp, out_y);
             end
         end
     end
@@ -852,12 +828,10 @@ module tb_clahe_top #(
         if (!rst_n) begin
             prev_out_y <= 8'd0;
             prev_valid <= 1'b0;
-        end
-        else begin
+        end else begin
             if (!out_href) begin
-                prev_valid <= 1'b0; // 行间隔时复位
-            end
-            else begin
+                prev_valid <= 1'b0;  // 行间隔时复位
+            end else begin
                 if (prev_valid) begin
                     if ((out_y > prev_out_y ? (out_y - prev_out_y) : (prev_out_y - out_y)) >= 2) begin
                         // $display("[JUMP] y=%0d x=%0d out_y=%0d prev=%0d", out_sy, out_sx, out_y, prev_out_y);
@@ -869,14 +843,12 @@ module tb_clahe_top #(
 
                 // 调试local_x=67位置的CDF数据
                 if (out_sy == 300 && (out_sx == 66 || out_sx == 67 || out_sx == 68)) begin
-                    $display("[CDF_DEBUG] y=%0d x=%0d out_y=%0d cdf_tl=%0d cdf_tr=%0d cdf_bl=%0d cdf_br=%0d wx=%0d wy=%0d",
-                             out_sy, out_sx, out_y,
-                             u_dut.mapping_inst.cdf_tl_rd_data,
-                             u_dut.mapping_inst.cdf_tr_rd_data,
-                             u_dut.mapping_inst.cdf_bl_rd_data,
-                             u_dut.mapping_inst.cdf_br_rd_data,
-                             u_dut.mapping_inst.wx,
-                             u_dut.mapping_inst.wy);
+                    $display(
+                        "[CDF_DEBUG] y=%0d x=%0d out_y=%0d cdf_tl=%0d cdf_tr=%0d cdf_bl=%0d cdf_br=%0d wx=%0d wy=%0d",
+                        out_sy, out_sx, out_y, u_dut.mapping_inst.cdf_tl_rd_data,
+                        u_dut.mapping_inst.cdf_tr_rd_data, u_dut.mapping_inst.cdf_bl_rd_data,
+                        u_dut.mapping_inst.cdf_br_rd_data, u_dut.mapping_inst.wx,
+                        u_dut.mapping_inst.wy);
                 end
             end
         end
@@ -887,7 +859,7 @@ module tb_clahe_top #(
     reg [31:0] cdf_write_60_count;
     reg [31:0] cdf_write_80_count;
     initial begin
-        cdf_write_count = 0;
+        cdf_write_count    = 0;
         cdf_write_60_count = 0;
         cdf_write_80_count = 0;
     end
@@ -897,10 +869,8 @@ module tb_clahe_top #(
             cdf_write_count = cdf_write_count + 1;
 
             // 计数特定bin的写入
-            if (u_dut.cdf_addr == 60)
-                cdf_write_60_count = cdf_write_60_count + 1;
-            if (u_dut.cdf_addr == 80)
-                cdf_write_80_count = cdf_write_80_count + 1;
+            if (u_dut.cdf_addr == 60) cdf_write_60_count = cdf_write_60_count + 1;
+            if (u_dut.cdf_addr == 80) cdf_write_80_count = cdf_write_80_count + 1;
 
             // CDF写入监控已禁用以加快仿真
         end
@@ -909,14 +879,15 @@ module tb_clahe_top #(
     // 监控关键事件
     always @(posedge processing) begin
         $display("[%0t] >>> CDF Processing started, ping_pong=%0d", $time, u_dut.ping_pong_flag);
-        cdf_write_count = 0;
+        cdf_write_count    = 0;
         cdf_write_60_count = 0;
         cdf_write_80_count = 0;
     end
 
     always @(negedge processing) begin
-        $display("[%0t] <<< CDF Processing finished, total_writes=%0d, writes_60=%0d, writes_80=%0d, ping_pong=%0d",
-                 $time, cdf_write_count, cdf_write_60_count, cdf_write_80_count, u_dut.ping_pong_flag);
+        $display(
+            "[%0t] <<< CDF Processing finished, total_writes=%0d, writes_60=%0d, writes_80=%0d, ping_pong=%0d",
+            $time, cdf_write_count, cdf_write_60_count, cdf_write_80_count, u_dut.ping_pong_flag);
     end
 
     always @(posedge cdf_ready) begin
@@ -928,8 +899,8 @@ module tb_clahe_top #(
     always @(posedge pclk) begin
         ping_pong_d1 <= u_dut.ping_pong_flag;
         if (u_dut.ping_pong_flag != ping_pong_d1) begin
-            $display("[%0t] @@@ ping_pong_flag changed: %0d -> %0d",
-                     $time, ping_pong_d1, u_dut.ping_pong_flag);
+            $display("[%0t] @@@ ping_pong_flag changed: %0d -> %0d", $time, ping_pong_d1,
+                     u_dut.ping_pong_flag);
         end
     end
 
@@ -956,16 +927,14 @@ module tb_clahe_top #(
             // 检查histogram统计是否完成
             if (u_dut.frame_hist_done) begin
                 $display("[PASS] Histogram统计已完成");
-            end
-            else begin
+            end else begin
                 $display("[ERROR] Histogram统计未完成");
             end
 
             // 检查CDF计算是否完成
             if (u_dut.cdf_done) begin
                 $display("[PASS] CDF计算已完成");
-            end
-            else begin
+            end else begin
                 $display("[ERROR] CDF计算未完成");
             end
 
@@ -975,8 +944,7 @@ module tb_clahe_top #(
             // 检查清零状态
             if (u_dut.hist_clear_done) begin
                 $display("[PASS] Histogram清零已完成");
-            end
-            else begin
+            end else begin
                 $display("[WARN] Histogram清零未完成");
             end
         end
@@ -997,21 +965,20 @@ module tb_clahe_top #(
 
             // 检查几个关键tile的histogram
             for (tile_idx = 0; tile_idx < 4; tile_idx = tile_idx + 1) begin
-                total_count = 0;
+                total_count    = 0;
                 pixel_60_count = 0;
                 pixel_80_count = 0;
 
                 // 根据我们的测试数据模式来验证
                 // TEST 1: gen_frame_uniform(60) - 所有像素都是60
                 if (frame_num == 1) begin
-                    pixel_60_count = expected_count; // 所有14400个像素都是60
-                    total_count = pixel_60_count;
-                end
-                else begin
+                    pixel_60_count = expected_count;  // 所有14400个像素都是60
+                    total_count    = pixel_60_count;
+                end else begin
                     // 其他测试模式的验证
-                    pixel_60_count = expected_count * 0.9; // 90%是60
-                    pixel_80_count = expected_count * 0.1; // 10%是80
-                    total_count = pixel_60_count + pixel_80_count;
+                    pixel_60_count = expected_count * 0.9;  // 90%是60
+                    pixel_80_count = expected_count * 0.1;  // 10%是80
+                    total_count    = pixel_60_count + pixel_80_count;
                 end
 
                 $display("[HIST] Tile%0d: 总像素=%0d (期望%0d), 像素60=%0d, 像素80=%0d",
@@ -1020,18 +987,17 @@ module tb_clahe_top #(
                 // 验证总像素数
                 if (total_count == expected_count) begin
                     $display("[PASS] Tile%0d histogram像素总数正确", tile_idx);
-                end
-                else begin
-                    $display("[ERROR] Tile%0d histogram像素总数错误: %0d != %0d",
-                             tile_idx, total_count, expected_count);
+                end else begin
+                    $display("[ERROR] Tile%0d histogram像素总数错误: %0d != %0d", tile_idx,
+                             total_count, expected_count);
                 end
 
                 // 验证主要像素值分布
                 if (pixel_60_count > expected_count * 0.8) begin
                     $display("[PASS] Tile%0d 主要像素值(60)分布正常", tile_idx);
-                end
-                else begin
-                    $display("[WARN] Tile%0d 主要像素值(60)分布异常: %0d", tile_idx, pixel_60_count);
+                end else begin
+                    $display("[WARN] Tile%0d 主要像素值(60)分布异常: %0d", tile_idx,
+                             pixel_60_count);
                 end
             end
         end
@@ -1054,53 +1020,48 @@ module tb_clahe_top #(
                 // 根据histogram分布预期CDF值
                 if (frame_num == 1) begin
                     // gen_frame_uniform(60): 所有像素都是60
-                    cdf_0 = 0;      // CDF[0] = 0
-                    cdf_60 = 255;   // CDF[60] = 255 (所有像素都<=60)
-                    cdf_80 = 255;   // CDF[80] = 255
+                    cdf_0   = 0;  // CDF[0] = 0
+                    cdf_60  = 255;  // CDF[60] = 255 (所有像素都<=60)
+                    cdf_80  = 255;  // CDF[80] = 255
                     cdf_255 = 255;  // CDF[255] = 255
-                end
-                else begin
+                end else begin
                     // 混合分布
-                    cdf_0 = 0;      // CDF[0] = 0
-                    cdf_60 = 230;   // CDF[60] 应该很高（90%像素<=60）
-                    cdf_80 = 255;   // CDF[80] = 255 (所有像素都<=80)
+                    cdf_0   = 0;  // CDF[0] = 0
+                    cdf_60  = 230;  // CDF[60] 应该很高（90%像素<=60）
+                    cdf_80  = 255;  // CDF[80] = 255 (所有像素都<=80)
                     cdf_255 = 255;  // CDF[255] = 255
                 end
 
-                $display("  期望CDF[0]=%0d, CDF[60]=%0d, CDF[80]=%0d, CDF[255]=%0d",
-                         cdf_0, cdf_60, cdf_80, cdf_255);
+                $display("  期望CDF[0]=%0d, CDF[60]=%0d, CDF[80]=%0d, CDF[255]=%0d", cdf_0,
+                         cdf_60, cdf_80, cdf_255);
 
                 // 验证CDF基本特性
                 if (cdf_0 == 0) begin
                     $display("[PASS] Tile%0d CDF[0]=0 正确", tile_idx);
-                end
-                else begin
+                end else begin
                     $display("[ERROR] Tile%0d CDF[0]=%0d 应该为0", tile_idx, cdf_0);
                 end
 
                 if (cdf_255 == 255) begin
                     $display("[PASS] Tile%0d CDF[255]=255 正确", tile_idx);
-                end
-                else begin
+                end else begin
                     $display("[ERROR] Tile%0d CDF[255]=%0d 应该为255", tile_idx, cdf_255);
                 end
 
                 // 验证CDF单调性
                 if (cdf_0 <= cdf_60 && cdf_60 <= cdf_80 && cdf_80 <= cdf_255) begin
                     $display("[PASS] Tile%0d CDF单调性正确", tile_idx);
-                end
-                else begin
+                end else begin
                     $display("[ERROR] Tile%0d CDF非单调", tile_idx);
                 end
 
                 // 验证CDF值合理性
                 if (frame_num == 1 && cdf_60 == 255) begin
-                    $display("[PASS] Tile%0d CDF[60]=255正确（所有像素都是60）", tile_idx);
-                end
-                else if (frame_num != 1 && cdf_60 > 200) begin
+                    $display("[PASS] Tile%0d CDF[60]=255正确（所有像素都是60）",
+                             tile_idx);
+                end else if (frame_num != 1 && cdf_60 > 200) begin
                     $display("[PASS] Tile%0d CDF[60]值合理", tile_idx);
-                end
-                else begin
+                end else begin
                     $display("[WARN] Tile%0d CDF[60]=%0d 可能不符合预期", tile_idx, cdf_60);
                 end
             end
@@ -1125,7 +1086,7 @@ module tb_clahe_top #(
 
             // 检查几个tile的clipping效果
             for (tile_idx = 0; tile_idx < 4; tile_idx = tile_idx + 1) begin
-                clipped_pixels = 0;
+                clipped_pixels       = 0;
                 redistributed_pixels = 0;
 
                 $display("[CLIPPER] 检查Tile%0d的clipping效果:", tile_idx);
@@ -1134,32 +1095,32 @@ module tb_clahe_top #(
                     // gen_frame_uniform(60): 所有14400个像素都是60
                     hist_before = 14400;  // Bin60有14400个像素
                     if (hist_before > clip_limit) begin
-                        hist_after = clip_limit;
+                        hist_after     = clip_limit;
                         clipped_pixels = hist_before - hist_after;
-                        $display("  Bin60: %0d -> %0d (clipped %0d)", hist_before, hist_after, clipped_pixels);
+                        $display("  Bin60: %0d -> %0d (clipped %0d)", hist_before, hist_after,
+                                 clipped_pixels);
 
                         if (hist_after <= clip_limit) begin
-                            $display("[PASS] Tile%0d Bin60正确被clip到%0d", tile_idx, clip_limit);
-                        end
-                        else begin
-                            $display("[ERROR] Tile%0d Bin60未被正确clip: %0d > %0d",
-                                     tile_idx, hist_after, clip_limit);
+                            $display("[PASS] Tile%0d Bin60正确被clip到%0d", tile_idx,
+                                     clip_limit);
+                        end else begin
+                            $display("[ERROR] Tile%0d Bin60未被正确clip: %0d > %0d", tile_idx,
+                                     hist_after, clip_limit);
                         end
 
                         // 验证被clip的像素被重新分布
                         redistributed_pixels = clipped_pixels;
                         if (redistributed_pixels > 0) begin
                             $display("  重新分布的像素数: %0d", redistributed_pixels);
-                            $display("[PASS] Tile%0d 有%0d个像素被重新分布", tile_idx, redistributed_pixels);
+                            $display("[PASS] Tile%0d 有%0d个像素被重新分布", tile_idx,
+                                     redistributed_pixels);
                         end
-                    end
-                    else begin
+                    end else begin
                         hist_after = hist_before;
                         $display("  Bin60: %0d (无需clip)", hist_after);
                         $display("[INFO] Tile%0d Bin60无需clip", tile_idx);
                     end
-                end
-                else begin
+                end else begin
                     // 其他测试模式
                     $display("  其他测试模式的clipper验证");
                 end
@@ -1195,16 +1156,14 @@ module tb_clahe_top #(
             // 检查CLAHE使能信号
             if (u_dut.enable_clahe) begin
                 $display("[PASS] CLAHE功能已使能");
-            end
-            else begin
+            end else begin
                 $display("[ERROR] CLAHE功能未使能 - 这可能是问题所在！");
             end
 
             // 检查插值使能信号
             if (u_dut.enable_interp) begin
                 $display("[PASS] 插值功能已使能");
-            end
-            else begin
+            end else begin
                 $display("[WARN] 插值功能未使能");
             end
 
@@ -1220,12 +1179,14 @@ module tb_clahe_top #(
         #1;  // 等待一个时间单位让信号稳定
 
         // 等待第一帧完成
-        wait(total_frames >= 1);
-        #(CLK_PERIOD*100000);  // 等待足够时间让CDF处理完成
+        wait (total_frames >= 1);
+        #(CLK_PERIOD * 100000);  // 等待足够时间让CDF处理完成
 
-        $display("\n================================================================================");
+        $display(
+            "\n================================================================================");
         $display("CLAHE Algorithm Verification - Frame 1");
-        $display("================================================================================");
+        $display(
+            "================================================================================");
 
         // 简化的验证检查
         $display("[VERIFY] === Frame 1 CLAHE Status Verification ===");
@@ -1233,95 +1194,98 @@ module tb_clahe_top #(
         // 检查CLAHE使能信号
         if (u_dut.enable_clahe) begin
             $display("[PASS] CLAHE function enabled");
-        end
-        else begin
+        end else begin
             $display("[ERROR] CLAHE function NOT enabled");
         end
 
         // 检查插值使能信号
         if (u_dut.enable_interp) begin
             $display("[PASS] Interpolation function enabled");
-        end
-        else begin
+        end else begin
             $display("[WARN] Interpolation function NOT enabled");
         end
 
         // 检查CDF状态
         if (u_dut.cdf_done) begin
             $display("[PASS] CDF calculation completed");
-        end
-        else begin
+        end else begin
             $display("[ERROR] CDF calculation NOT completed");
         end
 
         // 检查直方图状态
         if (u_dut.frame_hist_done) begin
             $display("[PASS] Histogram statistics completed");
-        end
-        else begin
+        end else begin
             $display("[ERROR] Histogram statistics NOT completed");
         end
 
         $display("[INFO] Current ping_pong_flag: %0d", u_dut.ping_pong_flag);
         $display("[INFO] Current total_frames: %0d", total_frames);
 
-        $display("================================================================================");
+        $display(
+            "================================================================================");
         $display("Frame 1 Verification Complete");
-        $display("================================================================================\n");
+        $display(
+            "================================================================================\n");
 
         // 等待第二帧
-        wait(total_frames >= 2);
-        #(CLK_PERIOD*100000);
+        wait (total_frames >= 2);
+        #(CLK_PERIOD * 100000);
 
-        $display("\n================================================================================");
+        $display(
+            "\n================================================================================");
         $display("CLAHE Algorithm Verification - Frame 2");
-        $display("================================================================================");
+        $display(
+            "================================================================================");
 
         $display("[VERIFY] === Frame 2 CLAHE Status Verification ===");
 
         if (u_dut.enable_clahe) begin
             $display("[PASS] CLAHE function still enabled");
-        end
-        else begin
+        end else begin
             $display("[ERROR] CLAHE function disabled");
         end
 
         if (u_dut.cdf_done) begin
             $display("[PASS] CDF calculation completed for frame 2");
-        end
-        else begin
+        end else begin
             $display("[ERROR] CDF calculation NOT completed for frame 2");
         end
 
         $display("[INFO] Frame 2 ping_pong_flag: %0d", u_dut.ping_pong_flag);
 
-        $display("================================================================================");
+        $display(
+            "================================================================================");
         $display("Frame 2 Verification Complete");
-        $display("================================================================================\n");
+        $display(
+            "================================================================================\n");
 
         // 等待第三帧
-        wait(total_frames >= 3);
-        #(CLK_PERIOD*100000);
+        wait (total_frames >= 3);
+        #(CLK_PERIOD * 100000);
 
-        $display("\n================================================================================");
+        $display(
+            "\n================================================================================");
         $display("CLAHE Algorithm Verification - Frame 3");
-        $display("================================================================================");
+        $display(
+            "================================================================================");
 
         $display("[VERIFY] === Frame 3 CLAHE Status Verification ===");
 
         if (u_dut.enable_clahe) begin
             $display("[PASS] CLAHE function consistently enabled");
-        end
-        else begin
+        end else begin
             $display("[ERROR] CLAHE function disabled");
         end
 
         $display("[INFO] Frame 3 ping_pong_flag: %0d", u_dut.ping_pong_flag);
         $display("[INFO] Total frames processed: %0d", total_frames);
 
-        $display("================================================================================");
+        $display(
+            "================================================================================");
         $display("Frame 3 Verification Complete - Multi-frame verification successful!");
-        $display("================================================================================\n");
+        $display(
+            "================================================================================\n");
     end
 
     // ========================================================================

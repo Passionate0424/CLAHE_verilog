@@ -56,55 +56,55 @@
 `timescale 1ns / 1ps
 
 module clahe_top (
-        // ====================================================================
-        // 时钟和复位信号
-        // ====================================================================
-        input  wire        pclk,           // 像素时钟，通常为74MHz或100MHz
-        input  wire        rst_n,          // 复位信号，低电平有效
+    // ====================================================================
+    // 时钟和复位信号
+    // ====================================================================
+    input wire pclk,  // 像素时钟，通常为74MHz或100MHz
+    input wire rst_n, // 复位信号，低电平有效
 
-        // ====================================================================
-        // 输入数据接口 - 来自摄像头或图像传感器
-        // ====================================================================
-        input  wire [7:0]  in_y,           // 输入Y分量（亮度），8位灰度值
-        input  wire [7:0]  in_u,           // 输入U分量（色度），8位色度值
-        input  wire [7:0]  in_v,           // 输入V分量（色度），8位色度值
-        input  wire        in_href,        // 行有效信号，高电平表示有效像素
-        input  wire        in_vsync,       // 场同步信号，高电平表示有效帧
+    // ====================================================================
+    // 输入数据接口 - 来自摄像头或图像传感器
+    // ====================================================================
+    input wire [7:0] in_y,     // 输入Y分量（亮度），8位灰度值
+    input wire [7:0] in_u,     // 输入U分量（色度），8位色度值
+    input wire [7:0] in_v,     // 输入V分量（色度），8位色度值
+    input wire       in_href,  // 行有效信号，高电平表示有效像素
+    input wire       in_vsync, // 场同步信号，高电平表示有效帧
 
-        // ====================================================================
-        // 输出数据接口 - 送往显示器或编码器
-        // ====================================================================
-        output wire [7:0]  out_y,          // 输出Y分量（CLAHE增强后的亮度）
-        output wire [7:0]  out_u,          // 输出U分量（延迟匹配的色度）
-        output wire [7:0]  out_v,          // 输出V分量（延迟匹配的色度）
-        output wire        out_href,       // 输出行有效信号（延迟匹配）
-        output wire        out_vsync,      // 输出场同步信号（延迟匹配）
+    // ====================================================================
+    // 输出数据接口 - 送往显示器或编码器
+    // ====================================================================
+    output wire [7:0] out_y,     // 输出Y分量（CLAHE增强后的亮度）
+    output wire [7:0] out_u,     // 输出U分量（延迟匹配的色度）
+    output wire [7:0] out_v,     // 输出V分量（延迟匹配的色度）
+    output wire       out_href,  // 输出行有效信号（延迟匹配）
+    output wire       out_vsync, // 输出场同步信号（延迟匹配）
 
-        // ====================================================================
-        // 控制接口 - 来自CPU或控制逻辑
-        // ====================================================================
-        input  wire [7:0]  clip_threshold, // 对比度限制阈值 (0-255)，推荐值：3-5
-        input  wire        enable_clahe,   // CLAHE使能信号，1=启用CLAHE处理
-        input  wire        enable_interp,   // 插值使能信号，1=启用双线性插值
+    // ====================================================================
+    // 控制接口 - 来自CPU或控制逻辑
+    // ====================================================================
+    input  wire [15:0] clip_threshold, // 对比度限制阈值 (0-65535)，推荐值：80-800 (取决于tile大小)
+    input wire enable_clahe,  // CLAHE使能信号，1=启用CLAHE处理
+    input wire enable_interp,  // 插值使能信号，1=启用双线性插值
 
-        // ====================================================================
-        // 调试接口 - 用于仿真和调试
-        // ====================================================================
-        output wire        dbg_cdf_processing,
-        output wire        dbg_cdf_done,
-        output wire        dbg_ping_pong_flag
-    );
+    // ====================================================================
+    // 调试接口 - 用于仿真和调试
+    // ====================================================================
+    output wire dbg_cdf_processing,
+    output wire dbg_cdf_done,
+    output wire dbg_ping_pong_flag
+);
 
     // ========================================================================
     // 图像和分块参数定义
     // ========================================================================
-    localparam WIDTH = 1280;        // 图像宽度：1280像素（HD分辨率）
-    localparam HEIGHT = 720;        // 图像高度：720像素（HD分辨率）
-    localparam TILE_H = 8;          // 水平tile数量：8个（将图像分成8列）
-    localparam TILE_V = 8;          // 垂直tile数量：8个（将图像分成8行）
-    localparam TILE_NUM = 64;       // 总tile数量：8×8=64个（每个tile独立处理）
-    localparam TILE_WIDTH = WIDTH / TILE_H;   // 每个tile宽度：160像素
-    localparam TILE_HEIGHT = HEIGHT / TILE_V; // 每个tile高度：90像素
+    localparam WIDTH = 1280;  // 图像宽度：1280像素（HD分辨率）
+    localparam HEIGHT = 720;  // 图像高度：720像素（HD分辨率）
+    localparam TILE_H = 8;  // 水平tile数量：8个（将图像分成8列）
+    localparam TILE_V = 8;  // 垂直tile数量：8个（将图像分成8行）
+    localparam TILE_NUM = 64;  // 总tile数量：8×8=64个（每个tile独立处理）
+    localparam TILE_WIDTH = WIDTH / TILE_H;  // 每个tile宽度：160像素
+    localparam TILE_HEIGHT = HEIGHT / TILE_V;  // 每个tile高度：90像素
 
     // ========================================================================
     // 内部信号定义
@@ -113,84 +113,84 @@ module clahe_top (
     // ========================================================================
     // 同步信号延迟寄存器
     // ========================================================================
-    reg vsync_d1, vsync_d2;          // vsync边沿检测寄存器
+    reg vsync_d1, vsync_d2;  // vsync边沿检测寄存器
 
     // ========================================================================
     // 坐标计算相关信号
     // ========================================================================
     // 坐标计数器输出：实时计算像素位置和tile索引
-    wire [10:0] pixel_x;               // 全局像素X坐标 (0-1279)
-    wire [9:0]  pixel_y;                // 全局像素Y坐标 (0-719)
-    wire [2:0]  tile_x, tile_y;         // tile坐标 (0-7, 0-7)
-    wire [5:0]  tile_idx;               // tile索引 (0-63)，用于选择对应的RAM
-    wire [7:0]  local_x;                // tile内相对X坐标 (0-159)
-    wire [6:0]  local_y;                // tile内相对Y坐标 (0-89)
+    wire [10:0] pixel_x;  // 全局像素X坐标 (0-1279)
+    wire [ 9:0] pixel_y;  // 全局像素Y坐标 (0-719)
+    wire [2:0] tile_x, tile_y;  // tile坐标 (0-7, 0-7)
+    wire [5:0] tile_idx;  // tile索引 (0-63)，用于选择对应的RAM
+    wire [7:0] local_x;  // tile内相对X坐标 (0-159)
+    wire [6:0] local_y;  // tile内相对Y坐标 (0-89)
 
     // ========================================================================
     // 乒乓控制相关信号
     // ========================================================================
     // 乒乓控制：帧级乒乓操作，实现统计和映射的并行处理
-    reg         ping_pong_flag;      // 乒乓标志：0=统计RAM_A/映射RAM_B, 1=统计RAM_B/映射RAM_A
-    wire        vsync_posedge, vsync_negedge; // 场同步边沿检测信号
+    reg ping_pong_flag;  // 乒乓标志：0=统计RAM_A/映射RAM_B, 1=统计RAM_B/映射RAM_A
+    wire vsync_posedge, vsync_negedge;  // 场同步边沿检测信号
 
     // ========================================================================
     // 直方图统计控制信号
     // ========================================================================
     // 直方图统计控制：64块RAM的并行清零控制
-    wire        hist_clear_start;    // 清零开始信号，触发RAM清零操作
-    wire        hist_clear_done;     // 清零完成信号，表示RAM清零完成
-    wire        frame_hist_done;     // 帧直方图统计完成标志，触发CDF计算
+    wire        hist_clear_start;  // 清零开始信号，触发RAM清零操作
+    wire        hist_clear_done;  // 清零完成信号，表示RAM清零完成
+    wire        frame_hist_done;  // 帧直方图统计完成标志，触发CDF计算
 
     // ========================================================================
     // 直方图统计模块的RAM接口
     // ========================================================================
-    wire [5:0]  hist_rd_tile_idx;    // 直方图统计读tile索引
-    wire [5:0]  hist_wr_tile_idx;    // 直方图统计写tile索引
-    wire [7:0]  hist_wr_addr;        // 直方图统计写地址
-    wire [15:0] hist_wr_data;        // 直方图统计写数据
-    wire        hist_wr_en;          // 直方图统计写使能
-    wire [7:0]  hist_rd_addr;        // 直方图统计读地址
-    wire [15:0] hist_rd_data;        // 直方图统计读数据
+    wire [ 5:0] hist_rd_tile_idx;  // 直方图统计读tile索引
+    wire [ 5:0] hist_wr_tile_idx;  // 直方图统计写tile索引
+    wire [ 7:0] hist_wr_addr;  // 直方图统计写地址
+    wire [15:0] hist_wr_data;  // 直方图统计写数据
+    wire        hist_wr_en;  // 直方图统计写使能
+    wire [ 7:0] hist_rd_addr;  // 直方图统计读地址
+    wire [15:0] hist_rd_data;  // 直方图统计读数据
 
     // ========================================================================
     // CDF计算模块的RAM接口
     // ========================================================================
     // 修复：分开定义读和写的tile索引
-    wire [5:0]  cdf_rd_tile_idx;     // CDF读tile索引（读直方图）
-    wire [5:0]  cdf_wr_tile_idx;     // CDF写tile索引（写LUT）
-    wire [7:0]  cdf_rd_addr;         // CDF读地址（读直方图）
-    wire [7:0]  cdf_wr_addr;         // CDF写地址（写LUT）
-    wire [7:0]  cdf_wr_data;         // CDF写数据（8bit）
-    wire        cdf_wr_en;           // CDF写使能
-    wire        cdf_rd_en;           // CDF读使能
-    wire [15:0] cdf_rd_data;         // CDF读数据
-    wire        cdf_done;            // CDF计算完成标志
-    wire        cdf_processing;      // CDF处理中标志
+    wire [ 5:0] cdf_rd_tile_idx;  // CDF读tile索引（读直方图）
+    wire [ 5:0] cdf_wr_tile_idx;  // CDF写tile索引（写LUT）
+    wire [ 7:0] cdf_rd_addr;  // CDF读地址（读直方图）
+    wire [ 7:0] cdf_wr_addr;  // CDF写地址（写LUT）
+    wire [ 7:0] cdf_wr_data;  // CDF写数据（8bit）
+    wire        cdf_wr_en;  // CDF写使能
+    wire        cdf_rd_en;  // CDF读使能
+    wire [15:0] cdf_rd_data;  // CDF读数据
+    wire        cdf_done;  // CDF计算完成标志
+    wire        cdf_processing;  // CDF处理中标志
 
     // CDF地址和tile索引多路复用：读时用rd，写时用wr
-    wire [5:0]  cdf_tile_idx;
-    wire [7:0]  cdf_addr;
+    wire [ 5:0] cdf_tile_idx;
+    wire [ 7:0] cdf_addr;
     assign cdf_tile_idx = cdf_wr_en ? cdf_wr_tile_idx : cdf_rd_tile_idx;
-    assign cdf_addr = cdf_wr_en ? cdf_wr_addr : cdf_rd_addr;
+    assign cdf_addr     = cdf_wr_en ? cdf_wr_addr : cdf_rd_addr;
 
     // ========================================================================
     // 像素映射模块的RAM接口（并行读取版本 - 四块并行）
     // ========================================================================
     // 四块并行读取接口
-    wire [5:0]  mapping_tl_tile_idx;    // 左上tile索引
-    wire [5:0]  mapping_tr_tile_idx;    // 右上tile索引
-    wire [5:0]  mapping_bl_tile_idx;    // 左下tile索引
-    wire [5:0]  mapping_br_tile_idx;    // 右下tile索引
-    wire [7:0]  mapping_addr;           // 映射地址（四块共用）
-    wire [7:0]  mapping_tl_rd_data;     // 左上块读数据（8bit CDF LUT）
-    wire [7:0]  mapping_tr_rd_data;     // 右上块读数据（8bit CDF LUT）
-    wire [7:0]  mapping_bl_rd_data;     // 左下块读数据（8bit CDF LUT）
-    wire [7:0]  mapping_br_rd_data;     // 右下块读数据（8bit CDF LUT）
-    wire [7:0]  mapped_y;               // 映射后的Y分量
-    wire [7:0]  mapped_u;               // 映射后的U分量
-    wire [7:0]  mapped_v;               // 映射后的V分量
-    wire        mapped_href;            // 映射后的行有效信号
-    wire        mapped_vsync;           // 映射后的场同步信号
+    wire [5:0] mapping_tl_tile_idx;  // 左上tile索引
+    wire [5:0] mapping_tr_tile_idx;  // 右上tile索引
+    wire [5:0] mapping_bl_tile_idx;  // 左下tile索引
+    wire [5:0] mapping_br_tile_idx;  // 右下tile索引
+    wire [7:0] mapping_addr;  // 映射地址（四块共用）
+    wire [7:0] mapping_tl_rd_data;  // 左上块读数据（8bit CDF LUT）
+    wire [7:0] mapping_tr_rd_data;  // 右上块读数据（8bit CDF LUT）
+    wire [7:0] mapping_bl_rd_data;  // 左下块读数据（8bit CDF LUT）
+    wire [7:0] mapping_br_rd_data;  // 右下块读数据（8bit CDF LUT）
+    wire [7:0] mapped_y;  // 映射后的Y分量
+    wire [7:0] mapped_u;  // 映射后的U分量
+    wire [7:0] mapped_v;  // 映射后的V分量
+    wire       mapped_href;  // 映射后的行有效信号
+    wire       mapped_vsync;  // 映射后的场同步信号
 
     // 注意：延迟匹配已集成到mapping模块中，无需额外的延迟逻辑
 
@@ -204,8 +204,7 @@ module clahe_top (
         if (!rst_n) begin
             vsync_d1 <= 1'b0;
             vsync_d2 <= 1'b0;
-        end
-        else begin
+        end else begin
             vsync_d1 <= in_vsync;
             vsync_d2 <= vsync_d1;
         end
@@ -235,8 +234,7 @@ module clahe_top (
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
             cdf_processing_d1 <= 1'b0;
-        end
-        else begin
+        end else begin
             cdf_processing_d1 <= cdf_processing;
         end
     end
@@ -246,8 +244,7 @@ module clahe_top (
     always @(posedge pclk or negedge rst_n) begin
         if (!rst_n) begin
             ping_pong_flag <= 1'b0;
-        end
-        else if (vsync_posedge) begin
+        end else if (vsync_posedge) begin
             // 修正：在帧开始时切换ping_pong，避免清零和映射冲突
             ping_pong_flag <= !ping_pong_flag;
         end
@@ -263,80 +260,80 @@ module clahe_top (
     // 坐标计数器
     // ========================================================================
     clahe_coord_counter coord_counter_inst (
-                            .pclk(pclk),
-                            .rst_n(rst_n),
-                            .in_href(in_href),
-                            .in_vsync(in_vsync),
-                            .x_cnt(pixel_x),
-                            .y_cnt(pixel_y),
-                            .tile_x(tile_x),
-                            .tile_y(tile_y),
-                            .tile_idx(tile_idx),
-                            .local_x(local_x),
-                            .local_y(local_y)
-                        );
+        .pclk    (pclk),
+        .rst_n   (rst_n),
+        .in_href (in_href),
+        .in_vsync(in_vsync),
+        .x_cnt   (pixel_x),
+        .y_cnt   (pixel_y),
+        .tile_x  (tile_x),
+        .tile_y  (tile_y),
+        .tile_idx(tile_idx),
+        .local_x (local_x),
+        .local_y (local_y)
+    );
 
     // ========================================================================
     // 直方图统计模块
     // ========================================================================
     clahe_histogram_stat hist_stat_inst (
-                             .pclk(pclk),
-                             .rst_n(rst_n),
-                             .in_y(in_y),
-                             .in_href(in_href),
-                             .in_vsync(in_vsync),
-                             .tile_idx(tile_idx),
-                             .ping_pong_flag(ping_pong_flag),
-                             .clear_start(hist_clear_start),
-                             .clear_done(hist_clear_done),
-                             .ram_rd_tile_idx(hist_rd_tile_idx),
-                             .ram_wr_tile_idx(hist_wr_tile_idx),
-                             .ram_wr_addr_a(hist_wr_addr),
-                             .ram_wr_data_a(hist_wr_data),
-                             .ram_wr_en_a(hist_wr_en),
-                             .ram_rd_addr_b(hist_rd_addr),
-                             .ram_rd_data_b(hist_rd_data),
-                             .frame_hist_done(frame_hist_done)
-                         );
+        .pclk           (pclk),
+        .rst_n          (rst_n),
+        .in_y           (in_y),
+        .in_href        (in_href),
+        .in_vsync       (in_vsync),
+        .tile_idx       (tile_idx),
+        .ping_pong_flag (ping_pong_flag),
+        .clear_start    (hist_clear_start),
+        .clear_done     (hist_clear_done),
+        .ram_rd_tile_idx(hist_rd_tile_idx),
+        .ram_wr_tile_idx(hist_wr_tile_idx),
+        .ram_wr_addr_a  (hist_wr_addr),
+        .ram_wr_data_a  (hist_wr_data),
+        .ram_wr_en_a    (hist_wr_en),
+        .ram_rd_addr_b  (hist_rd_addr),
+        .ram_rd_data_b  (hist_rd_data),
+        .frame_hist_done(frame_hist_done)
+    );
 
     // ========================================================================
     // 64块RAM实例（128块伪双端口RAM，64 RAM_A + 64 RAM_B）- 并行读取版本
     // ========================================================================
     clahe_ram_64tiles_parallel ram_64tiles_inst (
-                                   .pclk(pclk),
-                                   .rst_n(rst_n),
-                                   .ping_pong_flag(ping_pong_flag),
-                                   .clear_start(hist_clear_start),
-                                   .clear_done(hist_clear_done),
+        .pclk          (pclk),
+        .rst_n         (rst_n),
+        .ping_pong_flag(ping_pong_flag),
+        .clear_start   (hist_clear_start),
+        .clear_done    (hist_clear_done),
 
-                                   // 直方图统计接口
-                                   .hist_rd_tile_idx(hist_rd_tile_idx),
-                                   .hist_wr_tile_idx(hist_wr_tile_idx),
-                                   .hist_wr_addr(hist_wr_addr),
-                                   .hist_wr_data(hist_wr_data),
-                                   .hist_wr_en(hist_wr_en),
-                                   .hist_rd_addr(hist_rd_addr),
-                                   .hist_rd_data(hist_rd_data),
+        // 直方图统计接口
+        .hist_rd_tile_idx(hist_rd_tile_idx),
+        .hist_wr_tile_idx(hist_wr_tile_idx),
+        .hist_wr_addr    (hist_wr_addr),
+        .hist_wr_data    (hist_wr_data),
+        .hist_wr_en      (hist_wr_en),
+        .hist_rd_addr    (hist_rd_addr),
+        .hist_rd_data    (hist_rd_data),
 
-                                   // CDF计算接口
-                                   .cdf_tile_idx(cdf_tile_idx),
-                                   .cdf_addr(cdf_addr),
-                                   .cdf_wr_data(cdf_wr_data),
-                                   .cdf_wr_en(cdf_wr_en),
-                                   .cdf_rd_en(cdf_rd_en),
-                                   .cdf_rd_data(cdf_rd_data),
+        // CDF计算接口
+        .cdf_tile_idx(cdf_tile_idx),
+        .cdf_addr    (cdf_addr),
+        .cdf_wr_data (cdf_wr_data),
+        .cdf_wr_en   (cdf_wr_en),
+        .cdf_rd_en   (cdf_rd_en),
+        .cdf_rd_data (cdf_rd_data),
 
-                                   // 四块并行映射接口
-                                   .mapping_tl_tile_idx(mapping_tl_tile_idx),
-                                   .mapping_tr_tile_idx(mapping_tr_tile_idx),
-                                   .mapping_bl_tile_idx(mapping_bl_tile_idx),
-                                   .mapping_br_tile_idx(mapping_br_tile_idx),
-                                   .mapping_addr(mapping_addr),
-                                   .mapping_tl_rd_data(mapping_tl_rd_data),
-                                   .mapping_tr_rd_data(mapping_tr_rd_data),
-                                   .mapping_bl_rd_data(mapping_bl_rd_data),
-                                   .mapping_br_rd_data(mapping_br_rd_data)
-                               );
+        // 四块并行映射接口
+        .mapping_tl_tile_idx(mapping_tl_tile_idx),
+        .mapping_tr_tile_idx(mapping_tr_tile_idx),
+        .mapping_bl_tile_idx(mapping_bl_tile_idx),
+        .mapping_br_tile_idx(mapping_br_tile_idx),
+        .mapping_addr       (mapping_addr),
+        .mapping_tl_rd_data (mapping_tl_rd_data),
+        .mapping_tr_rd_data (mapping_tr_rd_data),
+        .mapping_bl_rd_data (mapping_bl_rd_data),
+        .mapping_br_rd_data (mapping_br_rd_data)
+    );
 
     // ========================================================================
     // CDF计算模块
@@ -345,71 +342,71 @@ module clahe_top (
     assign cdf_rd_en = cdf_processing;
 
     clahe_clipper_cdf #(
-                          .TILE_NUM(TILE_NUM),
-                          .BINS(256),
-                          .TILE_PIXELS(TILE_WIDTH * TILE_HEIGHT)
-                      ) clipper_cdf_inst (
-                          .pclk(pclk),
-                          .rst_n(rst_n),
-                          .frame_hist_done(frame_hist_done),
-                          .clip_limit({8'd0, clip_threshold}),
-                          .ping_pong_flag(ping_pong_flag),
-                          .hist_rd_tile_idx(cdf_rd_tile_idx),
-                          .hist_rd_bin_addr(cdf_rd_addr),
-                          .hist_rd_data_a(cdf_rd_data),
-                          .hist_rd_data_b(cdf_rd_data),
-                          .cdf_wr_tile_idx(cdf_wr_tile_idx),
-                          .cdf_wr_bin_addr(cdf_wr_addr),
-                          .cdf_wr_data(cdf_wr_data),
-                          .cdf_wr_en(cdf_wr_en),
-                          .cdf_done(cdf_done),
-                          .processing(cdf_processing)
-                      );
+        .TILE_NUM   (TILE_NUM),
+        .BINS       (256),
+        .TILE_PIXELS(TILE_WIDTH * TILE_HEIGHT)
+    ) clipper_cdf_inst (
+        .pclk            (pclk),
+        .rst_n           (rst_n),
+        .frame_hist_done (frame_hist_done),
+        .clip_limit      (clip_threshold),
+        .ping_pong_flag  (ping_pong_flag),
+        .hist_rd_tile_idx(cdf_rd_tile_idx),
+        .hist_rd_bin_addr(cdf_rd_addr),
+        .hist_rd_data_a  (cdf_rd_data),
+        .hist_rd_data_b  (cdf_rd_data),
+        .cdf_wr_tile_idx (cdf_wr_tile_idx),
+        .cdf_wr_bin_addr (cdf_wr_addr),
+        .cdf_wr_data     (cdf_wr_data),
+        .cdf_wr_en       (cdf_wr_en),
+        .cdf_done        (cdf_done),
+        .processing      (cdf_processing)
+    );
 
     // ========================================================================
     // 像素映射模块（并行读取版本） - 四块并行读取CDF LUT
     // ========================================================================
     clahe_mapping_parallel #(
-                               .TILE_NUM(TILE_NUM),
-                               .BINS(256),
-                               .IMG_WIDTH(WIDTH),
-                               .IMG_HEIGHT(HEIGHT),
-                               .TILE_H(TILE_H),
-                               .TILE_V(TILE_V)
-                           ) mapping_inst (
-                               .pclk(pclk),
-                               .rst_n(rst_n),
-                               .in_y(in_y),                    // 输入Y分量（原始数据）
-                               .in_u(in_u),                    // 输入U分量（原始数据）
-                               .in_v(in_v),                    // 输入V分量（原始数据）
-                               .in_href(in_href),              // 输入行有效信号
-                               .in_vsync(in_vsync),           // 输入场同步信号
-                               .tile_idx(tile_idx),            // 输入tile索引（来自coord_counter）
-                               .pixel_x(pixel_x),              // 输入像素X坐标（来自coord_counter）
-                               .pixel_y(pixel_y),              // 输入像素Y坐标（来自coord_counter）
-                               .local_x_in(local_x),           // 输入tile内X坐标（来自coord_counter）
-                               .local_y_in(local_y),           // 输入tile内Y坐标（来自coord_counter）
-                               .clahe_enable(enable_clahe),    // CLAHE使能信号
-                               .interp_enable(enable_interp),  // 插值使能信号
-                               .cdf_ready(cdf_done),          // CDF准备就绪信号
+        .TILE_NUM  (TILE_NUM),
+        .BINS      (256),
+        .IMG_WIDTH (WIDTH),
+        .IMG_HEIGHT(HEIGHT),
+        .TILE_H    (TILE_H),
+        .TILE_V    (TILE_V)
+    ) mapping_inst (
+        .pclk         (pclk),
+        .rst_n        (rst_n),
+        .in_y         (in_y),           // 输入Y分量（原始数据）
+        .in_u         (in_u),           // 输入U分量（原始数据）
+        .in_v         (in_v),           // 输入V分量（原始数据）
+        .in_href      (in_href),        // 输入行有效信号
+        .in_vsync     (in_vsync),       // 输入场同步信号
+        .tile_idx     (tile_idx),       // 输入tile索引（来自coord_counter）
+        .pixel_x      (pixel_x),        // 输入像素X坐标（来自coord_counter）
+        .pixel_y      (pixel_y),        // 输入像素Y坐标（来自coord_counter）
+        .local_x_in   (local_x),        // 输入tile内X坐标（来自coord_counter）
+        .local_y_in   (local_y),        // 输入tile内Y坐标（来自coord_counter）
+        .clahe_enable (enable_clahe),   // CLAHE使能信号
+        .interp_enable(enable_interp),  // 插值使能信号
+        .cdf_ready    (cdf_done),       // CDF准备就绪信号
 
-                               // 四块并行CDF LUT读接口
-                               .cdf_tl_tile_idx(mapping_tl_tile_idx),     // 左上tile索引
-                               .cdf_tr_tile_idx(mapping_tr_tile_idx),     // 右上tile索引
-                               .cdf_bl_tile_idx(mapping_bl_tile_idx),     // 左下tile索引
-                               .cdf_br_tile_idx(mapping_br_tile_idx),     // 右下tile索引
-                               .cdf_rd_bin_addr(mapping_addr),            // 读bin地址
-                               .cdf_tl_rd_data(mapping_tl_rd_data),       // 左上块读数据
-                               .cdf_tr_rd_data(mapping_tr_rd_data),       // 右上块读数据
-                               .cdf_bl_rd_data(mapping_bl_rd_data),       // 左下块读数据
-                               .cdf_br_rd_data(mapping_br_rd_data),       // 右下块读数据
+        // 四块并行CDF LUT读接口
+        .cdf_tl_tile_idx(mapping_tl_tile_idx),  // 左上tile索引
+        .cdf_tr_tile_idx(mapping_tr_tile_idx),  // 右上tile索引
+        .cdf_bl_tile_idx(mapping_bl_tile_idx),  // 左下tile索引
+        .cdf_br_tile_idx(mapping_br_tile_idx),  // 右下tile索引
+        .cdf_rd_bin_addr(mapping_addr),         // 读bin地址
+        .cdf_tl_rd_data (mapping_tl_rd_data),   // 左上块读数据
+        .cdf_tr_rd_data (mapping_tr_rd_data),   // 右上块读数据
+        .cdf_bl_rd_data (mapping_bl_rd_data),   // 左下块读数据
+        .cdf_br_rd_data (mapping_br_rd_data),   // 右下块读数据
 
-                               .out_y(mapped_y),              // 输出映射后的Y分量
-                               .out_u(mapped_u),              // 输出映射后的U分量
-                               .out_v(mapped_v),              // 输出映射后的V分量
-                               .out_href(mapped_href),        // 输出映射后的行有效信号
-                               .out_vsync(mapped_vsync)       // 输出映射后的场同步信号
-                           );
+        .out_y    (mapped_y),     // 输出映射后的Y分量
+        .out_u    (mapped_u),     // 输出映射后的U分量
+        .out_v    (mapped_v),     // 输出映射后的V分量
+        .out_href (mapped_href),  // 输出映射后的行有效信号
+        .out_vsync(mapped_vsync)  // 输出映射后的场同步信号
+    );
 
     // ========================================================================
     // 注意：插值功能已集成到mapping模块中，无需独立的插值模块
@@ -443,14 +440,14 @@ module clahe_top (
     // 注意：插值功能已集成到mapping模块中，通过interp_enable控制
 
     // Y分量输出选择
-    assign out_y = enable_clahe ? mapped_y : in_y;
+    assign out_y     = enable_clahe ? mapped_y : in_y;
 
     // U/V分量输出选择
-    assign out_u = enable_clahe ? mapped_u : in_u;
-    assign out_v = enable_clahe ? mapped_v : in_v;
+    assign out_u     = enable_clahe ? mapped_u : in_u;
+    assign out_v     = enable_clahe ? mapped_v : in_v;
 
     // 同步信号输出选择
-    assign out_href = enable_clahe ? mapped_href : in_href;
+    assign out_href  = enable_clahe ? mapped_href : in_href;
     assign out_vsync = enable_clahe ? mapped_vsync : in_vsync;
 
     // ========================================================================
@@ -458,10 +455,10 @@ module clahe_top (
     // ========================================================================
     // 这些信号可以用于调试和验证
     wire [10:0] debug_pixel_x = pixel_x;
-    wire [9:0]  debug_pixel_y = pixel_y;
-    wire [5:0]  debug_tile_idx = tile_idx;
-    wire [7:0]  debug_local_x = local_x;
-    wire [7:0]  debug_local_y = local_y;
+    wire [ 9:0] debug_pixel_y = pixel_y;
+    wire [ 5:0] debug_tile_idx = tile_idx;
+    wire [ 7:0] debug_local_x = local_x;
+    wire [ 7:0] debug_local_y = local_y;
     wire        debug_ping_pong = ping_pong_flag;
     wire        debug_clear_busy = !hist_clear_done;
     wire        debug_frame_done = frame_hist_done;
@@ -471,7 +468,7 @@ module clahe_top (
 
     // Aliases for Testbench compatibility
     assign dbg_cdf_processing = cdf_processing;
-    assign dbg_cdf_done = cdf_done;
+    assign dbg_cdf_done       = cdf_done;
     assign dbg_ping_pong_flag = ping_pong_flag;
 
 endmodule
