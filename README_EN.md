@@ -12,7 +12,7 @@ Welcome! Please pick a language:
 CLAHE (Contrast Limited Adaptive Histogram Equalization) is a classic image enhancement algorithm. By dividing an image into multiple sub-regions (tiles), performing histogram equalization independently on each tile, and using interpolation techniques to eliminate boundary blocking artifacts, it achieves local contrast enhancement. This project implements an FPGA hardware acceleration version of this algorithm, supporting real-time video processing.
 
 > [!IMPORTANT]
-> 🚀 **Current optimized implementation achieves 720P @ 176.4MHz clock frequency**
+> 🚀 **Current optimized implementation achieves 720P @ 188.8MHz clock frequency**
 
 ### Core Features
 
@@ -333,10 +333,10 @@ Based on real **Vivado 2018.3 Implementation** data on target device **Xilinx 7V
 
 | Resource | Baseline (64t) | Optimized (64t_opt) | Change |
 | :--- | ---: | ---: | :--- |
-| **LUTs** | 8,014 | 3,929 | **⬇️ 51.0%** |
-| **Registers (Flip-Flops)** | 637 | 3,104 | ⬆️ 387% (Pipeline Cost) |
+| **LUTs** | 8,014 | 3,738 | **⬇️ 53.4%** |
+| **Registers (Flip-Flops)** | 637 | 3,281 | ⬆️ 415% (Pipeline Cost) |
 | **Block RAM (Tiles)** | 66 | 18 | **⬇️ 72.7%** |
-| **DSP48E1** | 3 | 3 | → Same |
+| **DSP48E1** | 3 | 1 | **⬇️ 66.7%** |
 | **F7 Muxes** | 768 | 46 | **⬇️ 94.0%** |
 | **F8 Muxes** | 256 | 6 | **⬇️ 97.7%** |
 
@@ -344,16 +344,16 @@ Based on real **Vivado 2018.3 Implementation** data on target device **Xilinx 7V
 
 | Metric | Baseline @ 74MHz | Optimized @ 100MHz |
 |--------|------------------:|-------------------:|
-| **WNS** | **-22.347 ns** ❌ | **+3.223 ns** ✅ |
-| **Critical Path Logic Levels** | 185 | 5 |
-| **Max Theoretical Frequency** | ~28 MHz | **~148 MHz** |
+| **WNS** | **-22.347 ns** ❌ | **+4.704 ns** ✅ |
+| **Critical Path Logic Levels** | 185 | 6 |
+| **Max Theoretical Frequency** | ~28 MHz | **~188.8 MHz** |
 
 ```mermaid
 xychart-beta
     title "Resource Change % (Negative=Savings, Positive=Increase)"
     x-axis ["LUTs", "BRAM", "F7 Mux", "F8 Mux", "Registers"]
     y-axis "Change %" -100 --> 400
-    bar [-51, -73, -94, -98, 387]
+    bar [-53, -73, -94, -98, 415]
 ```
 
 ### 🔑 Key Highlights
