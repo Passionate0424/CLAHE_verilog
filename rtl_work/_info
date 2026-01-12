@@ -1,0 +1,217 @@
+m255
+K4
+z2
+!s11f vlog 2020.4 2020.10, Oct 13 2020
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 de:/FPGA_codes/CLAHE
+vclahe_clipper_cdf
+!s110 1768027241
+!i10b 1
+!s100 e_kl?5MlG905X<<5[X>JW3
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IXfV[RA]jGJ>nLN]Y4o=6l3
+R0
+w1766901590
+8e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_clipper_cdf.v
+Fe:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_clipper_cdf.v
+!i122 0
+L0 66 850
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OL;L;2020.4;71
+r1
+!s85 0
+31
+!s108 1768027240.000000
+!s107 e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_clipper_cdf.v|
+!s90 -nologo|-work|work|e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_clipper_cdf.v|
+!i113 0
+Z4 o-nologo -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z5 tCvgOpt 0
+vclahe_coord_counter
+!s110 1768027466
+!i10b 1
+!s100 SV=hNX36`NFPdT^mPVcjO3
+R1
+IbjQM<J?3_>[9NKJ9imV:g3
+R0
+Z6 w1766769160
+8e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_coord_counter.v
+Fe:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_coord_counter.v
+!i122 1
+L0 50 160
+R2
+R3
+r1
+!s85 0
+31
+!s108 1768027466.000000
+!s107 e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_coord_counter.v|
+!s90 -nologo|-work|work|e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_coord_counter.v|
+!i113 0
+R4
+R5
+vclahe_divider_pipelined
+!s110 1768027491
+!i10b 1
+!s100 5>iHM8L<H7YTRIW`MT3DM0
+R1
+IK4SHc7LPWO35:1NWbdUii3
+R0
+R6
+8e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_divider_pipelined.v
+Fe:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_divider_pipelined.v
+!i122 4
+L0 42 132
+R2
+R3
+r1
+!s85 0
+31
+!s108 1768027491.000000
+!s107 e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_divider_pipelined.v|
+!s90 -nologo|-work|work|e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_divider_pipelined.v|
+!i113 0
+R4
+R5
+vclahe_histogram_stat
+!s110 1768027525
+!i10b 1
+!s100 eo7M:JU?zi0Sf9H3BAX_D0
+R1
+IBO;BB5mV3d;30bk=mgKDX3
+R0
+R6
+8e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_histogram_stat.v
+Fe:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_histogram_stat.v
+!i122 5
+L0 45 174
+R2
+R3
+r1
+!s85 0
+31
+!s108 1768027525.000000
+!s107 e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_histogram_stat.v|
+!s90 -nologo|-work|work|e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_histogram_stat.v|
+!i113 0
+R4
+R5
+vclahe_mapping_parallel
+!s110 1768149172
+!i10b 1
+!s100 cX:ae`?K0?<WN<3]GnE6M3
+R1
+IH]A5MV0f3AS8CVE:k;4z32
+R0
+w1765456658
+8e:\FPGA_codes\CLAHE\projects\16tile\rtl\clahe_mapping_parallel.v
+Fe:\FPGA_codes\CLAHE\projects\16tile\rtl\clahe_mapping_parallel.v
+!i122 11
+L0 55 496
+R2
+R3
+r1
+!s85 0
+31
+!s108 1768149172.000000
+!s107 e:\FPGA_codes\CLAHE\projects\16tile\rtl\clahe_mapping_parallel.v|
+!s90 -nologo|-work|work|e:\FPGA_codes\CLAHE\projects\16tile\rtl\clahe_mapping_parallel.v|
+!i113 0
+R4
+R5
+vclahe_ram_64tiles_sim
+Z7 !s110 1768027753
+!i10b 1
+!s100 mZ?5]_UQIAcm5z;B:J6aG0
+R1
+I430`8cFlgBzo8S;1FG9`K3
+R0
+R6
+Z8 8e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_ram_true_dual.v
+Z9 Fe:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_ram_true_dual.v
+!i122 8
+L0 96 152
+R2
+R3
+r1
+!s85 0
+31
+Z10 !s108 1768027753.000000
+Z11 !s107 e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_ram_true_dual.v|
+Z12 !s90 -nologo|-work|work|e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_ram_true_dual.v|
+!i113 0
+R4
+R5
+vclahe_ram_banked
+!s110 1768027682
+!i10b 1
+!s100 iJbZ4DEX[L:CCJeb<WbGj2
+R1
+I8HIRigFF34kz1=^Z5EDV63
+R0
+w1767012789
+8e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_ram_banked.v
+Fe:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_ram_banked.v
+!i122 7
+L0 47 356
+R2
+R3
+r1
+!s85 0
+31
+!s108 1768027682.000000
+!s107 e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_ram_banked.v|
+!s90 -nologo|-work|work|e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_ram_banked.v|
+!i113 0
+R4
+R5
+vclahe_tile_ram_true_dual
+R7
+!i10b 1
+!s100 ZAU@Wlk;23^P`oO>?Q9Wc0
+R1
+I=iTW=FHLQ2Fj2?JS6aO=O2
+R0
+R6
+R8
+R9
+!i122 8
+L0 46 36
+R2
+R3
+r1
+!s85 0
+31
+R10
+R11
+R12
+!i113 0
+R4
+R5
+vclahe_top
+!s110 1768149159
+!i10b 1
+!s100 7JEGjCC>KYNJaTh7TgSC80
+R1
+Ig?TI337cfdS8:_@aNEjnD2
+R0
+w1766901750
+8e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_top.v
+Fe:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_top.v
+!i122 10
+L0 58 445
+R2
+R3
+r1
+!s85 0
+31
+!s108 1768149159.000000
+!s107 e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_top.v|
+!s90 -nologo|-work|work|e:\FPGA_codes\CLAHE\optimized\projects\64tile_optimized\rtl\clahe_top.v|
+!i113 0
+R4
+R5
